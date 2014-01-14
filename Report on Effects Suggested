@@ -27,6 +27,8 @@ Phaser
 			  phase
 			- The other path can be anything, change the pitch, delay, etc
 		- These 2 paths are then joined together to create the overall effect
+
+	- Notch Filter frequently mentioned
 	
 	- http://en.wikipedia.org/wiki/Phaser_%28effect%29
 
@@ -42,5 +44,33 @@ Chorus
 	- http://en.wikipedia.org/wiki/Chorus_effect
 
 Vibrato
-	- The effect of regular, pulsating change of pitch
+	- The effect of regular, pulsating change of pitch, the vibrating effect
 		- Can vary amount of pitch and speed of pitch is varied at
+	
+	- Useful http://en.wikipedia.org/wiki/Vibrato_unit
+
+	- To create this
+		- Use a combination of delays and filters
+		- NOT MUCH INFO AVAILABLE, COULD BE HARD
+
+Tremelo
+	- Very similar to Vibrato, the trembling effect
+	- Two types
+		- First type
+			- rapid reiteration, playing the same note again and again
+		- Second type
+			- variation in amplitude
+			- rapidly turning volume up or down
+	- "Whammy Bar"
+	
+	- http://en.wikipedia.org/wiki/Tremolo
+
+	- 
+
+
+
+
+
+
+
+

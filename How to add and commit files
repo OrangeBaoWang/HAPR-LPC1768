@@ -13,4 +13,6 @@ To https://github.com/olilea/HAPR.git
 	- Browse to file directory
 	- use (git add [file name])
 	- then (git commit -m "Test file")
-	- finally push changes to repository (git push orgin master)
+	- finally push changes to repository (git push origin master)
+
+	- To get latest shiz, (git pull upstream master)
