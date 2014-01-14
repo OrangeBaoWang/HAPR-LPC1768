@@ -13,6 +13,7 @@ void sdac_init(void) {
 	PinCfg.Pinnum = 26;		//Refers to pin 18 on board
 	PinCfg.Portnum = 0;
 	PINSEL_ConfigPin(&PinCfg);
+
 	DAC_Init(LPC_DAC);
 }
 
