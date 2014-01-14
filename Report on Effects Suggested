@@ -1,0 +1,46 @@
+Compressor
+	- Reduces volume of loud sound or amplifies quite sounds
+		- Does this by compressing an audio signals dynamic range
+	
+	- Downward Compression, reduces loud sounds, quiet sounds remain unaffected
+		- Apply gain reduction to the loud section of signal
+		- http://en.wikipedia.org/wiki/File:Audio-level-compresion-diagram-01.svg
+
+	- Upward Compression, increases sound of quiet sounds, loud sounds unaffected
+		- Apply gain increase to quiet section of signal
+		- http://en.wikipedia.org/wiki/File:Upward_compression.svg
+
+Envolope Follower
+	- Responds to the incoming signal in different ways depending on the signal
+		- It could be set up so the filter is more closed on soft guitar strums
+		- Or it could be set up to be more open on loud guitar strums
+
+	- Can use the Envolope follower to vary the "attack" (fast/slow) based on the
+	  input signal for effects.
+		- Useful = http://www.abletonop.com/2011/07/auto-filter-        		  modulation-part-ii-envelope-follower/
+
+Phaser
+	- Creates a "sweeping" effect by making a series of peaks and troughs in the 		  signal
+		- Does this by using a low-frequency oscillator and below
+		- Split audio signal into 2 paths
+			- 1 Path uses an all-pass filter to preserve amplitude and alter
+			  phase
+			- The other path can be anything, change the pitch, delay, etc
+		- These 2 paths are then joined together to create the overall effect
+	
+	- http://en.wikipedia.org/wiki/Phaser_%28effect%29
+
+Chorus
+	- When individual sounds with similar tone and pitch, all come together and are
+	  perceived as one sound
+
+	- To create this
+		- Take input signal
+		- Mix it with one or more delayed, pitch modulated copies of itself
+			- To modulate pitch use a Low-frequency oscillator 
+	
+	- http://en.wikipedia.org/wiki/Chorus_effect
+
+Vibrato
+	- The effect of regular, pulsating change of pitch
+		- Can vary amount of pitch and speed of pitch is varied at
