@@ -4,7 +4,7 @@ Compressor
 	
 	- Downward Compression, reduces loud sounds, quiet sounds remain unaffected
 		- Apply gain reduction to the loud section of signal
-		- http://en.wikipedia.org/wiki/File:Audio-level-compresion-diagram-01.svg
+		- http://en.wikipedia.org/wiki/File:Audio-level-compresion-    diagram-01.svg
 
 	- Upward Compression, increases sound of quiet sounds, loud sounds unaffected
 		- Apply gain increase to quiet section of signal
@@ -23,8 +23,7 @@ Phaser
 	- Creates a "sweeping" effect by making a series of peaks and troughs in the 		  signal
 		- Does this by using a low-frequency oscillator and below
 		- Split audio signal into 2 paths
-			- 1 Path uses an all-pass filter to preserve amplitude and alter
-			  phase
+			- 1 Path uses an all-pass filter to preserve amplitude and 				  alter phase
 			- The other path can be anything, change the pitch, delay, etc
 		- These 2 paths are then joined together to create the overall effect
 
@@ -86,6 +85,15 @@ Distortion
 		- Amplifies signal so it distorts massively
 			- Very easy
 
+Pitch Shift(Notes say Difficult)
+	- The pitch of the audio signal is raised or lowered
+	
+	- To create replaying the audio signal at a different speed than it was 	  recorded
+
+	- Note, not much information available
+
+Noise Filter
+	- Nothing comes up, closest is Noise Reduction 
 
 
 
