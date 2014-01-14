@@ -1,0 +1,16 @@
+jadl500@pc762s:~/Documents/2ndYear/HAPR/HAPR$ git add Jay\ Upload~
+jadl500@pc762s:~/Documents/2ndYear/HAPR/HAPR$ git commit -m "Test file"
+[master b5c339b] Test file
+ 0 files changed
+ create mode 100644 Jay Upload~
+jadl500@pc762s:~/Documents/2ndYear/HAPR/HAPR$ git push origin master
+Username for 'https://github.com': jayl33
+Password for 'https://jayl33@github.com': 
+To https://github.com/olilea/HAPR.git
+   f404908..b5c339b  master -> master
+
+
+	- Browse to file directory
+	- use (git add [file name])
+	- then (git commit -m "Test file")
+	- finally push changes to repository (git push orgin master)
