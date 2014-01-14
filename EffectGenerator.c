@@ -1,43 +1,33 @@
 #include "lpc17xx_adc.h"
-#include "string.h"
 #include "lpc17xx_dac.h"
 
 #include "debug.h"
-//#include "i2cInit.h"
-#include "lcdInit.h"
 #include "adcInit.h"
 #include "dacInit.h"
 
-char toPrint[50];
-long int sampleCounter = 0;
+#define ADC_SAMPLE_RATE	200000
+#define BUFFER_SIZE 4096
 
-const float voltageScalar = 3.3 / 4096.0;
+uint16_t sampleBuffer[BUFFER_SIZE];
+uint16_t *sampleP = &sampleBuffer;
 
 void ADC_IRQHandler(void) {
 
-	uint16_t analogueValue = ADC_ChannelGetData(LPC_ADC, ADC_CHANNEL_4);
+	*sampleP = ADC_ChannelGetData(LPC_ADC, ADC_CHANNEL_4);
 
-	//sprintf(toPrint, "Value is %0.4f\n\r", (float)((analogueValue >> 4)/100));
-	//printToTerminal(toPrint);
-	//sprintf(toPrint, "Distance is %000.3f cm\n\r", 21.67 / (analogueValue - 0.15));
-	//sprintf(toPrint, "%000.3f cm\n\r", analogueValue);
-	//printToTerminal(toPrint);
+	dacSetValue(*sampleP);
 
-	//printfToTerminal("Value read is %f\n\r", (float)analogueValue * voltageScalar);
-
-	dacSetValue(analogueValue >> 2);
+	//Select next buffer location based on previous location
+	//When at the end of the buffer, loop round to the beginning next
+	sampleP = sampleBuffer + ((uint16_t)++sampleP % BUFFER_SIZE);
 }
 
 int main(void) {
 
-	//i2c_init();
 	debug_init();
-	//inter_init();
-	//lcd_init();
-	sadc_init(10000);
-	sdac_init();
 
-	//ASSERT(0, "Zero is not one");
+	sadc_init(ADC_SAMPLE_RATE);
+	sdac_init();
 
 	while(1) {
 	}
