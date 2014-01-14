@@ -34,13 +34,13 @@ LDFLAGS+=-L$(CMSIS)/lib -lDriversLPC17xxgnu
 
 EXECNAME	= bin/LIBS
 
-OBJ		= MP34.o debug.o i2cInit.o lcdInit.o interInit.o keypadComms.o timerInit.o adcInit.o
+OBJ		= EffectGenerator.o debug.o i2cInit.o lcdInit.o interInit.o keypadComms.o timerInit.o adcInit.o dacInit.o
 
-all: 	MP34
+all: 	EffectGenerator
 	@echo "Build finished"
 
 
-MP34: $(OBJ)
+EffectGenerator: $(OBJ)
 	$(CC) -o $(EXECNAME) $(OBJ) $(LDFLAGS)
 	$(OBJCOPY) -I elf32-little -O binary $(EXECNAME) $(EXECNAME).bin
 	
