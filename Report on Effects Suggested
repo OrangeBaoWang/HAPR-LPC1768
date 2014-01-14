@@ -2,13 +2,19 @@ Compressor
 	- Reduces volume of loud sound or amplifies quite sounds
 		- Does this by compressing an audio signals dynamic range
 	
-	- Downward Compression, reduces loud sounds, quiet sounds remain unaffected
-		- Apply gain reduction to the loud section of signal
-		- http://en.wikipedia.org/wiki/File:Audio-level-compresion-    diagram-01.svg
+		- Downward Compression, reduces loud sounds, quiet sounds remain 			  unaffected
+			- Apply gain reduction to the loud section of signal
+			- http://en.wikipedia.org/wiki/File:Audio-level-compresion-    				  diagram-01.svg
 
-	- Upward Compression, increases sound of quiet sounds, loud sounds unaffected
-		- Apply gain increase to quiet section of signal
-		- http://en.wikipedia.org/wiki/File:Upward_compression.svg
+		- Upward Compression, increases sound of quiet sounds, loud sounds 			  unaffected
+			- Apply gain increase to quiet section of signal
+			- http://en.wikipedia.org/wiki/File:Upward_compression.svg
+
+
+	- HWWDT
+		- Clipping
+		- http://en.wikipedia.org/wiki/Clipping_%28signal_processing%	29#Analog_circuitry
+		-We can do it digitally, by using 16-bit signed integers, doubling the sample values
 
 Envolope Follower
 	- Responds to the incoming signal in different ways depending on the signal
@@ -18,6 +24,15 @@ Envolope Follower
 	- Can use the Envolope follower to vary the "attack" (fast/slow) based on the
 	  input signal for effects.
 		- Useful = http://www.abletonop.com/2011/07/auto-filter-        		  modulation-part-ii-envelope-follower/
+
+	- Used to curve parts of the signal to make it sound different
+	
+
+	- HWWDT
+		- Monitor incoming signal
+		- When it reaches part that we want it to have
+		- Apply filter to it
+			- Low Pass/High Pass perhaps to vary sound
 
 Phaser
 	- Creates a "sweeping" effect by making a series of peaks and troughs in the 		  signal
