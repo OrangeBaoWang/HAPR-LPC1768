@@ -65,7 +65,26 @@ Tremelo
 	
 	- http://en.wikipedia.org/wiki/Tremolo
 
-	- 
+Reverb
+	- A reverb is when a sound is produced in an enclosed space, lots of echoes 		  build up then die down as the sound is absorbed
+	
+	- To create
+		- Use multiple feedback, delay circuits to create a large, decaying 			  series of echoes
+	
+	- Advanced
+		- Simulate the time and the frequency responses of the CS Lab
+
+
+Distortion
+	- Creates "warm", "dirty" and "fuzzy" sounds by compressing the peaks of the 		  audio signal
+
+	- For Fuzzy distortion 
+		-  Alter signal until it is nearly a square wave and add overtones by 			   way of a frequency multiplier
+			- Frequency multiplier use a bandpass filter to choose desired 				  frequency
+
+	- OverDrive
+		- Amplifies signal so it distorts massively
+			- Very easy
 
 
 
