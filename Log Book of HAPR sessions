@@ -10,12 +10,17 @@ LOG #1 - 14/1/2014: 9:30 - 12:30
 
 LOG #2 - 14/1/2014: 2:30 - 5:30
 
-	- Jay finished sound effect document and started work on how we would implement 	  the all the effects
+	- Jay finished sound effect document and started work on how we would
+	  implement the all the effects
 	- Got the ADC and the DAC working
-	- Oli and Daz working on a low pass filter and op-amp to remove the DC bias on 		  the signal
+	- Oli and Daz working on a low pass filter and op-amp to remove
+	  the DC bias on the signal
 
 LOG #2 - 15/1/2014:
 	- Oli added looping buffer and averaging to analgoue signal
-	- Oli researched adding a DC bias to the input of the board in order to prevent loss of signal upon input to the board. Found circuit to increase bias: http://electronics.stackexchange.com/questions/14404/dc-biasing-audio-signal
-		- Second diagram of answer explains how to add the bias
-		- Use the values given in the diagram
+	- Oli researched adding a DC bias to the input of the board in
+	  order to prevent loss of signal upon input to the board.
+		- Found circuit to increase bias:
+		http://electronics.stackexchange.com/questions/14404/dc-biasing-audio-signal
+			- Second diagram of answer explains how to add the bias
+			- Use the values given in the diagram
