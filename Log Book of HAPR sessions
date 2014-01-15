@@ -16,4 +16,6 @@ LOG #2 - 14/1/2014: 2:30 - 5:30
 
 LOG #2 - 15/1/2014:
 	- Oli added looping buffer and averaging to analgoue signal
-	- Oli researched adding a DC bias to the input of the board in order to prevent loss of signal upon input to the board
+	- Oli researched adding a DC bias to the input of the board in order to prevent loss of signal upon input to the board. Found circuit to increase bias: http://electronics.stackexchange.com/questions/14404/dc-biasing-audio-signal
+		- Second diagram of answer explains how to add the bias
+		- Use the values given in the diagram
