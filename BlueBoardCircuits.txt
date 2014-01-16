@@ -1,0 +1,12 @@
+#######################
+Blue board
+#######################
+
+==> 1st Low pass filter
+R1 = 180 ohm
+C1 = 10 micro f
+
+==> Op Amp Gain
+R1 = 40k ohm
+R2 = 100k ohm
+
