@@ -24,3 +24,9 @@ LOG #2 - 15/1/2014:
 		http://electronics.stackexchange.com/questions/14404/dc-biasing-audio-signal
 			- Second diagram of answer explains how to add the bias
 			- Use the values given in the diagram
+
+
+LOG #3 - 16/1/2014
+	- Oli and Daz worked on new op-amp and correcting D.C bias by doing this at input instead of outut
+	- Jay found circuits to apply Compression to signal
+		- Difficult to implement however
