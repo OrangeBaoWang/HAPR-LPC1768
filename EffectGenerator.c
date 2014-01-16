@@ -16,9 +16,15 @@ void ADC_IRQHandler(void) {
 	*sampleP = ADC_ChannelGetData(LPC_ADC, ADC_CHANNEL_4);
 
 	if (sampleP < &(sampleBuffer[2])) {
-		dacSetValue(*sampleP);
+		dacSetValue(*sampleP >> 2);
+	//printfToTerminal("%d\n\r", *sampleP);
 	} else {
-		dacSetValue(((*sampleP + *(sampleP - 1) + *(sampleP - 2)) / 3) >> 2);
+		//if (*sampleP > *(sampleP - 1)) {
+			//dacSetValue(*(sampleP - 1));
+		//}
+		//else {
+			dacSetValue(((*sampleP + *(sampleP - 1) + *(sampleP - 2)) / 3));
+		//}
 	}
 
 	//Select next buffer location based on previous location
