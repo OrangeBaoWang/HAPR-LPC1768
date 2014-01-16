@@ -18,3 +18,32 @@ Start with sampling
 Get input/output sorted, then sort everything else after
 
 -> Idea: Use blueboard buttons as UI
+
+#########################
+Meeting 2
+
+Daz - Chair
+Jay - Secretary
+Oli - Big Boss
+#########################
+
+- Realised that approaching task wrong way
+	- Correcting D.C bias has to be done on input not on output
+	- OP Amp also the wrong way round
+
+-> User interface(idea)
+	-> FPGA, field programmable gate
+		-> Buttons
+	-> Use terminal for now
+
+-> Sort out D.C bias and get a good clean signal
+
+-> Code to average signals
+
+-> Look into compression in more details
+	-> Finish effects sheet
+
+-> Finish op-amp
+
+-> Make filters, low/high/bandpass
+##########################################################
