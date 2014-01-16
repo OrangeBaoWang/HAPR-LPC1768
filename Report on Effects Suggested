@@ -16,6 +16,16 @@ Compressor
 		- http://en.wikipedia.org/wiki/Clipping_%28signal_processing%	29#Analog_circuitry
 		-We can do it digitally, by using 16-bit signed integers, doubling the sample values
 
+		- UPDATED
+			- We need to clip it by using low and high pass filters
+				- Store signal
+					- Run it through low pass filter
+					- Run original through high pass filter
+					- Combine the 2 new signals
+			- Attack time is the time it takes for signal to become compressed
+			- Release time is the time it takes for signal to revert from compressed to normal
+			
+			- We can also use a FET to apply compression
 Envolope Follower
 	- Responds to the incoming signal in different ways depending on the signal
 		- It could be set up so the filter is more closed on soft guitar strums
