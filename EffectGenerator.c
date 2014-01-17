@@ -23,7 +23,26 @@ void ADC_IRQHandler(void) {
 			//dacSetValue(*(sampleP - 1));
 		//}
 		//else {
-			dacSetValue((((*sampleP + *(sampleP - 1) + *(sampleP - 2)) / 3))>>2);
+			//finds median sample value from previous 3
+			if (*sampleP > *(sampleP - 1)) {
+				if (*sampleP < *(sampleP - 2)) {
+					dacSetValue(*sampleP >> 2);
+				}
+				else if (*(sampleP - 1) > *(sampleP - 2)) {
+					dacSetValue(*(sampleP - 1) >> 2);
+				}
+				else dacSetValue(*(sampleP - 2) >> 2);
+			}
+			else {
+				if(*(sampleP - 1) < *(sampleP - 2)){
+					dacSetValue(*(sampleP - 1) >> 2);	
+				}
+				else if (*sampleP > *(sampleP - 2)){
+					dacSetValue(*sampleP >> 2);
+				}
+				else dacSetValue(*(sampleP - 2) >> 2);
+			}
+			//dacSetValue((((*sampleP + *(sampleP - 1) + *(sampleP - 2)) / 3))>>2);
 		//}
 	}
 
@@ -38,6 +57,7 @@ void ADC_IRQHandler(void) {
 		sampleP = sampleBuffer;
 	}
 }
+
 
 // Assuming the given value fits criteria, function 
 // called and gain applied
