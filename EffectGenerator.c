@@ -10,6 +10,7 @@
 
 uint16_t sampleBuffer[BUFFER_SIZE];
 uint16_t *sampleP = sampleBuffer;
+uint16_t medianSample = 0;
 
 void ADC_IRQHandler(void) {
 
@@ -17,13 +18,28 @@ void ADC_IRQHandler(void) {
 
 	if (sampleP < &(sampleBuffer[2])) {
 		dacSetValue(*sampleP >> 2);
-	//printfToTerminal("%d\n\r", *sampleP);
 	} else {
 		//if (*sampleP > *(sampleP - 1)) {
 			//dacSetValue(*(sampleP - 1));
 		//}
 		//else {
-			dacSetValue(((*sampleP + *(sampleP - 1) + *(sampleP - 2)) / 3));
+		if (*sampleP > *(sampleP-1)) {
+			if (*sampleP < *(sampleP-2)) {
+				dacSetValue(*sampleP >> 2);
+			} else if (*(sampleP-1) > *(sampleP-2)) {
+				dacSetValue(*(sampleP-1) >> 2);
+			} else if (*sampleP < *(sampleP-2)) {
+				dacSetValue(*sampleP >> 2);
+			} else {
+				dacSetValue(*(sampleP-2));
+			}
+		} else if (*(sampleP-1) < *(sampleP-2)) {
+			dacSetValue(*(sampleP-1) >> 2);
+		} else if (*sampleP < *(sampleP-2)) {
+			dacSetValue(*sampleP >> 2);
+		} else {
+			dacSetValue(*(sampleP-2) >> 2);
+		}
 		//}
 	}
 
