@@ -1,3 +1,5 @@
+// Created by Oliver Lea 18/01/2014
+
 #ifndef __FILTER_H__
 #define __FILTER_H__
 

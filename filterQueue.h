@@ -1,3 +1,5 @@
+// Created by Oliver Lea 17/01/2014
+
 #ifndef __FILTERQUEUE_H__
 #define __FILTERQUEUE_H__
 
