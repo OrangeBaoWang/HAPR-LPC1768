@@ -5,6 +5,8 @@
 #include "debug.h"
 #include "adcInit.h"
 #include "dacInit.h"
+#include "filter.h"
+#include "filterQueue.h"
 
 #define ADC_SAMPLE_RATE	44000
 #define BUFFER_SIZE 4096
@@ -53,14 +55,6 @@ void ADC_IRQHandler(void) {
 	} else {
 		sampleP = sampleBuffer;
 	}
-}
-
-
-// Assuming the given value fits criteria, function 
-// called and gain applied
-uint16_t upwardCompression(uint16_t analogueValue) {
-
-	
 }
 
 int main(void) {

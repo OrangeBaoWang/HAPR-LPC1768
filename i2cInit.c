@@ -10,8 +10,6 @@ I2C_M_SETUP_Type transferCfg;
 void pollAddresses(void) {
 	//debug_init(); must be initialized first in main function
 	uint8_t devicesCon = 0;
-	uint8_t nullByte = 0;
-	char *toPrint[100];
 
 	while (transferCfg.sl_addr7bit <= 127) {
 		if (I2C_MasterTransferData(I2CDEV, &transferCfg, I2C_TRANSFER_POLLING)
@@ -19,10 +17,9 @@ void pollAddresses(void) {
 			transferCfg.sl_addr7bit++;
 		} else {
 			devicesCon++;
-			sprintf(toPrint, "Address %d is used\n\r",
+			printfToTerminal("Address %d is used\n\r",
 				transferCfg.sl_addr7bit);
 			transferCfg.sl_addr7bit++;
-			write_usb_serial_blocking(toPrint, 100);
 		}
 	}
 }
@@ -49,5 +46,6 @@ int i2c_init(void) {
 	
 	//Enable i2c operation
 	I2C_Cmd(I2CDEV, ENABLE);
-	
+
+	return 0;
 }

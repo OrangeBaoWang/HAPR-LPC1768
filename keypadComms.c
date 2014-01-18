@@ -79,6 +79,9 @@ short int determineRow(void) {
 			return row;
 		}
 	}
+
+	// Should never reach as function only called if buttonPressed() = 1
+	return -1;
 }
 
 char scanKeypad(void) {

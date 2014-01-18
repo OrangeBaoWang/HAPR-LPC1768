@@ -7,7 +7,7 @@
 /*  Unnecessary function call
     Call ADC_ChannelGetData directly */
 uint16_t getAdcData(void) {
-	ADC_ChannelGetData(LPC_ADC, ADC_CHANNEL_4);
+	return ADC_ChannelGetData(LPC_ADC, ADC_CHANNEL_4);
 }
 
 void sadc_init(int sampleRate) {
