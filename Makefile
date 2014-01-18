@@ -1,5 +1,5 @@
 PKG=/usr/local/pkg
-SOURCERY=~/Code/HAPR/bin/arm-2013.11
+SOURCERY=~/HAPR/Project/HAPR/bin/arm-2013.11
 ARCH=arm-none-eabi
 CC=$(SOURCERY)/bin/$(ARCH)-gcc
 HCC	= /usr/bin/gcc

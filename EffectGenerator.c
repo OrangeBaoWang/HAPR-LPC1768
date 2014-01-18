@@ -1,5 +1,6 @@
 #include "lpc17xx_adc.h"
 #include "lpc17xx_dac.h"
+#include "stdlib.h"
 
 #include "debug.h"
 #include "adcInit.h"
@@ -42,15 +43,11 @@ void ADC_IRQHandler(void) {
 				}
 				else dacSetValue(*(sampleP - 2) >> 2);
 			}
-			//dacSetValue((((*sampleP + *(sampleP - 1) + *(sampleP - 2)) / 3))>>2);
 		//}
 	}
 
 	//Select next buffer location based on previous location
 	//When at the end of the buffer, loop round to the beginning next
-	//sampleP = sampleBuffer + ((uint16_t)++sampleP % BUFFER_SIZE);
-
-
 	if (sampleP < &(sampleBuffer[BUFFER_SIZE - 1])) {
 		sampleP++;
 	} else {

@@ -1,16 +1,16 @@
-#include "stdlib.h"
-
 #include "debug.h"
 
 typedef struct FilterNode {
-		int filterID;
-		struct FilterNode *next;
+	int filterID;
+	int parameters[3];
+	struct FilterNode *next;
 } FilterNode;
 
 FilterNode *currentNode;
 FilterNode *root;
 
-int addFilter(int filter) {
+// Need to add way for node to contain filter parameters
+int enqueue(int filterType) {
 
 	// Ensure the currentNode is at the end of the linked list
 	if (currentNode != 0) {
@@ -25,13 +25,33 @@ int addFilter(int filter) {
 	currentNode = currentNode->next;
 
 	if (currentNode == 0) {
-		debugThrow("Out of memory when allocating new node to filter queue");
+		THROW("Out of memory when allocating new node to filter queue");
 		return -1;
 	}
 
 	// Initialize the new node
 	currentNode->next = 0;
-	currentNode->filterID = filter;
+	currentNode->filterID = filterType;
+
+	return 0;
+}
+
+// Need way to find specific node (not just by filterID)
+int dequeue(int filterType) {
+
+	currentNode = root->next;
+
+	// Find the node with filterID == filterType
+	// If it does not exist, return -1
+	while ((currentNode->filterID) != filterType) {
+		currentNode = currentNode->next;
+		if (currentNode->next == 0) {
+			return -1;
+		}
+	}
+
+
+
 }
 
 int queueInit() {
