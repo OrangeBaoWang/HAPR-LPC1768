@@ -4,7 +4,7 @@
 
 #include "debug.h"
 #include "filter.h"
-#include "filterQueue.h"
+#include "filterChain.h"
 
 FilterNode *currentNode;
 FilterNode *root;
@@ -78,7 +78,7 @@ void incrementCurrentNode(void) {
 	}
 }
 
-int queue_init(void) {
+int chain_init(void) {
 
 	// root now points to a node struct
 	root = malloc(sizeof(FilterNode));

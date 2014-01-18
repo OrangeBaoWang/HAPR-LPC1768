@@ -1,7 +1,7 @@
 // Created by Oliver Lea 17/01/2014
 
-#ifndef __FILTERQUEUE_H__
-#define __FILTERQUEUE_H__
+#ifndef __FILTERCHAIN_H__
+#define __FILTERCHAIN_H__
 
 typedef struct FilterNode {
 	Filter *filter;
@@ -14,6 +14,6 @@ int dequeue(Filter *targetFilter);
 
 void incrementCurrentNode(void);
 
-int queue_init(void);
+int chain_init(void);
 
 #endif

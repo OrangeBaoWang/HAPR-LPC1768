@@ -35,7 +35,7 @@ LDFLAGS+=-L$(CMSIS)/lib -lDriversLPC17xxgnu
 
 EXECNAME	= bin/LIBS
 
-OBJ		= EffectGenerator.o debug.o i2cInit.o lcdInit.o interInit.o keypadComms.o timerInit.o adcInit.o dacInit.o filterQueue.o
+OBJ		= EffectGenerator.o debug.o i2cInit.o lcdInit.o interInit.o keypadComms.o timerInit.o adcInit.o dacInit.o filterChain.o
 
 all: 	EffectGenerator
 	@echo "Build finished"

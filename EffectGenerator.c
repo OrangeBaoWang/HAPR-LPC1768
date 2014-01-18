@@ -6,7 +6,7 @@
 #include "adcInit.h"
 #include "dacInit.h"
 #include "filter.h"
-#include "filterQueue.h"
+#include "filterChain.h"
 
 #define ADC_SAMPLE_RATE	44000
 #define BUFFER_SIZE 4096
@@ -57,13 +57,41 @@ void ADC_IRQHandler(void) {
 	}
 }
 
+int testFilterFunction(int param0, int param1) {
+
+	printfToTerminal("HERE. Param0 = %i, Param1 = %i", param0, param1);
+
+	return 1;
+}
+
 int main(void) {
 
 	debug_init();
 
+	chain_init();
+
+	Filter *testFilter;
+	testFilter = malloc(sizeof(Filter));
+
+	testFilter->filterFunction = &testFilterFunction;
+	testFilter->parameters[0] = 42;
+	testFilter->parameters[1] = 54;
+	enqueue(testFilter);
+
+	int test = (*(testFilter->filterFunction))(testFilter->parameters[0],
+					testFilter->parameters[1]);
+
+	printfToTerminal("Test = %i", test);
+
+	dequeue(testFilter);
+
+	/* COMMENTED OUT FOR TESTING
 	sadc_init(ADC_SAMPLE_RATE);
 	sdac_init();
 
 	while(1) {
 	}
+	*/
+
+	return 0;
 }
