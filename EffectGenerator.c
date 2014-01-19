@@ -1,5 +1,7 @@
 #include "lpc17xx_adc.h"
 #include "lpc17xx_dac.h"
+#include "lpc_types.h"
+
 #include "stdlib.h"
 
 #include "debug.h"
@@ -9,23 +11,24 @@
 #include "filterChain.h"
 
 #define ADC_SAMPLE_RATE	44000
-#define BUFFER_SIZE 4096
+#define BUFFER_SIZE 8192
 
 uint16_t sampleBuffer[BUFFER_SIZE];
 uint16_t *sampleP = sampleBuffer;
-uint16_t medianSample = 0;
+uint16_t output;
 
+Filter *testFilter;
+
+// Interrupt handler that samples the ADC and sends the sample
+// on to be filtered
 void ADC_IRQHandler(void) {
 
 	*sampleP = ADC_ChannelGetData(LPC_ADC, ADC_CHANNEL_4);
 
+	/*
 	if (sampleP < &(sampleBuffer[2])) {
 		dacSetValue(*sampleP >> 2);
 	} else {
-		//if (*sampleP > *(sampleP - 1)) {
-			//dacSetValue(*(sampleP - 1));
-		//}
-		//else {
 			//finds median sample value from previous 3
 			if (*sampleP > *(sampleP - 1)) {
 				if (*sampleP < *(sampleP - 2)) {
@@ -45,8 +48,12 @@ void ADC_IRQHandler(void) {
 				}
 				else dacSetValue(*(sampleP - 2) >> 2);
 			}
-		//}
 	}
+	*/
+
+	output = applyFilters(*sampleP);
+
+	dacSetValue(output);
 
 	//Select next buffer location based on previous location
 	//When at the end of the buffer, loop round to the beginning next
@@ -57,9 +64,10 @@ void ADC_IRQHandler(void) {
 	}
 }
 
-int testFilterFunction(int param0, int param1) {
+uint64_t testFilterFunction(uint64_t testSample, int param1) {
 
-	printfToTerminal("HERE. Param0 = %i, Param1 = %i", param0, param1);
+	printfToTerminal("HERE. testSample = %i, Param1 = %i",
+						testSample, param1);
 
 	return 1;
 }
@@ -70,16 +78,14 @@ int main(void) {
 
 	chain_init();
 
-	Filter *testFilter;
 	testFilter = malloc(sizeof(Filter));
 
 	testFilter->filterFunction = &testFilterFunction;
-	testFilter->parameters[0] = 42;
-	testFilter->parameters[1] = 54;
+	testFilter->parameter = 42;
 	enqueue(testFilter);
 
-	int test = (*(testFilter->filterFunction))(testFilter->parameters[0],
-					testFilter->parameters[1]);
+	int test = (*(testFilter->filterFunction))(102,
+					testFilter->parameter);
 
 	printfToTerminal("Test = %i", test);
 

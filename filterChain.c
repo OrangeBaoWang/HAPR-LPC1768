@@ -1,5 +1,7 @@
 // Created by Oliver Lea 17/01/2014
 
+#include "lpc_types.h"
+
 #include "stdlib.h"
 
 #include "debug.h"
@@ -8,6 +10,10 @@
 
 FilterNode *currentNode;
 FilterNode *root;
+
+// The 64-bit container the sample is put into while filtering
+// takes place
+uint64_t dSample;
 
 // Need to add way for node to contain filter parameters
 int enqueue(Filter *newFilter) {
@@ -51,15 +57,11 @@ int dequeue(Filter *targetFilter) {
 		if  ((((currentNode->next)->filter)->filterFunction) == 
 				targetFilter->filterFunction) {
 
-			if ((((currentNode->next)->filter)->parameters[0]) ==
-					targetFilter->parameters[0]) {
+			if ((((currentNode->next)->filter)->parameter) ==
+					targetFilter->parameter) {
 
-				if ((((currentNode->next)->filter)->parameters[1]) ==
-						targetFilter->parameters[1]) {
-
-					currentNode->next = (currentNode->next)->next;
-					return 0;
-				}
+				currentNode->next = (currentNode->next)->next;
+				return 0;
 			}
 		}
 		currentNode = currentNode->next;
@@ -76,6 +78,39 @@ void incrementCurrentNode(void) {
 	if (currentNode->next != 0) {
 		currentNode = currentNode->next;
 	}
+}
+
+// Will apply all filters present in the filter chain
+// If no filters in chain, simply return the given value
+uint16_t applyFilters(uint16_t sample) {
+
+	if (root->next == 0) {
+		return sample >> 2;
+	}
+
+	dSample = (uint64_t)sample;
+
+	currentNode = root;
+
+	// While not at the end of the list, apply each filter to
+	// the value in dSample
+	while(currentNode->next != 0) {
+
+		currentNode = currentNode->next;
+
+		dSample = (*((currentNode->filter)->filterFunction))
+					(dSample, ((currentNode->filter)->parameter));
+	}
+
+	// If the value from the filters is greater than 2^12 (the
+	// highest value of the ADC, dSample is clipped to 2^12
+	// The value of sample then becomes dSample, shifted two
+	// to the right to become a 10-bit number ready for the DAC
+	// Low amplitude noise is also shifted out by the shifting
+	if (dSample > 4096) {dSample = 4096;}
+	sample = (uint16_t)(dSample>>2);
+
+	return sample;
 }
 
 int chain_init(void) {

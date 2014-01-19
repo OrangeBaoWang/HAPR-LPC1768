@@ -14,6 +14,8 @@ int dequeue(Filter *targetFilter);
 
 void incrementCurrentNode(void);
 
+uint16_t applyFilters(uint16_t sample);
+
 int chain_init(void);
 
 #endif

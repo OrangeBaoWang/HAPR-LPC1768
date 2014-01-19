@@ -3,14 +3,14 @@
 #ifndef __FILTER_H__
 #define __FILTER_H__
 
-// MUST BE INCLUDED ABOVE FILTERQUEUE.H"
+// MUST BE INCLUDED ABOVE FILTERCHAIN.H"
 
 // Structure containing all the information needed for a filter
 // filterFunction points to the address of the destination filter
 // function
 typedef struct Filter {
-	int (*filterFunction)(int, int);
-	int parameters[2];
+	uint64_t (*filterFunction)(uint64_t, int);
+	int parameter;
 } Filter;
 
 #endif
