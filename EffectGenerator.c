@@ -84,8 +84,7 @@ int main(void) {
 	testFilter->parameter = 42;
 	enqueue(testFilter);
 
-	int test = (*(testFilter->filterFunction))(102,
-					testFilter->parameter);
+	int test = applyFilters(102);
 
 	printfToTerminal("Test = %i", test);
 
