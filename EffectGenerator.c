@@ -64,12 +64,12 @@ void ADC_IRQHandler(void) {
 	}
 }
 
-uint64_t testFilterFunction(uint64_t testSample, int param1) {
+uint64_t testFilterFunction(uint32_t testSample, int param1) {
 
-	printfToTerminal("HERE. testSample = %i, Param1 = %i",
+	printfToTerminal("HERE. testSample = %d, Param1 = %i",
 						testSample, param1);
 
-	return 1;
+	return testSample;
 }
 
 int main(void) {

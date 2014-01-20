@@ -11,9 +11,9 @@
 FilterNode *currentNode;
 FilterNode *root;
 
-// The 64-bit container the sample is put into while filtering
+// The 32-bit container the sample is put into while filtering
 // takes place
-uint64_t dSample;
+uint32_t dSample;
 
 // Need to add way for node to contain filter parameters
 int enqueue(Filter *newFilter) {
@@ -88,7 +88,10 @@ uint16_t applyFilters(uint16_t sample) {
 		return sample >> 2;
 	}
 
-	dSample = (uint64_t)sample;
+	dSample = sample;
+	printfToTerminal("Sample = %d\n\r", sample);
+	printfToTerminal("dSample = %d\n\r", dSample);
+	printfToTerminal("Param = %d", (currentNode->filter)->parameter);
 
 	currentNode = root;
 
@@ -108,7 +111,7 @@ uint16_t applyFilters(uint16_t sample) {
 	// to the right to become a 10-bit number ready for the DAC
 	// Low amplitude noise is also shifted out by the shifting
 	if (dSample > 4096) {dSample = 4096;}
-	sample = (uint16_t)(dSample>>2);
+	sample = (uint16_t)(dSample);//>>2);
 
 	return sample;
 }
