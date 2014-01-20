@@ -70,11 +70,6 @@ uint32_t testFilterFunction(uint32_t testSample, uint32_t param1) {
 	return testSample;
 }
 
-uint32_t linearGain(uint32_t sample, uint32_t gainMultiplier) {
-
-	return (sample * gainMultiplier);
-}
-
 int main(void) {
 
 	debug_init();

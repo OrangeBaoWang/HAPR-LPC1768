@@ -13,4 +13,19 @@ typedef struct Filter {
 	uint32_t parameter;
 } Filter;
 
+/*
+typedef struct ParFilter {
+	Filter *filterOne;
+	Filter *filterTwo;
+	float mixingRatio;
+} ParFilter;
+*/
+
+uint32_t linearGainF(uint32_t sample, uint32_t gainMultiplier);
+
+uint32_t parallelF(Filter *filter1, Filter *filter2,
+						uint32_t sample, float mixRatio);
+
+Filter *newFilter(uint32_t filterAddr, uint32_t filterParam);
+
 #endif
