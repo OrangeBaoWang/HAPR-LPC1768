@@ -18,6 +18,7 @@ uint16_t *sampleP = sampleBuffer;
 uint16_t output;
 
 Filter *testFilter;
+Filter *linearFilter;
 
 // Interrupt handler that samples the ADC and sends the sample
 // on to be filtered
@@ -64,12 +65,14 @@ void ADC_IRQHandler(void) {
 	}
 }
 
-uint64_t testFilterFunction(uint32_t testSample, int param1) {
-
-	printfToTerminal("HERE. testSample = %d, Param1 = %i",
-						testSample, param1);
+uint32_t testFilterFunction(uint32_t testSample, uint32_t param1) {
 
 	return testSample;
+}
+
+uint32_t linearGain(uint32_t sample, uint32_t gainMultiplier) {
+
+	return (sample * gainMultiplier);
 }
 
 int main(void) {
@@ -79,12 +82,20 @@ int main(void) {
 	chain_init();
 
 	testFilter = malloc(sizeof(Filter));
+	linearFilter = malloc(sizeof(Filter));
 
 	testFilter->filterFunction = &testFilterFunction;
 	testFilter->parameter = 42;
 	enqueue(testFilter);
+	
+	linearFilter->filterFunction = &linearGain;
+	linearFilter->parameter = 5;
+	enqueue(linearFilter);
+	enqueue(linearFilter);
+	dequeue(linearFilter);
+	dequeue(testFilter);
 
-	int test = applyFilters(102);
+	uint16_t test = applyFilters(102);
 
 	printfToTerminal("Test = %i", test);
 

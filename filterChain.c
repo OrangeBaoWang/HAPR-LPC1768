@@ -89,9 +89,6 @@ uint16_t applyFilters(uint16_t sample) {
 	}
 
 	dSample = sample;
-	printfToTerminal("Sample = %d\n\r", sample);
-	printfToTerminal("dSample = %d\n\r", dSample);
-	printfToTerminal("Param = %d", (currentNode->filter)->parameter);
 
 	currentNode = root;
 

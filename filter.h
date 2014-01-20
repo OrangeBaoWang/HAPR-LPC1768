@@ -9,8 +9,8 @@
 // filterFunction points to the address of the destination filter
 // function
 typedef struct Filter {
-	uint32_t (*filterFunction)(uint32_t, int);
-	int parameter;
+	uint32_t (*filterFunction)(uint32_t, uint32_t);
+	uint32_t parameter;
 } Filter;
 
 #endif
