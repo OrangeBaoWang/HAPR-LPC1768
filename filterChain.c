@@ -85,7 +85,7 @@ void incrementCurrentNode(void) {
 uint16_t applyFilters(uint16_t sample) {
 
 	if (root->next == 0) {
-		return sample >> 2;
+		return sample;
 	}
 
 	dSample = sample;
@@ -103,12 +103,10 @@ uint16_t applyFilters(uint16_t sample) {
 	}
 
 	// If the value from the filters is greater than 2^12 (the
-	// highest value of the ADC, dSample is clipped to 2^12
-	// The value of sample then becomes dSample, shifted two
-	// to the right to become a 10-bit number ready for the DAC
-	// Low amplitude noise is also shifted out by the shifting
-	if (dSample > 4096) {dSample = 4096;}
-	sample = (uint16_t)(dSample);//>>2);
+	// highest value of the ADC, sample is clipped to 2^12
+	if (dSample > 4096) {
+		sample = 4096;
+	}
 
 	return sample;
 }

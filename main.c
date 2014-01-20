@@ -81,6 +81,7 @@ int main(void) {
 
 	chain_init();
 
+/*
 	testFilter = malloc(sizeof(Filter));
 	linearFilter = malloc(sizeof(Filter));
 
@@ -94,20 +95,21 @@ int main(void) {
 	enqueue(linearFilter);
 	dequeue(linearFilter);
 	dequeue(testFilter);
+	dequeue(linearFilter);
 
 	uint16_t test = applyFilters(102);
 
-	printfToTerminal("Test = %i", test);
-
+	printfToTerminal("Test = %i\n\r", test);
 	dequeue(testFilter);
+*/
 
-	/* COMMENTED OUT FOR TESTING
+/* COMMENTED OUT FOR TESTING
 	sadc_init(ADC_SAMPLE_RATE);
 	sdac_init();
 
 	while(1) {
 	}
-	*/
+*/
 
 	return 0;
 }
