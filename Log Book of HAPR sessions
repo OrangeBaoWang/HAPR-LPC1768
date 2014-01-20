@@ -30,3 +30,10 @@ LOG #3 - 16/1/2014
 	- Oli and Daz worked on new op-amp and correcting D.C bias by doing this at input instead of outut
 	- Jay found circuits to apply Compression to signal
 		- Difficult to implement however
+
+LOG #4 - 20/1/2014
+	- Weekend work done by Oli
+		- Fixed bugs and added a filter chain of linked lists with pointers
+		- Added testings and made code neater
+		- Added filter chain full supports and usuage
+		- Updated testings
