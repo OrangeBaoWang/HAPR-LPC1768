@@ -16,6 +16,7 @@
 uint16_t sampleBuffer[BUFFER_SIZE];
 uint16_t *sampleP = sampleBuffer;
 uint16_t output;
+uint16_t *medianVal;
 
 Filter *testFilter;
 Filter *linearFilter;
@@ -26,31 +27,32 @@ void ADC_IRQHandler(void) {
 
 	*sampleP = ADC_ChannelGetData(LPC_ADC, ADC_CHANNEL_4);
 
-	/*
+/*
 	if (sampleP < &(sampleBuffer[2])) {
-		dacSetValue(*sampleP >> 2);
+		output = applyFilters(*sampleP);
 	} else {
 			//finds median sample value from previous 3
 			if (*sampleP > *(sampleP - 1)) {
 				if (*sampleP < *(sampleP - 2)) {
-					dacSetValue(*sampleP >> 2);
+					*medianVal= *sampleP;
 				}
 				else if (*(sampleP - 1) > *(sampleP - 2)) {
-					dacSetValue(*(sampleP - 1) >> 2);
+					*medianVal = *(sampleP - 1);
 				}
-				else dacSetValue(*(sampleP - 2) >> 2);
+				else *medianVal = *(sampleP - 2);
 			}
 			else {
 				if(*(sampleP - 1) < *(sampleP - 2)){
-					dacSetValue(*(sampleP - 1) >> 2);	
+					*medianVal = *(sampleP - 1);	
 				}
 				else if (*sampleP > *(sampleP - 2)){
-					dacSetValue(*sampleP >> 2);
+					*medianVal = *sampleP;
 				}
-				else dacSetValue(*(sampleP - 2) >> 2);
+				else *medianVal = *(sampleP - 2);
 			}
+			output = applyFilters(*medianVal);
 	}
-	*/
+*/
 
 	output = applyFilters(*sampleP);
 
@@ -76,7 +78,7 @@ int main(void) {
 
 	chain_init();
 
-//	enqueue(createFilterS(&linearGainF, 2));
+	enqueue(createFilterS(&linearGainF, 2));
 
 	/*
 	enqueue(createFilterP((newSfilter(&linearGainF, 5)),

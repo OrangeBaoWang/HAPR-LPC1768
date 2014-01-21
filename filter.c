@@ -13,6 +13,20 @@ uint32_t linearGainF(uint32_t sample, uint32_t gainMultiplier) {
 	return (sample * gainMultiplier);
 }
 
+uint32_t reverbF(uint32_t sample, uint32_t reverbGain) {
+
+	uint32_t output;
+
+	float reverbParam = 1/reverbGain;
+
+	// Multiply the input value by reverbParam
+	// Multiply the reverbParam by the sample position in the
+	// queue - X where x is a constant. Eg, 2000 places.
+	// Add the two values together
+
+	return output;
+}
+
 // Mixes two filters outputs from the same sample with each other
 // in order to produce an output that 
 uint32_t mixParallel(PFilter *pfilter, uint32_t sample) {
