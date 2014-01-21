@@ -2,7 +2,7 @@
 
 #include "lpc_types.h"
 
-#include "main.h"
+#include "global.h"
 #include "debug.h"
 #include "filter.h"
 #include "filterChain.h"
@@ -15,7 +15,7 @@ uint32_t linearGainF(uint32_t sample, uint32_t gainMultiplier) {
 	return (sample * gainMultiplier);
 }
 
-uint32_t delayF(uint32_t sample, uint32_t reverbGain) {
+uint32_t delayF(uint32_t sample, uint32_t nullVar) {
 
 	uint32_t output;
 
@@ -25,17 +25,25 @@ uint32_t delayF(uint32_t sample, uint32_t reverbGain) {
 	// Add the two values together
 
 
-	if (sampleP - sampleBuffer > 8000) {
-		output = *(sampleP-8000);
-	} else {
+	if (sampleP - sampleBuffer < 8000) {
 		uint32_t remaining = (8000 - (sampleP - sampleBuffer));
 		output = sampleBuffer[BUFFER_SIZE-1-remaining];
-
-		//printfToTerminal("Input: %d, output %d", sample, output);
+	} else {
+		output = *(sampleP-8000);
 	}
+	return output;
+}
 
+uint32_t echoF(uint32_t sample, uint32_t nullVar) {
 
+	uint32_t output;
 
+	if (sampleP - sampleBuffer < 8000) {
+		uint32_t remaining = 8000 - (sampleP - sampleBuffer);
+		output = sample + (0.5 * sampleBuffer[BUFFER_SIZE-1-remaining]);
+	} else {
+		output = sample + (0.5 * (*(sampleP-8000)));
+	}
 
 	return output;
 }

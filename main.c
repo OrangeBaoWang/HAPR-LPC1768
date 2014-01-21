@@ -4,7 +4,7 @@
 
 #include "stdlib.h"
 
-#include "main.h"
+#include "global.h"
 #include "debug.h"
 #include "adcInit.h"
 #include "dacInit.h"
@@ -68,25 +68,15 @@ void ADC_IRQHandler(void) {
 	}
 }
 
-uint32_t testFilterFunction(uint32_t testSample, uint32_t param1) {
-
-	return testSample;
-}
-
 int main(void) {
 
 	debug_init();
 
 	chain_init();
 
-<<<<<<< HEAD
 	enqueue(createFilterS(&delayF, 1));
 
 	//enqueue(createFilterS(&linearGainF, 2));
-=======
-	enqueue(createFilterS(&linear
-GainF, 2));
->>>>>>> 37e275aea2ec28c5ba83a3311a4d50ff7a38e60b
 
 	/*
 	enqueue(createFilterP((newSfilter(&linearGainF, 5)),
@@ -96,26 +86,10 @@ GainF, 2));
 
 	printfToTerminal("Test is: %d\n\r", test);
 	*/
-/*
-	testFilter = malloc(sizeof(Filter));
-	linearFilter = malloc(sizeof(Filter));
-
-	testFilter->filterFunction = &testFilterFunction;
-	testFilter->parameter = 42;
-	enqueue(testFilter);
-	
-	linearFilter->filterFunction = &linearGain;
-	linearFilter->parameter = 5;
-	enqueue(linearFilter);
-	enqueue(linearFilter);
-	dequeue(linearFilter);
-	dequeue(testFilter);
-	dequeue(linearFilter);
-
+/*	
 	uint16_t test = applyFilters(102);
 
 	printfToTerminal("Test = %i\n\r", test);
-	dequeue(testFilter);
 */
 
 	sadc_init(ADC_SAMPLE_RATE);
