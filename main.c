@@ -78,7 +78,7 @@ int main(void) {
 
 	chain_init();
 
-	enqueue(createFilterS(&linearGainF, 2));
+	//enqueue(createFilterS(&linearGainF, 2));
 
 	/*
 	enqueue(createFilterP((newSfilter(&linearGainF, 5)),

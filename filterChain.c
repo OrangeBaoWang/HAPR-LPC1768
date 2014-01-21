@@ -118,7 +118,7 @@ uint16_t applyFilters(uint16_t sample) {
 	sample = dSample;
 
 
-	return sample;
+	return (sample);
 }
 
 int chain_init(void) {
