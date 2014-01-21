@@ -4,17 +4,16 @@
 
 #include "stdlib.h"
 
+#include "main.h"
 #include "debug.h"
 #include "adcInit.h"
 #include "dacInit.h"
 #include "filter.h"
 #include "filterChain.h"
 
-#define ADC_SAMPLE_RATE	44000
-#define BUFFER_SIZE 8192
-
 uint16_t sampleBuffer[BUFFER_SIZE];
 uint16_t *sampleP = sampleBuffer;
+
 uint16_t output;
 uint16_t *medianVal;
 
@@ -77,6 +76,8 @@ int main(void) {
 	debug_init();
 
 	chain_init();
+
+	enqueue(createFilterS(&delayF, 1));
 
 	//enqueue(createFilterS(&linearGainF, 2));
 

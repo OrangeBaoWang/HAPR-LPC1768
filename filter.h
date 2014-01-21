@@ -30,7 +30,7 @@ typedef struct Filter {
 
 uint32_t linearGainF(uint32_t sample, uint32_t gainMultiplier);
 
-uint32_t reverbF(uint32_t sample, uint32_t reverbGain);
+uint32_t delayF(uint32_t sample, uint32_t reverbGain);
 
 uint32_t mixParallel(PFilter *pfilter, uint32_t sample);
 

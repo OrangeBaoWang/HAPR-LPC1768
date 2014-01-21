@@ -2,6 +2,8 @@
 
 #include "lpc_types.h"
 
+#include "main.h"
+#include "debug.h"
 #include "filter.h"
 #include "filterChain.h"
 
@@ -13,16 +15,27 @@ uint32_t linearGainF(uint32_t sample, uint32_t gainMultiplier) {
 	return (sample * gainMultiplier);
 }
 
-uint32_t reverbF(uint32_t sample, uint32_t reverbGain) {
+uint32_t delayF(uint32_t sample, uint32_t reverbGain) {
 
 	uint32_t output;
-
-	float reverbParam = 1/reverbGain;
 
 	// Multiply the input value by reverbParam
 	// Multiply the reverbParam by the sample position in the
 	// queue - X where x is a constant. Eg, 2000 places.
 	// Add the two values together
+
+
+	if (sampleP - sampleBuffer > 8000) {
+		output = *(sampleP-8000);
+	} else {
+		uint32_t remaining = (8000 - (sampleP - sampleBuffer));
+		output = sampleBuffer[BUFFER_SIZE-1-remaining];
+
+		//printfToTerminal("Input: %d, output %d", sample, output);
+	}
+
+
+
 
 	return output;
 }
