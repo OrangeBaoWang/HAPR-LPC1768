@@ -18,6 +18,8 @@ uint16_t *sampleP = sampleBuffer;
 uint16_t output;
 uint16_t *medianVal;
 
+char recieveBuffer[10];
+
 Filter *testFilter;
 Filter *linearFilter;
 
@@ -78,7 +80,8 @@ int main(void) {
 
 	chain_init();
 
-	enqueue(createFilterS(&linearGainF, 2));
+	enqueue(createFilterS(&linear
+GainF, 2));
 
 	/*
 	enqueue(createFilterP((newSfilter(&linearGainF, 5)),
@@ -114,6 +117,12 @@ int main(void) {
 	sdac_init();
 
 	while(1) {
+		//read_usb_serial_none_blocking(&recieveBuffer, 10);
+		//printfToTerminal("stuff %c \n\r", recieveBuffer);
+		//some awesome stuff that'll read and print the greatest things
+		//ever.
+		
+		
 	}
 
 	return 0;
