@@ -41,7 +41,7 @@ int enqueue(Filter *newFilter) {
 
 	return 0;
 }
-
+/*
 int dequeue(Filter *targetFilter) {
 
 	currentNode = root;
@@ -70,7 +70,7 @@ int dequeue(Filter *targetFilter) {
 	return -1;
 
 }
-
+*/
 // Will not increment the currentNode if already at the end
 // of the list
 void incrementCurrentNode(void) {
@@ -98,8 +98,15 @@ uint16_t applyFilters(uint16_t sample) {
 
 		currentNode = currentNode->next;
 
-		dSample = (*((currentNode->filter)->filterFunction))
-					(dSample, ((currentNode->filter)->parameter));
+		if ((currentNode->filter)->sfilter == 0) {
+			dSample = mixParallel((currentNode->filter)->pfilter,
+						dSample);
+		} else {
+			dSample =
+				(*(((currentNode->filter)->sfilter)->filterFunction))
+						(dSample, (((currentNode->filter)->sfilter)
+						->parameter));
+		}
 	}
 
 	// If the value from the filters is greater than 2^12 (the

@@ -1,64 +1,86 @@
+#include "stdlib.h"
+
 #include "lpc_types.h"
 
 #include "filter.h"
 #include "filterChain.h"
 
-uint32_t filterLookup[] =
-			{&linearGainF,
-			&parallelF};
-
-char *filterNames[] =
-			{"Linear gain",
-			"Parallel filter"};
 
 // Simple linear gain filter that multiplies the input
 // by the gain
-uint32_t linearGainF(uint32_t sample, uint32_t gainMuliplier) {
+uint32_t linearGainF(uint32_t sample, uint32_t gainMultiplier) {
 
 	return (sample * gainMultiplier);
 }
 
 // Mixes two filters outputs from the same sample with each other
 // in order to produce an output that 
-uint32_t parallelF(Filter *filter1, Filter *filter2,
-							uint32_t sample, float mixRatio) {
+uint32_t mixParallel(PFilter *pfilter, uint32_t sample) {
 
-	uint32_t outputFilter1 = (*(filter1->filterFunction))
-								(sample, filter1->parameter);
+	uint32_t outputFilter1 = (*((pfilter->filterOne)->filterFunction))
+							(sample, (pfilter->filterOne)->parameter);
 
-	uint32_t outputFilter2 = (*(filter2->filterFunction))
-								(sample, filter2->parameter);
+	uint32_t outputFilter2 = (*((pfilter->filterTwo)->filterFunction))
+							(sample, (pfilter->filterTwo)->parameter);
 
-	return ((outputFilter1 * mixRatio) + 
-				(outputFilter2 * (1 - mixRatio)));
+	return (uint32_t)(((outputFilter1 * (pfilter->mixRatio)) +
+				(outputFilter2 * (1.0 - (pfilter->mixRatio)))));
 
+}
+
+// Function that will create a new SFilter struct for adding to
+// PFilter structs for parallel filters
+SFilter *newSfilter(uint32_t (*filterAddr)(uint32_t, uint32_t),
+					uint32_t filterParam) {
+
+	SFilter *createdSfilter;
+	createdSfilter = malloc(sizeof(SFilter));
+
+	createdSfilter->filterFunction = filterAddr;
+	createdSfilter->parameter = filterParam;
+
+	return createdSfilter;
 }
 
 // Function to create each new filter struct so that it can be
 // added to the filterNode struct upon enqueueing
-Filter *newFilter(uint32_t filterAddr, uint32_t filterParam) {
+Filter *createFilterS(uint32_t (*filterAddr)(uint32_t, uint32_t),
+					uint32_t filterParam) {
 
 	Filter *createdFilter;
 	createdFilter = malloc(sizeof(Filter));
 
-	createdFilter->filterFunction = filterAddr;
-	createdFilter->parameter = filterParam;
+	SFilter *createdSfilter;
+	createdSfilter = malloc(sizeof(SFilter));
+
+	createdFilter->sfilter = createdSfilter;
+	createdFilter->pfilter = 0;
+	createdFilter->parallel = 0;
+
+	createdSfilter->filterFunction = filterAddr;
+	createdSfilter->parameter = filterParam;
 
 	return createdFilter;
 }
 
-/*
-FilterNode *newParFilter(Filter *filter1, Filter *filter2
-							float mixRatio) {
+// Function to create a new filter struct that will be added to the
+// filterNode struct upon enqueueing
+Filter *createFilterP(SFilter *sfilter1, SFilter *sfilter2,
+					float mixingRatio) {
 
-	ParFilter *createdParFilter;
-	createdParFilter = malloc(sizeof(ParFilter));
+	Filter *createdFilter;
+	createdFilter = malloc(sizeof(Filter));
 
-	createdParFilter->FilterOne = filter1;
-	createdParFilter->FilterTwo = filter2;
-	createdParFilter->mixingRatio = mixRatio;
+	PFilter *createdPfilter;
+	createdPfilter = malloc(sizeof(PFilter));
 
-	return createdParFilter;
+	createdFilter->sfilter = 0;
+	createdFilter->pfilter = createdPfilter;
+	createdFilter->parallel = 1;
 
+	createdPfilter->filterOne = sfilter1;
+	createdPfilter->filterTwo = sfilter2;
+	createdPfilter->mixRatio = mixingRatio;
+
+	return createdFilter;
 }
-*/

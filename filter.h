@@ -5,27 +5,40 @@
 
 // MUST BE INCLUDED ABOVE FILTERCHAIN.H"
 
+
 // Structure containing all the information needed for a filter
 // filterFunction points to the address of the destination filter
 // function
-typedef struct Filter {
+
+typedef struct SFilter {
 	uint32_t (*filterFunction)(uint32_t, uint32_t);
 	uint32_t parameter;
+} SFilter;
+
+typedef struct PFilter {
+	SFilter *filterOne;
+	SFilter *filterTwo;
+	float mixRatio;
+} PFilter;
+
+typedef struct Filter {
+	PFilter *pfilter;
+	SFilter *sfilter;
+	int parallel;
 } Filter;
 
-/*
-typedef struct ParFilter {
-	Filter *filterOne;
-	Filter *filterTwo;
-	float mixingRatio;
-} ParFilter;
-*/
 
 uint32_t linearGainF(uint32_t sample, uint32_t gainMultiplier);
 
-uint32_t parallelF(Filter *filter1, Filter *filter2,
-						uint32_t sample, float mixRatio);
+uint32_t mixParallel(PFilter *pfilter, uint32_t sample);
 
-Filter *newFilter(uint32_t filterAddr, uint32_t filterParam);
+SFilter *newSfilter(uint32_t (*filterAddr)(uint32_t, uint32_t),
+					uint32_t filterParam);
+
+Filter *createFilterS(uint32_t (*filterAddr)(uint32_t, uint32_t),
+					uint32_t filterParam);
+
+Filter *createFilterP(SFilter *sfilter1, SFilter *sfilter2,
+						float mixingRatio);
 
 #endif
