@@ -115,6 +115,9 @@ uint16_t applyFilters(uint16_t sample) {
 		sample = 4096;
 	}
 
+	sample = dSample;
+
+
 	return sample;
 }
 

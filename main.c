@@ -54,7 +54,7 @@ void ADC_IRQHandler(void) {
 
 	output = applyFilters(*sampleP);
 
-	dacSetValue(output);
+	dacSetValue(output>>2);
 
 	//Select next buffer location based on previous location
 	//When at the end of the buffer, loop round to the beginning next
@@ -76,6 +76,16 @@ int main(void) {
 
 	chain_init();
 
+//	enqueue(createFilterS(&linearGainF, 2));
+
+	/*
+	enqueue(createFilterP((newSfilter(&linearGainF, 5)),
+				newSfilter(&linearGainF, 10), 0.7));
+
+	uint16_t test = applyFilters(10);
+
+	printfToTerminal("Test is: %d\n\r", test);
+	*/
 /*
 	testFilter = malloc(sizeof(Filter));
 	linearFilter = malloc(sizeof(Filter));
@@ -98,13 +108,11 @@ int main(void) {
 	dequeue(testFilter);
 */
 
-/* COMMENTED OUT FOR TESTING
 	sadc_init(ADC_SAMPLE_RATE);
 	sdac_init();
 
 	while(1) {
 	}
-*/
 
 	return 0;
 }
