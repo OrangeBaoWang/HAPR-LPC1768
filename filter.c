@@ -38,12 +38,12 @@ uint32_t echoF(uint32_t sample, uint32_t nullVar) {
 
 	uint32_t output;
 
-	if (sampleP - sampleBuffer < 8000) {
-		uint32_t remaining = 8000 - (sampleP - sampleBuffer);
+	if (sampleP - sampleBuffer < 2000) {
+		uint32_t remaining = 2000 - (sampleP - sampleBuffer);
 		output = (0.5*sample) + 
 					(0.5 * sampleBuffer[(BUFFER_SIZE)-1-remaining]);
 	} else {
-		output = (0.5*sample) + (0.5 * (*(sampleP-8000)));
+		output = (0.5*sample) + (0.5 * (*(sampleP-2000)));
 	}
 
 	return output;
@@ -54,12 +54,14 @@ uint32_t reverbF(uint32_t sample, uint32_t nullVar) {
 	uint32_t output;
 
 	if (sampleP - sampleBuffer < 8000) {
-		uint32_t remaining = 8000 (sampleP - sampleBuffer);
+		uint32_t remaining = 8000 - (sampleP - sampleBuffer);
 		output = (0.5*sample) +
 					(0.5 * sampleBuffer[(BUFFER_SIZE)-1-remaining]);
 	} else {
 		output = (0.5*sample) + (0.5 * (*(sampleP-8000)));
 	}
+
+	//printfToTerminal("Input = %d, output = %d\n\r", sample, output);
 
 	*sampleP = output;
 
