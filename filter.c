@@ -9,10 +9,14 @@
 
 
 // Simple linear gain filter that multiplies the input
-// by the gain
+// by the gain about zero volts which is 2.04V with bias
 uint32_t linearGainF(uint32_t sample, float gainMultiplier) {
 
-	return (sample * gainMultiplier);
+	if (sample > 2048) {
+		return (sample * gainMultiplier);
+	} else {
+		return (sample - ((sample * gainMultiplier) - sample));
+	}
 }
 
 uint32_t delayF(uint32_t sample, float nullVar) {
