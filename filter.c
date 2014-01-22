@@ -10,12 +10,12 @@
 
 // Simple linear gain filter that multiplies the input
 // by the gain
-uint32_t linearGainF(uint32_t sample, uint32_t gainMultiplier) {
+uint32_t linearGainF(uint32_t sample, float gainMultiplier) {
 
 	return (sample * gainMultiplier);
 }
 
-uint32_t delayF(uint32_t sample, uint32_t nullVar) {
+uint32_t delayF(uint32_t sample, float nullVar) {
 
 	uint32_t output;
 
@@ -34,7 +34,7 @@ uint32_t delayF(uint32_t sample, uint32_t nullVar) {
 	return output;
 }
 
-uint32_t echoF(uint32_t sample, uint32_t nullVar) {
+uint32_t echoF(uint32_t sample, float nullVar) {
 
 	uint32_t output;
 
@@ -49,7 +49,7 @@ uint32_t echoF(uint32_t sample, uint32_t nullVar) {
 	return output;
 }
 
-uint32_t reverbF(uint32_t sample, uint32_t nullVar) {
+uint32_t reverbF(uint32_t sample, float nullVar) {
 
 	uint32_t output;
 
@@ -85,8 +85,8 @@ uint32_t mixParallel(PFilter *pfilter, uint32_t sample) {
 
 // Function that will create a new SFilter struct for adding to
 // PFilter structs for parallel filters
-SFilter *newSfilter(uint32_t (*filterAddr)(uint32_t, uint32_t),
-					uint32_t filterParam) {
+SFilter *newSfilter(uint32_t (*filterAddr)(uint32_t, float),
+					float filterParam) {
 
 	SFilter *createdSfilter;
 	createdSfilter = malloc(sizeof(SFilter));
@@ -99,8 +99,8 @@ SFilter *newSfilter(uint32_t (*filterAddr)(uint32_t, uint32_t),
 
 // Function to create each new filter struct so that it can be
 // added to the filterNode struct upon enqueueing
-Filter *createFilterS(uint32_t (*filterAddr)(uint32_t, uint32_t),
-					uint32_t filterParam) {
+Filter *createFilterS(uint32_t (*filterAddr)(uint32_t, float),
+					float filterParam) {
 
 	Filter *createdFilter;
 	createdFilter = malloc(sizeof(Filter));
