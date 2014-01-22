@@ -40,3 +40,7 @@ LOG #4 - 20/1/2014
 	- Oli "We need 64 bits precision"
 		- Daz "Sometimes you just have to put your balls to the wall"
 	- Oli "Bitches love a good filter chain"
+
+LOG #5 - 20/1/2014
+	- Linear gain, reverb, delay and echo filters now all work
+	- Changed opamp resistors to a 100K and a 3.3K
