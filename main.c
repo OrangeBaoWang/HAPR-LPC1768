@@ -75,7 +75,10 @@ int main(void) {
 	printfToTerminal("SAMPLE RATE IS :%d\n\r", ADC_SAMPLE_RATE);
 	chain_init();
 
-	//enqueue(createFilterS(&reverbF, 1));
+	enqueue(createFilterS(&echoF, NULL));
+	enqueue(createFilterS(&echoF, NULL));
+	//enqueue(createFilterS(&linearGainF, 1.2));
+	enqueue(createFilterS(&reverbF, NULL));
 
 	//enqueue(createFilterS(&linearGainF, 2));
 
