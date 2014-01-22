@@ -34,6 +34,8 @@ uint32_t delayF(uint32_t sample, uint32_t nullVar);
 
 uint32_t echoF(uint32_t sample, uint32_t nullVar);
 
+uint32_t reverbF(uint32_t sample, uint32_t nullVar);
+
 uint32_t mixParallel(PFilter *pfilter, uint32_t sample);
 
 SFilter *newSfilter(uint32_t (*filterAddr)(uint32_t, uint32_t),

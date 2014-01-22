@@ -49,6 +49,23 @@ uint32_t echoF(uint32_t sample, uint32_t nullVar) {
 	return output;
 }
 
+uint32_t reverbF(uint32_t sample, uint32_t nullVar) {
+
+	uint32_t output;
+
+	if (sampleP - sampleBuffer < 8000) {
+		uint32_t remaining = 8000 (sampleP - sampleBuffer);
+		output = (0.5*sample) +
+					(0.5 * sampleBuffer[(BUFFER_SIZE)-1-remaining]);
+	} else {
+		output = (0.5*sample) + (0.5 * (*(sampleP-8000)));
+	}
+
+	*sampleP = output;
+
+	return output;
+}
+
 // Mixes two filters outputs from the same sample with each other
 // in order to produce an output that 
 uint32_t mixParallel(PFilter *pfilter, uint32_t sample) {
