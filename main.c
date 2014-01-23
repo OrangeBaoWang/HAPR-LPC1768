@@ -78,8 +78,8 @@ int main(void) {
 
 	//enqueue(createFilterS(&linearGainF, 1.2));
 	enqueue(createFilterS(&reverbF, 0));
-	enqueue(createFilterS(&reverbF, 0));
-	enqueue(createFilterS(&reverbF, 0));
+	enqueue(createFilterS(&echoF, 0));
+	enqueue(createFilterS(&echoF, 0));
 
 	/*
 	enqueue(createFilterP((newSfilter(&linearGainF, 5)),
