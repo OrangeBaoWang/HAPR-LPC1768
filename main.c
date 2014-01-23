@@ -2,7 +2,7 @@
 #include "lpc17xx_dac.h"
 #include "lpc_types.h"
 
-#include "stdlib.h"
+#include <stdlib.h>
 
 #include "global.h"
 #include "debug.h"
