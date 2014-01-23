@@ -38,31 +38,33 @@ uint32_t delayF(uint32_t sample, float nullVar) {
 	return output;
 }
 
-uint32_t echoF(uint32_t sample, float nullVar) {
+// A mixing ratio of 0.8 is optimal
+uint32_t echoF(uint32_t sample, float mixingRatio) {
 
 	uint32_t output;
 
 	if (sampleP - sampleBuffer < 8000) {
 		uint32_t remaining = 8000 - (sampleP - sampleBuffer);
-		output = (0.8*sample) + 
-					(0.2 * sampleBuffer[(BUFFER_SIZE)-1-remaining]);
+		output = (mixingRatio*sample) + 
+					((1-mixingRatio) * sampleBuffer[(BUFFER_SIZE)-1-remaining]);
 	} else {
-		output = (0.8*sample) + (0.2 * (*(sampleP-8000)));
+		output = (mixingRatio*sample) + ((1-mixingRatio) * (*(sampleP-8000)));
 	}
 
 	return output;
 }
 
-uint32_t reverbF(uint32_t sample, float nullVar) {
+// A mixing ratio of 0.4 is optimal
+uint32_t reverbF(uint32_t sample, float mixingRatio) {
 
 	uint32_t output;
 
 	if (sampleP - sampleBuffer < 8000) {
 		uint32_t remaining = 8000 - (sampleP - sampleBuffer);
-		output = (0.4*sample) +
-					(0.6 * sampleBuffer[(BUFFER_SIZE)-1-remaining]);
+		output = (mixingRatio*sample) +
+					((1-mixingRatio) * sampleBuffer[(BUFFER_SIZE)-1-remaining]);
 	} else {
-		output = (0.4*sample) + (0.6 * (*(sampleP-8000)));
+		output = (mixingRatio*sample) + ((1-mixingRatio) * (*(sampleP-8000)));
 	}
 
 	//printfToTerminal("Input = %d, output = %d\n\r", sample, output);
