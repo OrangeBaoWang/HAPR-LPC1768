@@ -15,7 +15,6 @@ uint16_t sampleBuffer[BUFFER_SIZE];
 uint16_t *sampleP = sampleBuffer;
 
 uint16_t output;
-uint16_t *medianVal;
 
 char recieveBuffer[10];
 
@@ -80,6 +79,10 @@ int main(void) {
 	enqueue(createFilterS(&reverbF, 0));
 	enqueue(createFilterS(&echoF, 0));
 	enqueue(createFilterS(&echoF, 0));
+
+	dequeue(createFilterS(&echoF, 0));
+	dequeue(createFilterS(&echoF, 0));
+	dequeue(createFilterS(&reverbF, 0));
 
 	/*
 	enqueue(createFilterP((newSfilter(&linearGainF, 5)),

@@ -41,7 +41,7 @@ int enqueue(Filter *newFilter) {
 
 	return 0;
 }
-/*
+
 int dequeue(Filter *targetFilter) {
 
 	currentNode = root;
@@ -54,23 +54,38 @@ int dequeue(Filter *targetFilter) {
 	// structs for equivalence.
 	// Will return -1 if no equivalent filter struct found
 	while (currentNode->next != 0) {
-		if  ((((currentNode->next)->filter)->filterFunction) == 
-				targetFilter->filterFunction) {
+		currentNode = currentNode->next;
 
-			if ((((currentNode->next)->filter)->parameter) ==
-					targetFilter->parameter) {
-
-				currentNode->next = (currentNode->next)->next;
+		if ((currentNode->filter)->pfilter == NULL) {
+			if (filterEq(targetFilter->sfilter, (currentNode->filter)->sfilter) == 1) {
 				return 0;
 			}
+		} else {
+			// If the filter is a parallel filter
+			if (filterEq((targetFilter->pfilter)->filterOne,
+					((currentNode->filter)->pfilter)->filterOne) == 1) {
+				if (filterEq((targetFilter->pfilter)->filterTwo,
+						((currentNode->filter)->pfilter)->filterTwo) == 1) {
+					return 0;
+				}
+			}
 		}
-		currentNode = currentNode->next;
 	}
-
 	return -1;
-
 }
-*/
+
+// Will return 1 if two filters are equivalent, 0 otherwise
+int filterEq(SFilter *targetFilter, SFilter *currentFilter) {
+
+	if ((targetFilter->filterFunction) == (currentFilter->filterFunction)) {
+		if ((targetFilter->parameter) == (currentFilter->parameter)) {
+			return 1;
+		}
+	}
+	return 0;
+}
+
+
 // Will not increment the currentNode if already at the end
 // of the list
 void incrementCurrentNode(void) {

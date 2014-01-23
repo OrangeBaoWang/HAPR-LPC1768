@@ -113,8 +113,7 @@ Filter *createFilterS(uint32_t (*filterAddr)(uint32_t, float),
 	createdSfilter = malloc(sizeof(SFilter));
 
 	createdFilter->sfilter = createdSfilter;
-	createdFilter->pfilter = 0;
-	createdFilter->parallel = 0;
+	createdFilter->pfilter = NULL;
 
 	createdSfilter->filterFunction = filterAddr;
 	createdSfilter->parameter = filterParam;
@@ -133,9 +132,8 @@ Filter *createFilterP(SFilter *sfilter1, SFilter *sfilter2,
 	PFilter *createdPfilter;
 	createdPfilter = malloc(sizeof(PFilter));
 
-	createdFilter->sfilter = 0;
+	createdFilter->sfilter = NULL;
 	createdFilter->pfilter = createdPfilter;
-	createdFilter->parallel = 1;
 
 	createdPfilter->filterOne = sfilter1;
 	createdPfilter->filterTwo = sfilter2;
