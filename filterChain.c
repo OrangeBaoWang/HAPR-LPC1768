@@ -50,27 +50,37 @@ int dequeue(Filter *targetFilter) {
 		return -1;
 	}
 
-	// While not at the end of the list, compare the filter
-	// structs for equivalence.
-	// Will return -1 if no equivalent filter struct found
-	while (currentNode->next != 0) {
-		currentNode = currentNode->next;
+	if (targetFilter->pfilter == NULL) {
 
-		if ((currentNode->filter)->pfilter == NULL) {
-			if (filterEq(targetFilter->sfilter, (currentNode->filter)->sfilter) == 1) {
-				return 0;
-			}
-		} else {
-			// If the filter is a parallel filter
-			if (filterEq((targetFilter->pfilter)->filterOne,
-					((currentNode->filter)->pfilter)->filterOne) == 1) {
-				if (filterEq((targetFilter->pfilter)->filterTwo,
-						((currentNode->filter)->pfilter)->filterTwo) == 1) {
+		while (currentNode->next != 0) {
+
+			if (((currentNode->next)->filter)->pfilter == NULL) {
+				if (filterEq(targetFilter->sfilter, ((currentNode->next)->filter)->sfilter) == 1) {
+
+					currentNode->next = (currentNode->next)->next;
 					return 0;
 				}
 			}
+			currentNode = currentNode->next;
 		}
-	}
+	} else {
+		// If the filter is a parallel filter
+		while (currentNode->next != 0) {
+			if (((currentNode->next)->filter)-pfilter != NULL) {
+				if (filterEq((targetFilter->pfilter)->filterOne,
+						(((currentNode->next)->filter)->pfilter)->filterOne) == 1) {
+
+					if (filterEq((targetFilter->pfilter)->filterTwo,
+							(((currentNode->next)->filter)->pfilter)->filterTwo) == 1) {
+
+						currentNode->next = (currentNode->next)->next;
+						return 0;
+					}
+				}
+			}
+			currentNode = currentNode->next;
+		}
+	}	
 	return -1;
 }
 
