@@ -10,6 +10,7 @@
 #include "dacInit.h"
 #include "filter.h"
 #include "filterChain.h"
+#include "envFollower.h"
 
 uint16_t sampleBuffer[BUFFER_SIZE];
 uint16_t *sampleP = sampleBuffer;
@@ -74,15 +75,16 @@ int main(void) {
 	printfToTerminal("SAMPLE RATE IS :%d\n\r", ADC_SAMPLE_RATE);
 	chain_init();
 
+	enqueue(createFilterS(&updateFollower, 0));
 
 	//enqueue(createFilterS(&linearGainF, 1.2));
-	enqueue(createFilterS(&reverbF, 0.4));
-	enqueue(createFilterS(&echoF, 0.8));
-	enqueue(createFilterS(&echoF, 0.8));
+	//enqueue(createFilterS(&reverbF, 0.4));
+	//enqueue(createFilterS(&echoF, 0.8));
+	//enqueue(createFilterS(&echoF, 0.8));
 
-	dequeue(createFilterS(&echoF, 0.8));
-	dequeue(createFilterS(&echoF, 0.8));
-	dequeue(createFilterS(&reverbF, 0.4));
+	//dequeue(createFilterS(&echoF, 0.8));
+	//dequeue(createFilterS(&echoF, 0.8));
+	//dequeue(createFilterS(&reverbF, 0.4));
 
 	/*
 	enqueue(createFilterP((newSfilter(&linearGainF, 5)),

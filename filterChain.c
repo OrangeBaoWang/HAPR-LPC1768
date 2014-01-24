@@ -66,7 +66,7 @@ int dequeue(Filter *targetFilter) {
 	} else {
 		// If the filter is a parallel filter
 		while (currentNode->next != 0) {
-			if (((currentNode->next)->filter)-pfilter != NULL) {
+			if (((currentNode->next)->filter)->pfilter != NULL) {
 				if (filterEq((targetFilter->pfilter)->filterOne,
 						(((currentNode->next)->filter)->pfilter)->filterOne) == 1) {
 
