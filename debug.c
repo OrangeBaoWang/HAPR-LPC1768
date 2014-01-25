@@ -178,5 +178,5 @@ void debug_init(void) {
 	//Enable UART Transmit
 	UART_TxCmd((LPC_UART_TypeDef *) LPC_UART0, ENABLE);
 
-	printToTerminal("__CONSOLE_BEGIN__\n\n\r");
+	printToTerminal("__CONSOLE_BEGIN__\n\r\n\r");
 }

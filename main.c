@@ -68,14 +68,9 @@ void ADC_IRQHandler(void) {
 	}
 }
 
-int main(void) {
+void tests() {
 
-	debug_init();
-
-	printfToTerminal("SAMPLE RATE IS :%d\n\r", ADC_SAMPLE_RATE);
-	chain_init();
-
-	enqueue(createFilterS(&updateFollower, 0));
+	enqueue(createFilterS(&envFollowerF, 0));
 
 	//enqueue(createFilterS(&linearGainF, 1.2));
 	//enqueue(createFilterS(&reverbF, 0.4));
@@ -89,16 +84,18 @@ int main(void) {
 	/*
 	enqueue(createFilterP((newSfilter(&linearGainF, 5)),
 				newSfilter(&linearGainF, 10), 0.7));
-
-	uint16_t test = applyFilters(10);
-
-	printfToTerminal("Test is: %d\n\r", test);
 	*/
-/*	
-	uint16_t test = applyFilters(102);
+}
 
-	printfToTerminal("Test = %i\n\r", test);
-*/
+int main(void) {
+
+	debug_init();
+	printToTerminal("UART INITIALISED\n\r");
+
+	chain_init();
+	printfToTerminal("FILTER CHAIN INITIALISED. SAMPLE RATE IS :%d\n\r", ADC_SAMPLE_RATE);
+
+	tests();
 
 	sadc_init(ADC_SAMPLE_RATE);
 	sdac_init();
