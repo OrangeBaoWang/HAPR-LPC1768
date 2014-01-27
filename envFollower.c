@@ -6,10 +6,10 @@
 #include "global.h"
 #include "filter.h"
 
-#define WINDOW_SIZE 20
+#define WINDOW_SIZE 30
 
 #define RELEASE_MULT 0.8
-#define ATTACK_MULT 1.2
+#define ATTACK_MULT 1.05
 
 uint32_t envWindow[WINDOW_SIZE];
 uint8_t oldestElem = 0;
@@ -31,10 +31,10 @@ uint32_t envFollowerF(uint32_t sample, float nullVar) {
 	uint32_t max = 0;
 
 	// Implements attack
-	if (sample > previousMax) {
-		max = previousMax * ATTACK_MULT;
-		previousMax = sample;
-	} else { // Implements release
+	//if (sample > previousMax) {
+		//max = previousMax * ATTACK_MULT;
+		//previousMax = sample;
+	//} else { // Implements release
 		int i;
 		for (i = 0; i < WINDOW_SIZE; i++) {
 
@@ -46,7 +46,7 @@ uint32_t envFollowerF(uint32_t sample, float nullVar) {
 		if (max > sample) {
 			max = max * RELEASE_MULT;
 		}
-	}
+	//}
 
 	//printfToTerminal("Max: %d", max);
 	return max;

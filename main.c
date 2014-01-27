@@ -74,8 +74,8 @@ void tests() {
 
 	//enqueue(createFilterS(&linearGainF, 1.2));
 	//enqueue(createFilterS(&reverbF, 0.4));
-	//enqueue(createFilterS(&echoF, 0.8));
-	//enqueue(createFilterS(&echoF, 0.8));
+//	enqueue(createFilterS(&echoF, 0.8));
+//	enqueue(createFilterS(&echoF, 0.8));
 
 	//dequeue(createFilterS(&echoF, 0.8));
 	//dequeue(createFilterS(&echoF, 0.8));
