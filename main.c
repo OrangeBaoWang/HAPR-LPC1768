@@ -28,33 +28,6 @@ void ADC_IRQHandler(void) {
 
 	*sampleP = ADC_ChannelGetData(LPC_ADC, ADC_CHANNEL_4);
 
-/*
-	if (sampleP < &(sampleBuffer[2])) {
-		output = applyFilters(*sampleP);
-	} else {
-			//finds median sample value from previous 3
-			if (*sampleP > *(sampleP - 1)) {
-				if (*sampleP < *(sampleP - 2)) {
-					*medianVal= *sampleP;
-				}
-				else if (*(sampleP - 1) > *(sampleP - 2)) {
-					*medianVal = *(sampleP - 1);
-				}
-				else *medianVal = *(sampleP - 2);
-			}
-			else {
-				if(*(sampleP - 1) < *(sampleP - 2)){
-					*medianVal = *(sampleP - 1);	
-				}
-				else if (*sampleP > *(sampleP - 2)){
-					*medianVal = *sampleP;
-				}
-				else *medianVal = *(sampleP - 2);
-			}
-			output = applyFilters(*medianVal);
-	}
-*/
-
 	output = applyFilters(*sampleP);
 
 	dacSetValue(output>>2);
