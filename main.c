@@ -41,12 +41,12 @@ void ADC_IRQHandler(void) {
 
 void tests() {
 
-//	enqueue(createFilterS(&envFollowerF, 0));
+	enqueue(createFilterS(&envFollowerF, 0));
 
 //	enqueue(createFilterS(&linearGainF, 2.5));
-	enqueue(createFilterS(&reverbF, 0.4));
-	enqueue(createFilterS(&echoF, 0.8));
-	enqueue(createFilterS(&echoF, 0.8));
+//	enqueue(createFilterS(&reverbF, 0.4));
+//	enqueue(createFilterS(&echoF, 0.8));
+//	enqueue(createFilterS(&echoF, 0.8));
 
 	//dequeue(createFilterS(&echoF, 0.8));
 	//dequeue(createFilterS(&echoF, 0.8));

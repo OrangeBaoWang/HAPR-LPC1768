@@ -1,6 +1,6 @@
-#include "math.h"
-
 #include "lpc_types.h"
+
+#include <math.h>
 
 #include "debug.h"
 #include "envFollower.h"
@@ -12,24 +12,22 @@
 #define ATTACK_MS 5
 #define RELEASE_MS 5
 
+#define ATTACK_MULT 1.05
+#define RELEASE_MULT 0.95
+
 uint32_t envWindow[WINDOW_SIZE];
 uint8_t oldestElem = 0;
 
-uint32_t previousMax = 0;
-/*
-float attackCoef = 0;
-float releaseCoef = 0;
+uint32_t previousVal = 1000;
 
+float attackCoef;
+float releaseCoef;
 
-attackCoef = exp(log(0.01) / (ATTACK_MS * ADC_SAMPLE_RATE * 0.001));
-releaseCoef = exp(log(0.01) / (RELEASE_MS * ADC_SAMPLE_RATE * 0.001));
-*/
-/*
 // See and reference:
 // http://www.kvraudio.com/forum/viewtopic.php?p=5178628
 uint32_t envFollowerF(uint32_t sample, float nullVar) {
 
-	envWindow[oldestElem] = sample;
+	//envWindow[oldestElem] = sample;
 
 	if (oldestElem == (WINDOW_SIZE - 1)) {
 		oldestElem = 0;
@@ -38,26 +36,35 @@ uint32_t envFollowerF(uint32_t sample, float nullVar) {
 	}
 
 	uint32_t max = 0;
+	
+	int i;
+	for (i = 0; i < WINDOW_SIZE; i++) {
+
+		if (envWindow[i] > max) {
+			max = envWindow[i];
+		}
+	}
 
 	// Implements attack
-	//if (sample > previousMax) {
-		//max = previousMax * ATTACK_MULT;
-		//previousMax = sample;
-	//} else { // Implements release
-		int i;
-		for (i = 0; i < WINDOW_SIZE; i++) {
+	if (sample > max) {
+		//max = max * ATTACK_MULT;
+		max = attackCoef * (max - sample) + sample;
+	} else { // Implements release
+		//max = max * RELEASE_MULT;
+		max = releaseCoef * (max - sample) + sample;
+	}
 
-			if (envWindow[i] > max) {
-				max = envWindow[i];
-			}
-		}
+	envWindow[oldestElem] = sample;
 
-		if (max > sample) {
-			max = max * RELEASE_MULT;
-		}
-	//}
+//	printfToTerminal("Intial: %d, final: %d\n\r", sample, max);
 
-	//printfToTerminal("Max: %d", max);
 	return max;
 }
-*/
+
+// Initalises the necessary coefficients for implementing attack and
+// release
+void envFollowerInit(void) {
+	
+	attackCoef = exp(log(0.01) / (ATTACK_MS * ADC_SAMPLE_RATE * 0.001));
+	releaseCoef = exp(log(0.01) / (RELEASE_MS * ADC_SAMPLE_RATE * 0.001));
+}

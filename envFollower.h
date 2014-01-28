@@ -3,4 +3,6 @@
 
 uint32_t envFollowerF(uint32_t sample, float nullVar);
 
+void envFollowerInit(void);
+
 #endif

@@ -7,6 +7,7 @@
 #include "debug.h"
 #include "filter.h"
 #include "filterChain.h"
+#include "envFollower.h"
 
 FilterNode *currentNode;
 FilterNode *root;
@@ -158,6 +159,9 @@ int chain_init(void) {
 	root->next = 0;
 
 	currentNode = root;
+
+	// Initialises the variables necessary for envelope follower filters
+	envFollowerInit();
 
 	return 0;
 }
