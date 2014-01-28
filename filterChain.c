@@ -90,7 +90,9 @@ int filterEq(SFilter *targetFilter, SFilter *currentFilter) {
 
 	if ((targetFilter->filterFunction) == (currentFilter->filterFunction)) {
 		if ((targetFilter->parameter) == (currentFilter->parameter)) {
-			return 1;
+			if ((targetFilter->parameter2) == (currentFilter->parameter2)) {
+				return 1;
+			}
 		}
 	}
 	return 0;
@@ -130,8 +132,9 @@ uint16_t applyFilters(uint16_t sample) {
 		} else {
 			dSample =
 				(*(((currentNode->filter)->sfilter)->filterFunction))
-						(dSample, (((currentNode->filter)->sfilter)
-						->parameter));
+						(dSample,
+						(((currentNode->filter)->sfilter)->parameter), 
+						(((currentNode->filter)->sfilter)->parameter2));
 		}
 	}
 

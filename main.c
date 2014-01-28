@@ -11,6 +11,7 @@
 #include "filter.h"
 #include "filterChain.h"
 #include "envFollower.h"
+#include "flange.h"
 
 uint16_t sampleBuffer[BUFFER_SIZE];
 uint16_t *sampleP = sampleBuffer;
@@ -41,7 +42,7 @@ void ADC_IRQHandler(void) {
 
 void tests() {
 
-	enqueue(createFilterS(&envFollowerF, 0));
+	enqueue(createFilterS(&envFollowerF, 0, 0));
 
 //	enqueue(createFilterS(&linearGainF, 2.5));
 //	enqueue(createFilterS(&reverbF, 0.4));

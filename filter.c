@@ -1,4 +1,5 @@
-#include "stdlib.h"
+#include <stdlib.h>
+#include <math.h>
 
 #include "lpc_types.h"
 
@@ -10,7 +11,7 @@
 
 // Simple linear gain filter that multiplies the input
 // by the gain about zero volts which is 2.04V with bias
-uint32_t linearGainF(uint32_t sample, float gainMultiplier) {
+uint32_t linearGainF(uint32_t sample, float gainMultiplier, float nullVar) {
 
 	if (sample > 2048) {
 		return (sample * gainMultiplier);
@@ -19,7 +20,7 @@ uint32_t linearGainF(uint32_t sample, float gainMultiplier) {
 	}
 }
 
-uint32_t delayF(uint32_t sample, float nullVar) {
+uint32_t delayF(uint32_t sample, float nullVar, float nullVar2) {
 
 	uint32_t output;
 
@@ -39,7 +40,7 @@ uint32_t delayF(uint32_t sample, float nullVar) {
 }
 
 // A mixing ratio of 0.8 is optimal
-uint32_t echoF(uint32_t sample, float mixingRatio) {
+uint32_t echoF(uint32_t sample, float mixingRatio, float nullVar) {
 
 	uint32_t output;
 
@@ -55,7 +56,7 @@ uint32_t echoF(uint32_t sample, float mixingRatio) {
 }
 
 // A mixing ratio of 0.4 is optimal
-uint32_t reverbF(uint32_t sample, float mixingRatio) {
+uint32_t reverbF(uint32_t sample, float mixingRatio, float nullVar) {
 
 	uint32_t output;
 
@@ -79,10 +80,12 @@ uint32_t reverbF(uint32_t sample, float mixingRatio) {
 uint32_t mixParallel(PFilter *pfilter, uint32_t sample) {
 
 	uint32_t outputFilter1 = (*((pfilter->filterOne)->filterFunction))
-							(sample, (pfilter->filterOne)->parameter);
+					(sample, (pfilter->filterOne)->parameter,
+						(pfilter->filterOne)->parameter2);
 
 	uint32_t outputFilter2 = (*((pfilter->filterTwo)->filterFunction))
-							(sample, (pfilter->filterTwo)->parameter);
+					(sample, (pfilter->filterTwo)->parameter,
+						(pfilter->filterTwo)->parameter2);
 
 	return (uint32_t)(((outputFilter1 * (pfilter->mixRatio)) +
 				(outputFilter2 * (1.0 - (pfilter->mixRatio)))));
@@ -91,22 +94,23 @@ uint32_t mixParallel(PFilter *pfilter, uint32_t sample) {
 
 // Function that will create a new SFilter struct for adding to
 // PFilter structs for parallel filters
-SFilter *newSfilter(uint32_t (*filterAddr)(uint32_t, float),
-					float filterParam) {
+SFilter *newSfilter(uint32_t (*filterAddr)(uint32_t, float, float),
+					float filterParam, float filterParam2) {
 
 	SFilter *createdSfilter;
 	createdSfilter = malloc(sizeof(SFilter));
 
 	createdSfilter->filterFunction = filterAddr;
 	createdSfilter->parameter = filterParam;
+	createdSfilter->parameter2 = filterParam2;
 
 	return createdSfilter;
 }
 
 // Function to create each new filter struct so that it can be
 // added to the filterNode struct upon enqueueing
-Filter *createFilterS(uint32_t (*filterAddr)(uint32_t, float),
-					float filterParam) {
+Filter *createFilterS(uint32_t (*filterAddr)(uint32_t, float, float),
+					float filterParam, float filterParam2) {
 
 	Filter *createdFilter;
 	createdFilter = malloc(sizeof(Filter));
@@ -119,6 +123,7 @@ Filter *createFilterS(uint32_t (*filterAddr)(uint32_t, float),
 
 	createdSfilter->filterFunction = filterAddr;
 	createdSfilter->parameter = filterParam;
+	createdSfilter->parameter2 = filterParam2;
 
 	return createdFilter;
 }

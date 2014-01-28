@@ -25,7 +25,7 @@ float releaseCoef;
 
 // See and reference:
 // http://www.kvraudio.com/forum/viewtopic.php?p=5178628
-uint32_t envFollowerF(uint32_t sample, float nullVar) {
+uint32_t envFollowerF(uint32_t sample, float nullVar, float nullVar2) {
 
 	//envWindow[oldestElem] = sample;
 
