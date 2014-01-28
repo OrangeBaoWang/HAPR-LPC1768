@@ -4,6 +4,8 @@
 #include "lpc17xx_adc.h"
 #include "lpc17xx_pinsel.h"
 
+#include "adcInit.h"
+
 /*  Unnecessary function call
     Call ADC_ChannelGetData directly */
 uint16_t getAdcSample(void) {

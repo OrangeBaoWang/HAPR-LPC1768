@@ -138,9 +138,7 @@ uint16_t applyFilters(uint16_t sample) {
 	// highest value of the ADC, sample is clipped to 2^12
 	if (dSample > 4096) {
 		sample = 4096;
-	}
-
-	sample = dSample;
+	} else {sample = dSample;}
 
 
 	return (sample);

@@ -1,3 +1,4 @@
+#include "math.h"
 
 #include "lpc_types.h"
 
@@ -8,14 +9,22 @@
 
 #define WINDOW_SIZE 30
 
-#define RELEASE_MULT 0.8
-#define ATTACK_MULT 1.05
+#define ATTACK_MS 5
+#define RELEASE_MS 5
 
 uint32_t envWindow[WINDOW_SIZE];
 uint8_t oldestElem = 0;
 
 uint32_t previousMax = 0;
+/*
+float attackCoef = 0;
+float releaseCoef = 0;
 
+
+attackCoef = exp(log(0.01) / (ATTACK_MS * ADC_SAMPLE_RATE * 0.001));
+releaseCoef = exp(log(0.01) / (RELEASE_MS * ADC_SAMPLE_RATE * 0.001));
+*/
+/*
 // See and reference:
 // http://www.kvraudio.com/forum/viewtopic.php?p=5178628
 uint32_t envFollowerF(uint32_t sample, float nullVar) {
@@ -51,3 +60,4 @@ uint32_t envFollowerF(uint32_t sample, float nullVar) {
 	//printfToTerminal("Max: %d", max);
 	return max;
 }
+*/

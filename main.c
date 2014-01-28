@@ -19,16 +19,14 @@ uint16_t output;
 
 char recieveBuffer[10];
 
-Filter *testFilter;
-Filter *linearFilter;
 
 // Interrupt handler that samples the ADC and sends the sample
 // on to be filtered
 void ADC_IRQHandler(void) {
 
-	*sampleP = ADC_ChannelGetData(LPC_ADC, ADC_CHANNEL_4);
-
+	*sampleP = getAdcSample();
 	output = applyFilters(*sampleP);
+
 
 	dacSetValue(output>>2);
 
@@ -43,12 +41,12 @@ void ADC_IRQHandler(void) {
 
 void tests() {
 
-	enqueue(createFilterS(&envFollowerF, 0));
+//	enqueue(createFilterS(&envFollowerF, 0));
 
-	//enqueue(createFilterS(&linearGainF, 1.2));
-	//enqueue(createFilterS(&reverbF, 0.4));
-//	enqueue(createFilterS(&echoF, 0.8));
-//	enqueue(createFilterS(&echoF, 0.8));
+//	enqueue(createFilterS(&linearGainF, 2.5));
+	enqueue(createFilterS(&reverbF, 0.4));
+	enqueue(createFilterS(&echoF, 0.8));
+	enqueue(createFilterS(&echoF, 0.8));
 
 	//dequeue(createFilterS(&echoF, 0.8));
 	//dequeue(createFilterS(&echoF, 0.8));
