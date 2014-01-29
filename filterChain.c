@@ -148,6 +148,23 @@ uint16_t applyFilters(uint16_t sample) {
 	return (sample);
 }
 
+void printQueue(void) {
+
+	if (root->next == 0) {
+		return;
+	}
+
+	currentNode = root;
+
+	while (currentNode->next != 0) {
+
+		printfToTerminal("Filter: %s\n\r\t\tParameter 1: %f\n\r\t\tParameter 2: %f\n\r",
+				currentNode->name, currentNode->parameter1, currentNode->parameter2);
+	}
+
+	return;
+}
+
 int chain_init(void) {
 
 	// root now points to a node struct
