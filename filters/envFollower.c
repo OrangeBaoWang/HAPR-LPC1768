@@ -2,10 +2,10 @@
 
 #include <math.h>
 
-#include "debug.h"
 #include "envFollower.h"
-#include "global.h"
-#include "filter.h"
+#include "../debug.h"
+#include "../global.h"
+#include "../filter.h"
 
 #define WINDOW_SIZE 30
 

@@ -11,9 +11,9 @@
 // function
 
 typedef struct SFilter {
-	uint32_t (*filterFunction)(uint32_t, float, float);
-	float parameter;
-	float parameter2;
+	uint32_t (*filterFunction)(uint32_t, float[5]);
+	float parameters[5];
+	void (*printFilter)(float parameters[5]);
 } SFilter;
 
 typedef struct PFilter {
@@ -28,22 +28,13 @@ typedef struct Filter {
 	int parallel;
 } Filter;
 
-
-uint32_t linearGainF(uint32_t sample, float gainMultiplier, float nullVar);
-
-uint32_t delayF(uint32_t sample, float nullVar, float nullVar2);
-
-uint32_t echoF(uint32_t sample, float mixingRatio, float nullVar);
-
-uint32_t reverbF(uint32_t sample, float mixingRatio, float nullVar);
-
 uint32_t mixParallel(PFilter *pfilter, uint32_t sample);
 
-SFilter *newSfilter(uint32_t (*filterAddr)(uint32_t, float, float),
-					float filterParam, float filterParam2);
+SFilter *newSfilter(uint32_t (*filterAddr)(uint32_t, float[]),
+		float param0, float param1, float param2, float param3, float param4);
 
-Filter *createFilterS(uint32_t (*filterAddr)(uint32_t, float, float),
-					float filterParam, float filterParam2);
+Filter *createFilterS(uint32_t (*filterAddr)(uint32_t, float[]),
+		float param0, float param1, float param2, float param3, float param4);
 
 Filter *createFilterP(SFilter *sfilter1, SFilter *sfilter2,
 						float mixingRatio);

@@ -3,23 +3,25 @@
 #include <math.h>
 #include <stdlib.h>
 
-#include "global.h"
 #include "flange.h"
+#include "global.h"
 #include "debug.h"
 
 // This global variable will be modified by the flangeF function
 // in order to provide a correct input the next time the flange function
 // is called
-float sineInput = 0;
-float mixingRatio = 0.6;
-
+static float sineInput = 0;
+static float mixingRatio = 0.6;
 
 // Maximum range is 4095
-uint32_t flangeF(uint32_t sample, float range) {
+uint32_t flangeF(uint32_t sample, float parameters[5]) {
 
 	uint32_t output;
 	uint32_t position;
+
 	float sineOutput;
+
+	float range = parameters[0];
 	float pivot = range / 2;
 
 	sineInput += 0.1;
@@ -43,4 +45,9 @@ uint32_t flangeF(uint32_t sample, float range) {
 					((1-mixingRatio) * sampleBuffer[position]);
 
 	return output;
+}
+
+void printFlangeF(float parameters[5]) {
+
+	printfToTerminal("FLANGE:\n\r\t\tRange: %f\n\r\r", parameters[0]);
 }

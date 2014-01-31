@@ -4,10 +4,10 @@
 
 #include "stdlib.h"
 
-#include "debug.h"
 #include "filter.h"
 #include "filterChain.h"
-#include "envFollower.h"
+#include "debug.h"
+#include "filters/envFollower.h"
 
 FilterNode *currentNode;
 FilterNode *root;
@@ -89,11 +89,15 @@ int dequeue(Filter *targetFilter) {
 int filterEq(SFilter *targetFilter, SFilter *currentFilter) {
 
 	if ((targetFilter->filterFunction) == (currentFilter->filterFunction)) {
-		if ((targetFilter->parameter) == (currentFilter->parameter)) {
-			if ((targetFilter->parameter2) == (currentFilter->parameter2)) {
-				return 1;
+		int i;
+		for (i = 0; i < 5; i++) {
+			if ((targetFilter->parameters[i]) == (currentFilter->parameters[i])) {
+				continue;
+			} else {
+				return 0;
 			}
 		}
+		return 1;
 	}
 	return 0;
 }
@@ -133,8 +137,7 @@ uint16_t applyFilters(uint16_t sample) {
 			dSample =
 				(*(((currentNode->filter)->sfilter)->filterFunction))
 						(dSample,
-						(((currentNode->filter)->sfilter)->parameter), 
-						(((currentNode->filter)->sfilter)->parameter2));
+						(((currentNode->filter)->sfilter)->parameters));
 		}
 	}
 
@@ -158,8 +161,8 @@ void printQueue(void) {
 
 	while (currentNode->next != 0) {
 
-		printfToTerminal("Filter: %s\n\r\t\tParameter 1: %f\n\r\t\tParameter 2: %f\n\r",
-				currentNode->name, currentNode->parameter1, currentNode->parameter2);
+		((currentNode->filter)->sfilter)->
+				printFilter(((currentNode->filter)->sfilter)->parameters);
 	}
 
 	return;

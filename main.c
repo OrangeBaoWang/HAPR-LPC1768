@@ -10,8 +10,13 @@
 #include "dacInit.h"
 #include "filter.h"
 #include "filterChain.h"
-#include "envFollower.h"
-#include "flange.h"
+
+#include "filters/linearGain.h"
+#include "filters/flange.h"
+#include "filters/delay.h"
+#include "filters/reverb.h"
+#include "filters/envFollower.h"
+#include "filters/echo.h"
 
 uint16_t sampleBuffer[BUFFER_SIZE];
 uint16_t *sampleP = sampleBuffer;
@@ -42,7 +47,7 @@ void ADC_IRQHandler(void) {
 
 void tests() {
 
-	enqueue(createFilterS(&envFollowerF, 0, 0));
+	//enqueue(createFilterS(&linearGainF, &printLinearGainF, buffer));
 
 //	enqueue(createFilterS(&linearGainF, 2.5));
 //	enqueue(createFilterS(&reverbF, 0.4));
