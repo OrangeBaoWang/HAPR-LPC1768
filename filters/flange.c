@@ -3,9 +3,10 @@
 #include <math.h>
 #include <stdlib.h>
 
+#include "../filter.h"
 #include "flange.h"
-#include "global.h"
-#include "debug.h"
+#include "../global.h"
+#include "../debug.h"
 
 // This global variable will be modified by the flangeF function
 // in order to provide a correct input the next time the flange function
@@ -38,11 +39,10 @@ uint32_t flangeF(uint32_t sample, float parameters[5]) {
 	if (sampleP - abs(sineOutput) > sampleBuffer) {
 		position = (BUFFER_SIZE / 2) + sineOutput;
 	} else {
-		THROW("INVALID FLANGE RANGE GIVEN");
+		return sample;
 	}
 
-	output = (sample * mixingRatio) +
-					((1-mixingRatio) * sampleBuffer[position]);
+	output = (sample * mixingRatio) + ((1-mixingRatio) * sampleBuffer[position]);
 
 	return output;
 }
@@ -50,4 +50,14 @@ uint32_t flangeF(uint32_t sample, float parameters[5]) {
 void printFlangeF(float parameters[5]) {
 
 	printfToTerminal("FLANGE:\n\r\t\tRange: %f\n\r\r", parameters[0]);
+}
+
+Filter *createFlangeF(float range) {
+
+	Filter *flangeFilter = createFilterS(&flangeF, range,
+			UNUSED, UNUSED, UNUSED, UNUSED);
+
+	(flangeFilter->sfilter)->printFilter = &printFlangeF;
+
+	return flangeFilter;
 }
