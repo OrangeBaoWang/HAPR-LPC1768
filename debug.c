@@ -1,11 +1,12 @@
 #include "lpc17xx_uart.h"
 #include "lpc17xx_pinsel.h"
 #include "lpc_types.h"
-#include "debug.h"
 
-#include "stdio.h"
-#include "stdarg.h"
-#include "string.h"
+#include <stdio.h>
+#include <stdarg.h>
+#include <string.h>
+
+#include "debug.h"
 
 //Read
 int read_usb_serial_none_blocking(char *buf, int length) {
