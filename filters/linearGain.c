@@ -29,7 +29,7 @@ Filter *createLinearGainF(float gain) {
 	Filter *linGainFilter = createFilterS(&linearGainF, gain,
 			UNUSED, UNUSED, UNUSED, UNUSED);
 
-	(linGainFilter->sfilter)->printFilter = &printLinearGainF;
+	(linGainFilter->sfilter)->printFunction = &printLinearGainF;
 
 	return linGainFilter;
 }

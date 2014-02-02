@@ -57,7 +57,7 @@ Filter *createFlangeF(float range) {
 	Filter *flangeFilter = createFilterS(&flangeF, range,
 			UNUSED, UNUSED, UNUSED, UNUSED);
 
-	(flangeFilter->sfilter)->printFilter = &printFlangeF;
+	(flangeFilter->sfilter)->printFunction = &printFlangeF;
 
 	return flangeFilter;
 }

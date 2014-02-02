@@ -74,7 +74,7 @@ Filter *createEnvFollowerF(float attack_ms, float release_ms) {
 	Filter *envFollow = createFilterS(&envFollowerF, attack_ms, release_ms,
 			UNUSED, UNUSED, UNUSED);
 
-	(envFollow->sfilter)->printFilter = &printEnvFollowerF;
+	(envFollow->sfilter)->printFunction = &printEnvFollowerF;
 
 	return envFollow;
 }

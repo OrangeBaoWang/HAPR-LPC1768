@@ -13,7 +13,7 @@
 typedef struct SFilter {
 	uint32_t (*filterFunction)(uint32_t, float[5]);
 	float parameters[5];
-	void (*printFilter)(float parameters[5]);
+	void (*printFunction)(float parameters[5]);
 } SFilter;
 
 typedef struct PFilter {

@@ -162,7 +162,7 @@ void printQueue(void) {
 	while (currentNode->next != 0) {
 
 		((currentNode->filter)->sfilter)->
-				printFilter(((currentNode->filter)->sfilter)->parameters);
+				printFunction(((currentNode->filter)->sfilter)->parameters);
 	}
 
 	return;

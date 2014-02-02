@@ -37,7 +37,7 @@ Filter *createDelayF(float delay) {
 	Filter *delayFilter = createFilterS(&delayF, delay,
 			UNUSED, UNUSED, UNUSED, UNUSED);
 
-	(delayFilter->sfilter)->printFilter = &printDelayF;
+	(delayFilter->sfilter)->printFunction = &printDelayF;
 
 	return delayFilter;
 }

@@ -40,7 +40,7 @@ Filter *createEchoF(float mixingRatio, float delay) {
 	Filter *echoFilter = createFilterS(&echoF, mixingRatio, delay,
 			UNUSED, UNUSED, UNUSED);
 
-	(echoFilter->sfilter)->printFilter = &printEchoF;
+	(echoFilter->sfilter)->printFunction = &printEchoF;
 
 	return echoFilter;
 }
