@@ -36,7 +36,7 @@ SFilter *newSfilter(uint32_t (*filterAddr)(uint32_t, float[]),
 Filter *createFilterS(uint32_t (*filterAddr)(uint32_t, float[]),
 		float param0, float param1, float param2, float param3, float param4);
 
-Filter *createFilterP(SFilter *sfilter1, SFilter *sfilter2,
+Filter *createFilterP(Filter *filter1, Filter *filter2,
 						float mixingRatio);
 
 #endif

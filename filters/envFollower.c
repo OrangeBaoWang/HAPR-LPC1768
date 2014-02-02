@@ -9,9 +9,6 @@
 
 #define WINDOW_SIZE 30
 
-#define ATTACK_MS 5
-#define RELEASE_MS 5
-
 static uint32_t envWindow[WINDOW_SIZE];
 static uint8_t oldestElem = 0;
 

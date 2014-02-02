@@ -47,20 +47,21 @@ void ADC_IRQHandler(void) {
 
 void tests() {
 
-	//enqueue(createFilterS(&linearGainF, &printLinearGainF, buffer));
+	enqueue(createReverbF(0.4, 8000));
 
-//	enqueue(createFilterS(&linearGainF, 2.5));
-//	enqueue(createFilterS(&reverbF, 0.4));
-//	enqueue(createFilterS(&echoF, 0.8));
-//	enqueue(createFilterS(&echoF, 0.8));
+	enqueue(createEchoF(0.8, 8000));
+	enqueue(createEchoF(0.8, 8000));
 
-	//dequeue(createFilterS(&echoF, 0.8));
-	//dequeue(createFilterS(&echoF, 0.8));
-	//dequeue(createFilterS(&reverbF, 0.4));
+	//enqueue(createDelayF(8000));
+
+	//enqueue(createEnvFollowerF(5, 5));
+
+	//enqueue(createFlangeF(8000));
+	//enqueue(createLinearGainF(1.05));
 
 	/*
-	enqueue(createFilterP((newSfilter(&linearGainF, 5)),
-				newSfilter(&linearGainF, 10), 0.7));
+	enqueue(createFilterP((createLinearGainF(1.05)),
+				createReverbF(0.4, 8000), 0.5));
 	*/
 }
 

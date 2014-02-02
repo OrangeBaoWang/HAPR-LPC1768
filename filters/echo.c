@@ -7,6 +7,7 @@
 #include "../debug.h"
 
 // A mixing ratio of 0.8 is optimal
+// with a delay of 8000
 uint32_t echoF(uint32_t sample, float parameters[5]) {
 
 	uint32_t output;
@@ -14,6 +15,7 @@ uint32_t echoF(uint32_t sample, float parameters[5]) {
 	float mixingRatio = parameters[0];
 	uint32_t delay = parameters[1];
 
+	// Guard against large user input for delay
 	if (delay > BUFFER_SIZE-2) {
 		return sample;
 	}

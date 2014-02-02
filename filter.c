@@ -67,7 +67,7 @@ Filter *createFilterS(uint32_t (*filterAddr)(uint32_t, float[]),
 
 // Function to create a new filter struct that will be added to the
 // filterNode struct upon enqueueing
-Filter *createFilterP(SFilter *sfilter1, SFilter *sfilter2,
+Filter *createFilterP(Filter *filter1, Filter *filter2,
 					float mixingRatio) {
 
 	Filter *createdFilter;
@@ -79,8 +79,8 @@ Filter *createFilterP(SFilter *sfilter1, SFilter *sfilter2,
 	createdFilter->sfilter = NULL;
 	createdFilter->pfilter = createdPfilter;
 
-	createdPfilter->filterOne = sfilter1;
-	createdPfilter->filterTwo = sfilter2;
+	createdPfilter->filterOne = filter1->sfilter;
+	createdPfilter->filterTwo = filter2->sfilter;
 	createdPfilter->mixRatio = mixingRatio;
 
 	return createdFilter;
