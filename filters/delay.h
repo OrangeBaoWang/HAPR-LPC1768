@@ -5,4 +5,6 @@ uint32_t delayF(uint32_t sample, float parameters[5]);
 
 void printDelayF(float parameters[5]);
 
+Filter *createDelayF(float delay);
+
 #endif

@@ -183,8 +183,5 @@ int chain_init(void) {
 
 	currentNode = root;
 
-	// Initialises the variables necessary for envelope follower filters
-	envFollowerInit();
-
 	return 0;
 }
