@@ -2,9 +2,9 @@
 #define __FLANGE_H_
 
 
-uint32_t flangeF(uint32_t sample, float parameters[5]);
+uint32_t flangeF(uint32_t sample, SFilter *filter);
 
-void printFlangeF(float parameters[5]);
+void printFlangeF(SFilter *filter);
 
 Filter *createFlangeF(float mixingRatio, float range, float frequency);
 

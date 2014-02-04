@@ -137,7 +137,7 @@ uint16_t applyFilters(uint16_t sample) {
 			dSample =
 				(*(((currentNode->filter)->sfilter)->filterFunction))
 						(dSample,
-						(((currentNode->filter)->sfilter)->parameters));
+						((currentNode->filter)->sfilter));
 		}
 	}
 
@@ -164,7 +164,7 @@ void printQueue(void) {
 		currentNode = currentNode->next;
 
 		(*(((currentNode->filter)->sfilter)->printFunction))
-				(((currentNode->filter)->sfilter)->parameters);
+				((currentNode->filter)->sfilter);
 	}
 
 	return;

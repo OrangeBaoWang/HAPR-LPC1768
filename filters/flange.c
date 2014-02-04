@@ -8,10 +8,8 @@
 #include "../global.h"
 #include "../debug.h"
 
-// This global variable will be modified by the flangeF function
-// in order to provide a correct input the next time the flange function
-// is called
-static float sineInput = 0;
+#define SINE_INPUT filter->scratch[0]
+#define SINE_INCREMENT filter->scratch[1]
 
 // Maximum range is 8000
 // Range for strange effects is 8000
@@ -20,28 +18,26 @@ static float sineInput = 0;
 // Standard flange effect for frequency = 0.1
 // UFO effect for frequency = 10
 // Formula 1 effect for frequency = 1
-uint32_t flangeF(uint32_t sample, float parameters[5]) {
+uint32_t flangeF(uint32_t sample, SFilter *filter) {
 
 	uint32_t output;
 
 	uint32_t sineOutput;
 
-	float mixingRatio = parameters[0];
-	float range = parameters[1];
-	float sineIncrement = parameters[3];
+	float mixingRatio = filter->parameters[0];
+	float range = filter->parameters[1];
 
 	float pivot = range / 2;
 
-	sineInput += sineIncrement;
-	
+	SINE_INPUT += SINE_INCREMENT;
 
 	// If the sine wave has completed one full revolution, set it back
 	// to zero
-	if (sineInput == 6.3) {
-		sineInput = 0;
+	if (SINE_INPUT == 6.3) {
+		SINE_INPUT = 0;
 	}
 
-	sineOutput = abs(sin(sineInput) * pivot);
+	sineOutput = abs(sin(SINE_INPUT) * pivot);
 
 	// Guard against range that is too large
 	if (sampleP - sampleBuffer > sineOutput) {
@@ -52,14 +48,13 @@ uint32_t flangeF(uint32_t sample, float parameters[5]) {
 				((1-mixingRatio) * (sampleBuffer[(BUFFER_SIZE)-1-remaining])));
 	}
 
-
 	return output;
 }
 
-void printFlangeF(float parameters[5]) {
+void printFlangeF(SFilter *filter) {
 
 	printfToTerminal("FLANGE:\n\r\t\tMixingRatio: %f\n\r\t\tRange: %f\n\r\t\tFrequency: %f\n\r\r",
-			parameters[0], parameters[1], parameters[2]);
+			filter->parameters[0], filter->parameters[1], filter->parameters[2]);
 }
 
 Filter *createFlangeF(float mixingRatio, float range, float frequency) {
@@ -67,8 +62,11 @@ Filter *createFlangeF(float mixingRatio, float range, float frequency) {
 	float sineIncrement = frequency*6.3*23e-6;
 
 	Filter *flangeFilter = createFilterS(&flangeF, &printFlangeF,
-			mixingRatio, range, frequency, sineIncrement,
-			UNUSED);
+			mixingRatio, range, frequency, UNUSED, UNUSED);
+
+	// The initial value to be fed into the sin() function
+	(flangeFilter->sfilter)->scratch[0] = 0;
+	(flangeFilter->sfilter)->scratch[1] = sineIncrement;
 
 	return flangeFilter;
 }

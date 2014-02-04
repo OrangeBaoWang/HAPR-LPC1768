@@ -13,10 +13,10 @@
 uint32_t mixParallel(PFilter *pfilter, uint32_t sample) {
 
 	uint32_t outputFilter1 = (*((pfilter->filterOne)->filterFunction))
-					(sample, (pfilter->filterOne)->parameters);
+					(sample, pfilter->filterOne);
 
 	uint32_t outputFilter2 = (*((pfilter->filterTwo)->filterFunction))
-					(sample, (pfilter->filterTwo)->parameters);
+					(sample, pfilter->filterTwo);
 
 	return (uint32_t)(((outputFilter1 * (pfilter->mixRatio)) +
 				(outputFilter2 * (1.0 - (pfilter->mixRatio)))));
@@ -25,7 +25,7 @@ uint32_t mixParallel(PFilter *pfilter, uint32_t sample) {
 
 // Function that will create a new SFilter struct for adding to
 // PFilter structs for parallel filters
-SFilter *newSfilter(uint32_t (*filterAddr)(uint32_t, float[]),
+SFilter *newSfilter(uint32_t (*filterAddr)(uint32_t, SFilter *), void (*printAddr)(SFilter *),
 		float param0, float param1, float param2, float param3, float param4) {
 
 	SFilter *createdSfilter;
@@ -43,7 +43,7 @@ SFilter *newSfilter(uint32_t (*filterAddr)(uint32_t, float[]),
 
 // Function to create each new filter struct so that it can be
 // added to the filterNode struct upon enqueueing
-Filter *createFilterS(uint32_t (*filterAddr)(uint32_t, float[]), void (*printAddr)(float[]),
+Filter *createFilterS(uint32_t (*filterAddr)(uint32_t, SFilter *), void (*printAddr)(SFilter *),
 		float param0, float param1, float param2, float param3, float param4) {
 
 	Filter *createdFilter;
