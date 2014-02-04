@@ -43,7 +43,7 @@ SFilter *newSfilter(uint32_t (*filterAddr)(uint32_t, float[]),
 
 // Function to create each new filter struct so that it can be
 // added to the filterNode struct upon enqueueing
-Filter *createFilterS(uint32_t (*filterAddr)(uint32_t, float[]),
+Filter *createFilterS(uint32_t (*filterAddr)(uint32_t, float[]), void (*printAddr)(float[]),
 		float param0, float param1, float param2, float param3, float param4) {
 
 	Filter *createdFilter;
@@ -56,6 +56,7 @@ Filter *createFilterS(uint32_t (*filterAddr)(uint32_t, float[]),
 	createdFilter->pfilter = NULL;
 
 	createdSfilter->filterFunction = filterAddr;
+	createdSfilter->printFunction = printAddr;
 	createdSfilter->parameters[0] = param0;
 	createdSfilter->parameters[1] = param1;
 	createdSfilter->parameters[2] = param2;

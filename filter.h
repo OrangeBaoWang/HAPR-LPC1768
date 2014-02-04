@@ -25,7 +25,6 @@ typedef struct PFilter {
 typedef struct Filter {
 	PFilter *pfilter;
 	SFilter *sfilter;
-	int parallel;
 } Filter;
 
 uint32_t mixParallel(PFilter *pfilter, uint32_t sample);
@@ -33,7 +32,7 @@ uint32_t mixParallel(PFilter *pfilter, uint32_t sample);
 SFilter *newSfilter(uint32_t (*filterAddr)(uint32_t, float[]),
 		float param0, float param1, float param2, float param3, float param4);
 
-Filter *createFilterS(uint32_t (*filterAddr)(uint32_t, float[]),
+Filter *createFilterS(uint32_t (*filterAddr)(uint32_t, float[]), void (*printAddr)(float[]),
 		float param0, float param1, float param2, float param3, float param4);
 
 Filter *createFilterP(Filter *filter1, Filter *filter2,

@@ -57,11 +57,13 @@ void tests() {
 
 	//enqueue(createEnvFollowerF(5, 5));
 	//enqueue(createTremeloF(0.7,2));
-	//enqueue(createFlangeF(0.5, 8000, 1));
+	enqueue(createFlangeF(0.5, 8000, 1));
 	//enqueue(createLinearGainF(1.05));
 
+/*
 	enqueue(createFilterP((createFlangeF(0.4, 8000, 10)),
 				createReverbF(0.4, 8000), 0.5));
+*/
 }
 
 int main(void) {
@@ -74,7 +76,7 @@ int main(void) {
 
 	tests();
 
-	//printQueue();
+	printQueue();
 
 	sadc_init(ADC_SAMPLE_RATE);
 	sdac_init();

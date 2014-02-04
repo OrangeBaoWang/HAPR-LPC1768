@@ -34,10 +34,8 @@ void printDelayF(float parameters[5]) {
 
 Filter *createDelayF(float delay) {
 
-	Filter *delayFilter = createFilterS(&delayF, delay,
+	Filter *delayFilter = createFilterS(&delayF, &printDelayF, delay,
 			UNUSED, UNUSED, UNUSED, UNUSED);
-
-	(delayFilter->sfilter)->printFunction = &printDelayF;
 
 	return delayFilter;
 }

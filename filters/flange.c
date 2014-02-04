@@ -28,10 +28,9 @@ uint32_t flangeF(uint32_t sample, float parameters[5]) {
 
 	float mixingRatio = parameters[0];
 	float range = parameters[1];
-	float frequency = parameters[2];
+	float sineIncrement = parameters[3];
 
 	float pivot = range / 2;
-	float sineIncrement = frequency*6.3*23e-6;
 
 	sineInput += sineIncrement;
 	
@@ -64,11 +63,12 @@ void printFlangeF(float parameters[5]) {
 }
 
 Filter *createFlangeF(float mixingRatio, float range, float frequency) {
+	
+	float sineIncrement = frequency*6.3*23e-6;
 
-	Filter *flangeFilter = createFilterS(&flangeF, mixingRatio, range, frequency,
-			UNUSED, UNUSED);
-
-	(flangeFilter->sfilter)->printFunction = &printFlangeF;
+	Filter *flangeFilter = createFilterS(&flangeF, &printFlangeF,
+			mixingRatio, range, frequency, sineIncrement,
+			UNUSED);
 
 	return flangeFilter;
 }

@@ -35,10 +35,8 @@ void printReverbF(float parameters[5]) {
 
 Filter *createReverbF(float mixingRatio, float delay) {
 
-	Filter *reverbFilter = createFilterS(&reverbF, mixingRatio, delay,
+	Filter *reverbFilter = createFilterS(&reverbF, &printReverbF, mixingRatio, delay,
 			UNUSED, UNUSED, UNUSED);
-
-	(reverbFilter->sfilter)->printFunction = &printReverbF;
 
 	return reverbFilter;
 }

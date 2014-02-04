@@ -68,10 +68,8 @@ Filter *createEnvFollowerF(float attack_ms, float release_ms) {
 	attackCoef = exp(log(0.01) / (attack_ms * ADC_SAMPLE_RATE * 0.001));
 	releaseCoef = exp(log(0.01) / (release_ms * ADC_SAMPLE_RATE * 0.001));
 
-	Filter *envFollow = createFilterS(&envFollowerF, attack_ms, release_ms,
+	Filter *envFollow = createFilterS(&envFollowerF, &printEnvFollowerF, attack_ms, release_ms,
 			UNUSED, UNUSED, UNUSED);
-
-	(envFollow->sfilter)->printFunction = &printEnvFollowerF;
 
 	return envFollow;
 }

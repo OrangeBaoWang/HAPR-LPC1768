@@ -18,6 +18,8 @@ void incrementCurrentNode(void);
 
 uint16_t applyFilters(uint16_t sample);
 
+void printQueue(void);
+
 int chain_init(void);
 
 #endif

@@ -39,10 +39,8 @@ void printEchoF(float parameters[5]) {
 
 Filter *createEchoF(float mixingRatio, float delay) {
 
-	Filter *echoFilter = createFilterS(&echoF, mixingRatio, delay,
+	Filter *echoFilter = createFilterS(&echoF, &printEchoF, mixingRatio, delay,
 			UNUSED, UNUSED, UNUSED);
-
-	(echoFilter->sfilter)->printFunction = &printEchoF;
 
 	return echoFilter;
 }

@@ -53,10 +53,8 @@ Filter *createTremeloF(float range, float frequency) {
 
 	float sineIncrement = frequency*6.3*23e-6;
 
-	Filter *tremeloFilter = createFilterS(&tremeloF, range, frequency, sineIncrement,
+	Filter *tremeloFilter = createFilterS(&tremeloF, &printTremeloF, range, frequency, sineIncrement,
 			UNUSED, UNUSED);
-
-	(tremeloFilter->sfilter)->printFunction = &printTremeloF;
 
 	return tremeloFilter;
 }

@@ -26,10 +26,8 @@ void printLinearGainF(float parameters[5]) {
 
 Filter *createLinearGainF(float gain) {
 
-	Filter *linGainFilter = createFilterS(&linearGainF, gain,
+	Filter *linGainFilter = createFilterS(&linearGainF, &printLinearGainF, gain,
 			UNUSED, UNUSED, UNUSED, UNUSED);
-
-	(linGainFilter->sfilter)->printFunction = &printLinearGainF;
 
 	return linGainFilter;
 }
