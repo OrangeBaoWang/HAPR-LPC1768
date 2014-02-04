@@ -56,14 +56,12 @@ void tests() {
 	//enqueue(createDelayF(8000));
 
 	//enqueue(createEnvFollowerF(5, 5));
-	enqueue(createTremeloF(0.7,2));
+	//enqueue(createTremeloF(0.7,2));
 	//enqueue(createFlangeF(0.5, 8000, 1));
 	//enqueue(createLinearGainF(1.05));
 
-	/*
-	enqueue(createFilterP((createLinearGainF(1.05)),
+	enqueue(createFilterP((createFlangeF(0.4, 8000, 10)),
 				createReverbF(0.4, 8000), 0.5));
-	*/
 }
 
 int main(void) {
