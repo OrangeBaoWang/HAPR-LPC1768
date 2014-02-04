@@ -1,9 +1,9 @@
 #ifndef __LINEARGAIN_H_
 #define __LINEARGAIN_H_
 
-uint32_t linearGainF(uint32_t sample, float parameters[5]);
+uint32_t linearGainF(uint32_t sample, SFilter *filter);
 
-void printLinearGainF(float parameters[5]);
+void printLinearGainF(SFilter *filter);
 
 Filter *createLinearGainF(float gain);
 

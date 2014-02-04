@@ -8,9 +8,9 @@
 
 // Simple linear gain filter that multiplies the input
 // by the gain about zero volts which is 2.04V with bias
-uint32_t linearGainF(uint32_t sample, float parameters[5]) {
+uint32_t linearGainF(uint32_t sample, SFilter *filter) {
 
-	float gain = parameters[0];
+	float gain = filter->parameters[0];
 
 	if (sample > 2048) {
 		return (sample * gain);
@@ -19,9 +19,10 @@ uint32_t linearGainF(uint32_t sample, float parameters[5]) {
 	}
 }
 
-void printLinearGainF(float parameters[5]) {
+void printLinearGainF(SFilter *filter) {
 
-	printfToTerminal("Linear Gain:\n\r\t\tGain Multiplier: %f\n\r\r", parameters[0]);
+	printfToTerminal("Linear Gain:\n\r\t\tGain Multiplier: %f\n\r\r",
+			filter->parameters[0]);
 }
 
 Filter *createLinearGainF(float gain) {
