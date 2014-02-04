@@ -6,10 +6,10 @@
 #include "../global.h"
 #include "../debug.h"
 
-uint32_t delayF(uint32_t sample, float parameters[5]) {
+uint32_t delayF(uint32_t sample, SFilter *filter) {
 
 	uint32_t output;
-	uint32_t delay = parameters[0];
+	uint32_t delay = filter->parameters[0];
 
 	// If the delay amount is greater than BUFFER_SIZE then simply
 	// return the sample given and do not do anything to it as invalid
@@ -27,9 +27,10 @@ uint32_t delayF(uint32_t sample, float parameters[5]) {
 	return output;
 }
 
-void printDelayF(float parameters[5]) {
+void printDelayF(SFilter *filter) {
 
-	printfToTerminal("Delay:\n\r\t\tDelay amount: %f\n\r\r", parameters[0]);
+	printfToTerminal("Delay:\n\r\t\tDelay amount: %f\n\r\r",
+			filter->parameters[0]);
 }
 
 Filter *createDelayF(float delay) {
