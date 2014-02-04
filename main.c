@@ -47,16 +47,16 @@ void ADC_IRQHandler(void) {
 
 void tests() {
 
-	enqueue(createReverbF(0.4, 8000));
+//	enqueue(createReverbF(0.4, 8000));
 
-	enqueue(createEchoF(0.8, 8000));
-	enqueue(createEchoF(0.8, 8000));
+//	enqueue(createEchoF(0.8, 8000));
+//	enqueue(createEchoF(0.8, 8000));
 
 	//enqueue(createDelayF(8000));
 
 	//enqueue(createEnvFollowerF(5, 5));
 
-	//enqueue(createFlangeF(8000));
+	enqueue(createFlangeF(0.5, 8000, 0.001));
 	//enqueue(createLinearGainF(1.05));
 
 	/*
