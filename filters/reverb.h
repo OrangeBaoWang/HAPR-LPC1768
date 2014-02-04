@@ -1,9 +1,9 @@
 #ifndef __REVERB_H__
 #define __REVERB_H__
 
-uint32_t reverbF(uint32_t sample, float parameters[5]);
+uint32_t reverbF(uint32_t sample, SFilter *filter);
 
-void printReverbF(float parameters[5]);
+void printReverbF(SFilter *filter);
 
 Filter *createReverbF(float mixingRatio, float delay);
 

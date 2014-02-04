@@ -7,10 +7,10 @@
 #include "../debug.h"
 
 // A mixing ratio of 0.4 is optimal
-uint32_t reverbF(uint32_t sample, float parameters[]) {
+uint32_t reverbF(uint32_t sample, SFilter *filter) {
 
-	float mixingRatio = parameters[0];
-	uint32_t delay = parameters[1];
+	float mixingRatio = filter->parameters[0];
+	uint32_t delay = filter->parameters[1];
 
 	uint32_t output;
 
@@ -27,10 +27,10 @@ uint32_t reverbF(uint32_t sample, float parameters[]) {
 	return output;
 }
 
-void printReverbF(float parameters[5]) {
+void printReverbF(SFilter *filter) {
 
 	printfToTerminal("Reverb:\n\r\t\tMixing Ratio: %f\n\t\tDelay: %f\n\r\r",
-			parameters[0], parameters[1]);
+			filter->parameters[0], filter->parameters[1]);
 }
 
 Filter *createReverbF(float mixingRatio, float delay) {
