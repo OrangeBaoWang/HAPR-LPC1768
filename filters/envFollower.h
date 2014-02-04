@@ -1,9 +1,9 @@
 #ifndef __ENVFOLLOWER_H__
 #define __ENVFOLLOWER_H__
 
-uint32_t envFollowerF(uint32_t sample, float parameters[5]);
+uint32_t envFollowerF(uint32_t sample, SFilter *filter);
 
-void printEnvFollowerF(float parameters[5]);
+void printEnvFollowerF(SFilter *filter);
 
 Filter *createEnvFollowerF(float attack_ms, float release_ms);
 
