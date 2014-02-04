@@ -17,6 +17,7 @@
 #include "filters/reverb.h"
 #include "filters/envFollower.h"
 #include "filters/echo.h"
+#include "filters/tremelo.h"
 
 uint16_t sampleBuffer[BUFFER_SIZE];
 uint16_t *sampleP = sampleBuffer;
@@ -55,8 +56,8 @@ void tests() {
 	//enqueue(createDelayF(8000));
 
 	//enqueue(createEnvFollowerF(5, 5));
-
-	enqueue(createFlangeF(0.5, 8000, 1));
+	enqueue(createTremeloF(0.7,2));
+	//enqueue(createFlangeF(0.5, 8000, 1));
 	//enqueue(createLinearGainF(1.05));
 
 	/*

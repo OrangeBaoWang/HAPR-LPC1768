@@ -10,30 +10,37 @@
 
 static float sineInput = 0;
 
+// Range vmust be between 0 and 1 to avoid saturation
+// Range value of 0.7 works well
+// Frequency value of 2 makes things very noticeable
 uint32_t tremeloF(uint32_t sample, float parameters[5]) {
 
 	uint32_t output;
-	uint32_t sineOutput;
+	float sineOutput;
 
 	float range = parameters[0];
-	float frequency = parameters[1];
-
-	float pivot = range / 2;
 
 	// Calculates the sineIncrement from the given frequency
-	float sineIncrement = frequency*6.3*23e-6;
+	float sineIncrement = parameters[2];
 
 	sineInput += sineIncrement;
 
-	if (sineInput == 6.3) {
+	if (sineInput > 6.3) {
 		sineInput = 0;
 	}
 
-	sineOutput = abs(sin(sineInput) * pivot);
+	sineOutput = sin(sineInput);
 
-	output = sineOutput * sample;
+	// If the value of the sine would be negative, decrease value of the sample
+	// Else, increase the value of the sample
+	if (sineInput > 3.15) {
+		output = sample - (sineOutput * (range*sample));
+	} else {
+		output = sample + (sineOutput * (range*sample));
+	}
 
-	return output;
+
+	return (output);
 }
 
 void printTremeloF(float parameters[5]) {
@@ -44,8 +51,10 @@ void printTremeloF(float parameters[5]) {
 
 Filter *createTremeloF(float range, float frequency) {
 
-	Filter *tremeloFilter = createFilterS(&tremeloF, range, frequency,
-			UNUSED, UNUSED, UNUSED);
+	float sineIncrement = frequency*6.3*23e-6;
+
+	Filter *tremeloFilter = createFilterS(&tremeloF, range, frequency, sineIncrement,
+			UNUSED, UNUSED);
 
 	(tremeloFilter->sfilter)->printFunction = &printTremeloF;
 
