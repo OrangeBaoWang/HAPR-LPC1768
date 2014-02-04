@@ -68,3 +68,27 @@ Oli - Secretary
 	- Going to use non-blocking call to read input buffer from USB
 	  to evaluate input when the processor is not processing incoming
 	  analogue samples
+###############################################################################
+Meeting 4
+
+Jay - Secretary
+Daz - Chair
+Oli - Big Boss
+########################
+
+- Oli has to do print chain function, to print out what filters are active etc
+
+- Has done refactoring to make code more efficient
+
+- Flange filter
+
+- Daz and I need to do our own filters
+	- Jay Noise Gain
+	- Daz Waa,waa
+- Daz and I 85% on UI.
+
+- Maybe change colours on UI for more aestheticness, yea zyzz brah!
+
+
+
+
