@@ -56,7 +56,7 @@ void tests() {
 
 	//enqueue(createEnvFollowerF(5, 5));
 
-	enqueue(createFlangeF(0.5, 8000, 0.001));
+	enqueue(createFlangeF(0.5, 8000, 1));
 	//enqueue(createLinearGainF(1.05));
 
 	/*
@@ -74,6 +74,8 @@ int main(void) {
 	printfToTerminal("FILTER CHAIN INITIALISED. SAMPLE RATE IS :%d\n\r", ADC_SAMPLE_RATE);
 
 	tests();
+
+	//printQueue();
 
 	sadc_init(ADC_SAMPLE_RATE);
 	sdac_init();

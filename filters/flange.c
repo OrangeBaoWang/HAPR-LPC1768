@@ -14,9 +14,12 @@
 static float sineInput = 0;
 
 // Maximum range is 8000
-// Using a mixing ratio of 0.1 gives good results
-// UFO effect for sineIncrement = 0.001
-// Formula 1 effect for sineIncrement = 0.0001
+// Range for strange effects is 8000
+// Range for choral effect is 500
+// Using a mixing ratio of 0.1 to 0.5 to give good results
+// Standard flange effect for frequency = 0.1
+// UFO effect for frequency = 10
+// Formula 1 effect for frequency = 1
 uint32_t flangeF(uint32_t sample, float parameters[5]) {
 
 	uint32_t output;
@@ -25,8 +28,10 @@ uint32_t flangeF(uint32_t sample, float parameters[5]) {
 
 	float mixingRatio = parameters[0];
 	float range = parameters[1];
-	float sineIncrement = parameters[2];
+	float frequency = parameters[2];
+
 	float pivot = range / 2;
+	float sineIncrement = frequency*6.3*23e-6;
 
 	sineInput += sineIncrement;
 	
@@ -54,13 +59,13 @@ uint32_t flangeF(uint32_t sample, float parameters[5]) {
 
 void printFlangeF(float parameters[5]) {
 
-	printfToTerminal("FLANGE:\n\r\t\tMixingRatio: %f\n\r\t\tRange: %f\n\r\t\tSine Increment: %f\n\r\r",
+	printfToTerminal("FLANGE:\n\r\t\tMixingRatio: %f\n\r\t\tRange: %f\n\r\t\tFrequency: %f\n\r\r",
 			parameters[0], parameters[1], parameters[2]);
 }
 
-Filter *createFlangeF(float mixingRatio, float range, float sineIncrement) {
+Filter *createFlangeF(float mixingRatio, float range, float frequency) {
 
-	Filter *flangeFilter = createFilterS(&flangeF, mixingRatio, range, sineIncrement,
+	Filter *flangeFilter = createFilterS(&flangeF, mixingRatio, range, frequency,
 			UNUSED, UNUSED);
 
 	(flangeFilter->sfilter)->printFunction = &printFlangeF;
