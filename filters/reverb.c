@@ -29,7 +29,7 @@ uint32_t reverbF(uint32_t sample, SFilter *filter) {
 
 void printReverbF(SFilter *filter) {
 
-	printfToTerminal("Reverb:\n\r\t\tMixing Ratio: %f\n\t\tDelay: %f\n\r\r",
+	printfToTerminal("REVERB:\n\r\t\tMixing Ratio: %f\n\r\t\tDelay: %f\n\r\r",
 			filter->parameters[0], filter->parameters[1]);
 }
 
