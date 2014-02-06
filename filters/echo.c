@@ -33,7 +33,7 @@ uint32_t echoF(uint32_t sample, SFilter *filter) {
 
 void printEchoF(SFilter *filter) {
 
-	printfToTerminal("Delay:\n\r\t\tMixing Ratio: %f\n\r\t\tDelay: %f\n\r\r",
+	printfToTerminal("Echo:\n\r\t\tMixing Ratio: %f\n\r\t\tEcho: %f\n\r\r",
 			filter->parameters[0], filter->parameters[1]);
 }
 

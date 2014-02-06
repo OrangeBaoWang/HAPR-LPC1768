@@ -56,7 +56,8 @@ int dequeue(Filter *targetFilter) {
 		while (currentNode->next != 0) {
 
 			if (((currentNode->next)->filter)->pfilter == NULL) {
-				if (filterEq(targetFilter->sfilter, ((currentNode->next)->filter)->sfilter) == 1) {
+				if (filterEq(targetFilter->sfilter,
+						((currentNode->next)->filter)->sfilter) == 1) {
 
 					currentNode->next = (currentNode->next)->next;
 					return 0;
@@ -153,7 +154,10 @@ uint16_t applyFilters(uint16_t sample) {
 
 void printQueue(void) {
 
+	printToTerminal("\n\rFILTER CHAIN:\n\r\r");
+
 	if (root->next == 0) {
+		printToTerminal("Empty\n\r");
 		return;
 	}
 
@@ -163,8 +167,19 @@ void printQueue(void) {
 
 		currentNode = currentNode->next;
 
-		(*(((currentNode->filter)->sfilter)->printFunction))
-				((currentNode->filter)->sfilter);
+		if ((currentNode->filter)->sfilter != NULL) {
+			(*(((currentNode->filter)->sfilter)->printFunction))
+					((currentNode->filter)->sfilter);
+		} else {
+			printToTerminal("Parallel\n\r\t");
+
+			(*((((currentNode->filter)->pfilter)->filterOne)->printFunction))
+					(((currentNode->filter)->pfilter)->filterOne);
+
+			printToTerminal("\t");
+			(*((((currentNode->filter)->pfilter)->filterTwo)->printFunction))
+					(((currentNode->filter)->pfilter)->filterTwo);
+		}
 	}
 
 	return;

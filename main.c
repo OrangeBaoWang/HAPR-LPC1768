@@ -68,6 +68,8 @@ void tests() {
 	enqueue(createFilterP((createFlangeF(0.4, 8000, 10)),
 				createReverbF(0.4, 8000), 0.5));
 
+	dequeue(createFilterP((createFlangeF(0.4, 8000, 10)),
+				createReverbF(0.4, 8000), 0.5));
 }
 
 int main(void) {
@@ -80,7 +82,7 @@ int main(void) {
 
 	tests();
 
-//	printQueue();
+	printQueue();
 
 	sadc_init(ADC_SAMPLE_RATE);
 	sdac_init();

@@ -42,7 +42,7 @@ uint32_t tremeloF(uint32_t sample, SFilter *filter) {
 
 void printTremeloF(SFilter *filter) {
 
-	printfToTerminal("TREMELO:\n\r\t\tRange: %f\n\r\t\tFrequency: %f\n\r\r",
+	printfToTerminal("Tremelo:\n\r\t\tRange: %f\n\r\t\tFrequency: %f\n\r\r",
 			filter->parameters[0], filter->parameters[1]);
 }
 

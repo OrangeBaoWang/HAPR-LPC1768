@@ -53,7 +53,7 @@ uint32_t flangeF(uint32_t sample, SFilter *filter) {
 
 void printFlangeF(SFilter *filter) {
 
-	printfToTerminal("FLANGE:\n\r\t\tMixingRatio: %f\n\r\t\tRange: %f\n\r\t\tFrequency: %f\n\r\r",
+	printfToTerminal("Flange:\n\r\t\tMixingRatio: %f\n\r\t\tRange: %f\n\r\t\tFrequency: %f\n\r\r",
 			filter->parameters[0], filter->parameters[1], filter->parameters[2]);
 }
 
