@@ -34,7 +34,6 @@ void ADC_IRQHandler(void) {
 	*sampleP = getAdcSample();
 	output = applyFilters(*sampleP);
 
-
 	dacSetValue(output>>2);
 
 	//Select next buffer location based on previous location
@@ -44,6 +43,7 @@ void ADC_IRQHandler(void) {
 	} else {
 		sampleP = sampleBuffer;
 	}
+
 }
 
 void tests() {
@@ -67,9 +67,10 @@ void tests() {
 
 	enqueue(createFilterP((createFlangeF(0.4, 8000, 10)),
 				createReverbF(0.4, 8000), 0.5));
-
+/*
 	dequeue(createFilterP((createFlangeF(0.4, 8000, 10)),
 				createReverbF(0.4, 8000), 0.5));
+*/
 }
 
 int main(void) {
@@ -92,7 +93,7 @@ int main(void) {
 		//printfToTerminal("stuff %c \n\r", recieveBuffer);
 		//some awesome stuff that'll read and print the greatest things
 		//ever.
-		
+		printToTerminal("Hello");
 		
 	}
 
