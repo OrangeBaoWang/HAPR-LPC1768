@@ -9,6 +9,7 @@
 /*  Unnecessary function call
     Call ADC_ChannelGetData directly */
 uint16_t getAdcSample(void) {
+
 	uint16_t sample4 = ADC_ChannelGetData(LPC_ADC, ADC_CHANNEL_4);
 	uint16_t sample0 = ADC_ChannelGetData(LPC_ADC, ADC_CHANNEL_0);
 	uint16_t sample1 = ADC_ChannelGetData(LPC_ADC, ADC_CHANNEL_1);
@@ -67,13 +68,13 @@ void sadc_init(int sampleRate) {
 	ADC_ChannelCmd(LPC_ADC, ADC_CHANNEL_0, ENABLE);
 	ADC_ChannelCmd(LPC_ADC, ADC_CHANNEL_1, ENABLE);
 
-	ADC_StartCmd(LPC_ADC, ADC_START_CONTINUOUS);
+//	ADC_StartCmd(LPC_ADC, ADC_START_CONTINUOUS);
 
 	ADC_BurstCmd(LPC_ADC, ENABLE);
 
-	NVIC_EnableIRQ(ADC_IRQn);
+//	NVIC_EnableIRQ(ADC_IRQn);
 
-	__enable_irq();
+//	__enable_irq();
 }
 
 //Add into main file void ADC_IRQHandler(void) with the IRQ handler
