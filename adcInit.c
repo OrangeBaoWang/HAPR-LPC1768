@@ -68,11 +68,11 @@ void sadc_init(int sampleRate) {
 	ADC_ChannelCmd(LPC_ADC, ADC_CHANNEL_0, ENABLE);
 	ADC_ChannelCmd(LPC_ADC, ADC_CHANNEL_1, ENABLE);
 
-	ADC_StartCmd(LPC_ADC, ADC_START_CONTINUOUS);
+//	ADC_StartCmd(LPC_ADC, ADC_START_CONTINUOUS);
 
 	ADC_BurstCmd(LPC_ADC, ENABLE);
 
-	NVIC_EnableIRQ(ADC_IRQn);
+//	NVIC_EnableIRQ(ADC_IRQn);
 
 //	__enable_irq();
 }

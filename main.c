@@ -1,5 +1,6 @@
 #include "lpc17xx_adc.h"
 #include "lpc17xx_dac.h"
+#include "lpc17xx_timer.h"
 #include "lpc_types.h"
 
 #include <stdlib.h>
@@ -7,6 +8,7 @@
 #include "global.h"
 #include "debug.h"
 #include "adcInit.h"
+#include "timerInit.h"
 #include "dacInit.h"
 #include "filter.h"
 #include "filterChain.h"
@@ -29,7 +31,7 @@ char recieveBuffer[10];
 
 // Interrupt handler that samples the ADC and sends the sample
 // on to be filtered
-void ADC_IRQHandler(void) {
+void TIMER0_IRQHandler(void) {
 
 	*sampleP = getAdcSample();
 	output = applyFilters(*sampleP);
@@ -44,6 +46,12 @@ void ADC_IRQHandler(void) {
 		sampleP = sampleBuffer;
 	}
 
+	// Reset the timer (it stops when it has counted to the designated value)
+	// and begin counting again
+	TIM_ResetCounter(LPC_TIM0);
+	TIM_Cmd(LPC_TIM0, ENABLE);
+
+	return;
 }
 
 void tests() {
@@ -87,6 +95,7 @@ int main(void) {
 
 	sadc_init(ADC_SAMPLE_RATE);
 	sdac_init();
+	timer_init((uint32_t) ((1.0/ADC_SAMPLE_RATE) * 1000000));
 
 	while(1) {
 		//read_usb_serial_none_blocking(&recieveBuffer, 10);

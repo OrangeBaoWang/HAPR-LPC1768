@@ -35,7 +35,7 @@ LDFLAGS+=-L$(CMSIS)/lib -lDriversLPC17xxgnu
 
 EXECNAME	= bin/LIBS
 
-OBJ		= main.o debug.o adcInit.o dacInit.o filterChain.o filter.o filters/envFollower.o filters/flange.o filters/linearGain.o filters/delay.o filters/echo.o filters/reverb.o filters/tremelo.o
+OBJ		= main.o debug.o adcInit.o timerInit.o dacInit.o filterChain.o filter.o filters/envFollower.o filters/flange.o filters/linearGain.o filters/delay.o filters/echo.o filters/reverb.o filters/tremelo.o
 
 all: 	main
 	@echo "Build finished"
