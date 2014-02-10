@@ -44,3 +44,13 @@ LOG #4 - 20/1/2014
 LOG #5 - 20/1/2014
 	- Linear gain, reverb, delay and echo filters now all work
 	- Changed opamp resistors to a 100K and a 3.3K
+
+LOG #6 - From Last time to 10/2/2014
+
+	- Project has reached V1.0!! Horray brahs
+	- All features have been implemented apart from a few individual filters
+	- Oli changed interrupts so program got to while loop
+	- 4 weeks early, great success.
+	- Now comments need to be added to confusing parts, and we could do with more information on exactly what the presentation involves
+	- Final individual filters to be added by Jay and Daz, Oli has done lots already
+	- 
