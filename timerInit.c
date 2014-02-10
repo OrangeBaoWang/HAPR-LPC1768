@@ -30,8 +30,8 @@ void timer_init(uint32_t timeInterval) {
 
 	timerMatch_cfg.MatchChannel = 0;
 	timerMatch_cfg.IntOnMatch   = TRUE;
-	timerMatch_cfg.ResetOnMatch = FALSE;
-	timerMatch_cfg.StopOnMatch  = TRUE;
+	timerMatch_cfg.ResetOnMatch = TRUE;
+	timerMatch_cfg.StopOnMatch  = FALSE;
 	timerMatch_cfg.ExtMatchOutputType = TIM_EXTMATCH_TOGGLE;
 	timerMatch_cfg.MatchValue   = timeInterval;
 	TIM_ConfigMatch(LPC_TIM0,&timerMatch_cfg);

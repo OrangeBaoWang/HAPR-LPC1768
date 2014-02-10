@@ -48,8 +48,7 @@ void TIMER0_IRQHandler(void) {
 
 	// Reset the timer (it stops when it has counted to the designated value)
 	// and begin counting again
-	TIM_ResetCounter(LPC_TIM0);
-	TIM_Cmd(LPC_TIM0, ENABLE);
+	TIM_ClearIntPending(LPC_TIM0, TIM_MR0_INT);
 
 	return;
 }
