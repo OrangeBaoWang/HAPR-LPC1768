@@ -13,6 +13,7 @@
 #include "filters/reverb.h"
 #include "filters/envFollower.h"
 #include "filters/echo.h"
+#include "filters/tremelo.h"
 
 #include "debug.h"
 #include "global.h"
@@ -116,7 +117,7 @@ void generateUI(void){
 			case '4':
 				printToTerminal("Enter number of Effect Required: \n\r");
 				printToTerminal("1 - Echo\n\r2 - Reverb\n\r3 - Linear Gain\n\r"
-					"4 - Envelope Follower\n\r5 - Flange \n\r");	
+					"4 - Envelope Follower\n\r5 - Flange \n\r6 - Tremelo");	
 				while (flag){
 					waitForTerminal();
 					switch(terminalBuffer){
@@ -139,7 +140,7 @@ void generateUI(void){
 							printToTerminal("Enter amount of Linear Gain (e.g 1.2), then press enter: \n\r");
 							waitForTerminal();
 							filterVariable = getFloat(); 
-							//enqueue(createFilterS(&linearGainF, 1.2));
+							enqueue(createLinearGainF(filterVariable));
 							flag = 0;
 							break;
 						case '4':
@@ -154,6 +155,13 @@ void generateUI(void){
 							waitForTerminal();
 							filterVariable = getFloat();
 							enqueue(createFlangeF(filterVariable, 8000, 1));
+							flag = 0;
+							break;
+						case '6':
+							printToTerminal("Enter a range between 0 and 1 (eg. 0.7), then press enter:\n\r");
+							waitForTerminal();
+							filterVariable = getFloat();
+							enqueue(createTremeloF(filterVariable, 20));
 							flag = 0;
 							break;
 						default:

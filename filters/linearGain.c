@@ -15,7 +15,7 @@ uint32_t linearGainF(uint32_t sample, SFilter *filter) {
 	if (sample > 2048) {
 		return (sample * gain);
 	} else {
-		return (sample - ((sample * gain) - sample));
+		return (sample * (1 - (1-gain)));
 	}
 }
 
