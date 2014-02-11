@@ -9,7 +9,6 @@
 #include "debug.h"
 #include "filters/envFollower.h"
 
-FilterNode *currentNode;
 FilterNode *root;
 
 // The 32-bit container the sample is put into while filtering
@@ -19,11 +18,11 @@ uint32_t dSample;
 // Need to add way for node to contain filter parameters
 int enqueue(Filter *newFilter) {
 
+	FilterNode *currentNode = root;
+
 	// Ensure the currentNode is at the end of the linked list
-	if (currentNode != 0) {
-		while (currentNode->next != 0) {
-			currentNode = currentNode->next;
-		}
+	while (currentNode->next != NULL) {
+		currentNode = currentNode->next;
 	}
 
 	// Creates a new node at the end of the linked list
@@ -31,13 +30,13 @@ int enqueue(Filter *newFilter) {
 	// Moves the currentNode pointer to the new node
 	currentNode = currentNode->next;
 
-	if (currentNode == 0) {
+	if (currentNode == NULL) {
 		THROW("Out of memory when allocating new node to filter queue");
 		return -1;
 	}
 
 	// Initialize the new node
-	currentNode->next = 0;
+	currentNode->next = NULL;
 	currentNode->filter = newFilter;
 
 	return 0;
@@ -45,20 +44,19 @@ int enqueue(Filter *newFilter) {
 
 int dequeue(Filter *targetFilter) {
 
-	currentNode = root;
+	FilterNode *currentNode = root;
 
-	if (currentNode->next == 0) {
+	if (currentNode->next == NULL) {
 		return -1;
 	}
 
 	if (targetFilter->pfilter == NULL) {
 
-		while (currentNode->next != 0) {
+		while (currentNode->next != NULL) {
 
 			if (((currentNode->next)->filter)->pfilter == NULL) {
 				if (filterEq(targetFilter->sfilter,
 						((currentNode->next)->filter)->sfilter) == 1) {
-
 					currentNode->next = (currentNode->next)->next;
 					return 0;
 				}
@@ -67,7 +65,7 @@ int dequeue(Filter *targetFilter) {
 		}
 	} else {
 		// If the filter is a parallel filter
-		while (currentNode->next != 0) {
+		while (currentNode->next != NULL) {
 			if (((currentNode->next)->filter)->pfilter != NULL) {
 				if (filterEq((targetFilter->pfilter)->filterOne,
 						(((currentNode->next)->filter)->pfilter)->filterOne) == 1) {
@@ -103,34 +101,24 @@ int filterEq(SFilter *targetFilter, SFilter *currentFilter) {
 	return 0;
 }
 
-
-// Will not increment the currentNode if already at the end
-// of the list
-void incrementCurrentNode(void) {
-
-	if (currentNode->next != 0) {
-		currentNode = currentNode->next;
-	}
-}
-
 // Will apply all filters present in the filter chain
 // If no filters in chain, simply return the given value
 uint16_t applyFilters(uint16_t sample) {
 
-	if (root->next == 0) {
+	FilterNode *currentNode = root;
+
+	if (currentNode->next == NULL) {
 		return sample;
 	}
 
 	dSample = sample;
 
-	currentNode = root;
-
 	// While not at the end of the list, apply each filter to
 	// the value in dSample
-	while(currentNode->next != 0) {
+	while(currentNode->next != NULL) {
 		currentNode = currentNode->next;
 
-		if ((currentNode->filter)->sfilter == 0) {
+		if ((currentNode->filter)->sfilter == NULL) {
 			dSample = mixParallel((currentNode->filter)->pfilter,
 						dSample);
 		} else {
@@ -153,16 +141,16 @@ uint16_t applyFilters(uint16_t sample) {
 
 void printQueue(void) {
 
+	FilterNode *currentNode = root;
+
 	printToTerminal("\n\rFILTER CHAIN:\n\r\r");
 
-	if (root->next == 0) {
+	if (currentNode->next == NULL) {
 		printToTerminal("Empty\n\r");
 		return;
 	}
 
-	currentNode = root;
-
-	while (currentNode->next != 0) {
+	while (currentNode->next != NULL) {
 
 		currentNode = currentNode->next;	
 
@@ -194,9 +182,7 @@ int chain_init(void) {
 	}
 
 	// The node pointer points to null
-	root->next = 0;
-
-	currentNode = root;
+	root->next = NULL;
 
 	return 0;
 }

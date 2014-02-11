@@ -27,9 +27,6 @@ uint16_t *sampleP = sampleBuffer;
 
 uint16_t output;
 
-char recieveBuffer[10];
-
-
 // Interrupt handler that samples the ADC and sends the sample
 // on to be filtered
 void TIMER0_IRQHandler(void) {
@@ -65,14 +62,14 @@ void tests() {
 
 //	enqueue(createEnvFollowerF(5, 5));
 
-	enqueue(createTremeloF(0.5,2));
+//	enqueue(createTremeloF(0.5,2));
 
-	enqueue(createFlangeF(0.5, 8000, 1));
+//	enqueue(createFlangeF(0.5, 8000, 1));
 
-	enqueue(createLinearGainF(1.05));
+//	enqueue(createLinearGainF(1.05));
 
 /*
-	enqueue(createFilterP((createFlangeF(0.4, 8000, 10)),
+	enqueue(createFilterP((createFlangeF(0.4, 8000, 0.5)),
 				createReverbF(0.4, 8000), 0.5));
 */
 }
