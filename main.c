@@ -65,19 +65,14 @@ void tests() {
 
 //	enqueue(createEnvFollowerF(5, 5));
 
-//	enqueue(createTremeloF(0.5,2));
+	enqueue(createTremeloF(0.5,2));
 
 	enqueue(createFlangeF(0.5, 8000, 1));
-	dequeue(createFlangeF(0.5, 8000, 1));
 
-//	enqueue(createLinearGainF(1.05));
+	enqueue(createLinearGainF(1.05));
 
 /*
 	enqueue(createFilterP((createFlangeF(0.4, 8000, 10)),
-				createReverbF(0.4, 8000), 0.5));
-*/
-/*
-	dequeue(createFilterP((createFlangeF(0.4, 8000, 10)),
 				createReverbF(0.4, 8000), 0.5));
 */
 }
@@ -91,21 +86,19 @@ int main(void) {
 	printfToTerminal("FILTER CHAIN INITIALISED. SAMPLE RATE IS :%d\n\r", ADC_SAMPLE_RATE);
 
 	tests();
-
-	printQueue();
+	
 
 	sadc_init(ADC_SAMPLE_RATE);
 	sdac_init();
 	timer_init((uint32_t) ((1.0/ADC_SAMPLE_RATE) * 1000000));
+	printQueue();
 
-	while(1) {
+
 		//read_usb_serial_none_blocking(&recieveBuffer, 10);
 		//printfToTerminal("stuff %c \n\r", recieveBuffer);
 		//some awesome stuff that'll read and print the greatest things
 		//ever.
 		generateUI();
-		
-	}
 
 	return 0;
 }

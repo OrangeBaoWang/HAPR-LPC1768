@@ -128,7 +128,6 @@ uint16_t applyFilters(uint16_t sample) {
 	// While not at the end of the list, apply each filter to
 	// the value in dSample
 	while(currentNode->next != 0) {
-
 		currentNode = currentNode->next;
 
 		if ((currentNode->filter)->sfilter == 0) {
@@ -165,7 +164,7 @@ void printQueue(void) {
 
 	while (currentNode->next != 0) {
 
-		currentNode = currentNode->next;
+		currentNode = currentNode->next;	
 
 		if ((currentNode->filter)->sfilter != NULL) {
 			(*(((currentNode->filter)->sfilter)->printFunction))
@@ -181,7 +180,6 @@ void printQueue(void) {
 					(((currentNode->filter)->pfilter)->filterTwo);
 		}
 	}
-
 	return;
 }
 

@@ -42,4 +42,5 @@ void timer_init(uint32_t timeInterval) {
 	NVIC_EnableIRQ(TIMER0_IRQn);
 	// To start timer 0
 	TIM_Cmd(LPC_TIM0,ENABLE);
+	printQueue();
 }

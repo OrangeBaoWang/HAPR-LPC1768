@@ -45,7 +45,7 @@ float getFloat(){
 	
 	while (terminalBuffer != 0x0D){ //while enter hasn't been pressed
 		if (index > sizeof terminalArray){ //if end of input array
-			printToTerminal("Input too long (that's what she said). Try again. \n\r");
+			printToTerminal("Input too long. Try again. \n\r");
 			memset(terminalArray, 0, sizeof terminalArray);
 			index = 0;
 			waitForTerminal();
@@ -56,8 +56,7 @@ float getFloat(){
 			printfToTerminal("%c", terminalBuffer);
 			index++; 
 			waitForTerminal();		
-		}
-		else{
+		} else{
 			printToTerminal("\n\rIncorrect input. Try again. \n\r");
 			memset(terminalArray, 0, sizeof terminalArray);
 			index = 0;
@@ -75,21 +74,21 @@ void generateUI(){
 	
 	while (1){
 		printToTerminal("\n\r################ MAIN MENU #################\n\r");
-		printToTerminal("1) Display all possible effects\n\r");
-		printToTerminal("2) Display all added effects\n\r");
-		printToTerminal("3) Remove effects\n\r");
-		printToTerminal("4) Add effects\n\r");
-		printToTerminal("5) Exit \n\r");
+		printToTerminal("1) Display all possible effects\n\r\n\r");
+		printToTerminal("2) Display all added effects\n\r\n\r");
+		printToTerminal("3) Remove effects\n\r\n\r");
+		printToTerminal("4) Add effects\n\r\n\r");
+		printToTerminal("5) Exit \n\r\n\r");
 		
 		waitForTerminal();
-		switch (terminalBuffer){
+		switch (terminalBuffer) {
 			case '1':
 				printToTerminal("1 - Echo\n\r2 - Reverb\n\r3 - Linear Gain\n\r"
-					"4 - Envelope Follower\n\r TBC \n\r");
+					"4 - Envelope Follower\n\r");
 				break;
 			case '2':
 				printToTerminal("DISPLAY ALL EFFECTS ADDED FUNCTION\n\r");
-				//printQueue();
+				printQueue();
 				break;
 			case '3':
 				printToTerminal("Enter number of Effect to remove: \n\r");
@@ -133,7 +132,7 @@ void generateUI(){
 							printToTerminal("Enter amount of Reverb (e.g 0.8), then press enter: \n\r");
 							waitForTerminal();
 							filterVariable = getFloat(); 
-							//enqueue(createFilterS(&reverbF, 0.4));
+							enqueue(createReverbF(filterVariable, 8000));
 							flag = 0;
 							break;
 						case '3':
