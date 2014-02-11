@@ -25,12 +25,12 @@ uint32_t received; //flag to check if there has been a keyboard input
 int flag = 1; //flag to loop through switch statements
 
 //recieves single char from keyboard input
-uint32_t receiveFromTerminal() {
+uint32_t receiveFromTerminal(void) {
 	return UART_Receive((LPC_UART_TypeDef *) LPC_UART0, &terminalBuffer, 1, NONE_BLOCKING);
 }
 
 //waits for keyboard input. loops until user inputs something
-void waitForTerminal(){
+void waitForTerminal(void){
 	while (!received){
 		received = receiveFromTerminal();
 	}
@@ -38,7 +38,7 @@ void waitForTerminal(){
 }
 
 //takes string input from terminal converts and returns a float
-float getFloat(){
+float getFloat(void){
 	char terminalArray[9];
 	int index = 0;
 	float inputFloat;
@@ -70,7 +70,7 @@ float getFloat(){
 	return inputFloat; //convert char array to float, return
 }
 	
-void generateUI(){
+void generateUI(void){
 	
 	while (1){
 		printToTerminal("\n\r################ MAIN MENU #################\n\r");
@@ -171,6 +171,7 @@ void generateUI(){
 				printToTerminal("Enter a correct command\n\r");
 		}
 		flag = 1; //reset flag to loop through switch statements again
+		clearScreen();
 	}
 }
 

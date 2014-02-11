@@ -20,6 +20,8 @@ int printToTerminal(char *buf);
 
 int printfToTerminal(char *buf, ...);
 
+void clearScreen(void);
+
 void dumpRegs();
 
 void setColor();

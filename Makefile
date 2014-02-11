@@ -59,3 +59,4 @@ install:
 	sync
 	@echo "Now press the reset button on all MBED file systems"
 
+now: clean main install

@@ -42,6 +42,14 @@ int printfToTerminal(char *buf, ...) {
 		(strlen(charBuf) + 1), BLOCKING));
 }
 
+// Clears the screen using an ASCII escape character and sets the cursor to
+// the top left-hand corner of the screen
+void clearScreen(void) {
+	
+	printfToTerminal("\033[2J");
+	printfToTerminal("\033[H");
+}
+
 void dumpRegs() { //http://www.ethernut.de/en/documents/arm-inline-asm.html
 
 	setColor("cyan");
@@ -178,6 +186,8 @@ void debug_init(void) {
 
 	//Enable UART Transmit
 	UART_TxCmd((LPC_UART_TypeDef *) LPC_UART0, ENABLE);
+
+	clearScreen();
 
 	printToTerminal("__CONSOLE_BEGIN__\n\r\n\r");
 }

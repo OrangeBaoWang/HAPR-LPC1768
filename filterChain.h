@@ -14,8 +14,6 @@ int dequeue(Filter *targetFilter);
 
 int filterEq(SFilter *targetFilter, SFilter *currentFilter);
 
-void incrementCurrentNode(void);
-
 uint16_t applyFilters(uint16_t sample);
 
 void printQueue(void);
