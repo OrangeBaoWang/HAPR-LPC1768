@@ -72,9 +72,10 @@ void tests() {
 
 //	enqueue(createLinearGainF(1.05));
 
-
+/*
 	enqueue(createFilterP((createFlangeF(0.4, 8000, 10)),
 				createReverbF(0.4, 8000), 0.5));
+*/
 /*
 	dequeue(createFilterP((createFlangeF(0.4, 8000, 10)),
 				createReverbF(0.4, 8000), 0.5));

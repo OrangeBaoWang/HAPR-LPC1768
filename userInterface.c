@@ -51,7 +51,7 @@ float getFloat(){
 			waitForTerminal();
 		}
 		//if correct input character
-		if (((terminalBuffer > 0x30) && (terminalBuffer < 0x39)) || terminalBuffer == 0x2E){ 
+		if (((terminalBuffer >= 0x30) && (terminalBuffer <= 0x39)) || terminalBuffer == 0x2E){ 
 			terminalArray[index] = terminalBuffer;
 			printfToTerminal("%c", terminalBuffer);
 			index++; 
@@ -117,7 +117,7 @@ void generateUI(){
 			case '4':
 				printToTerminal("Enter number of Effect Required: \n\r");
 				printToTerminal("1 - Echo\n\r2 - Reverb\n\r3 - Linear Gain\n\r"
-					"4 - Envelope Follower\n\r TBC \n\r");	
+					"4 - Envelope Follower\n\r5 - Flange \n\r");	
 				while (flag){
 					waitForTerminal();
 					switch(terminalBuffer){
@@ -148,6 +148,13 @@ void generateUI(){
 							waitForTerminal();
 							filterVariable = getFloat(); 
 							//enqueue(createFilterS(&envFollowerF, 0));
+							flag = 0;
+							break;
+						case '5':
+							printToTerminal("Enter a mixing ratio (eg. 0.4), then press enter:\n\r");
+							waitForTerminal();
+							filterVariable = getFloat();
+							enqueue(createFlangeF(filterVariable, 8000, 1));
 							flag = 0;
 							break;
 						default:
