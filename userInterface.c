@@ -2,6 +2,8 @@
 #include "lpc17xx_uart.h"
 
 #include <stdlib.h>
+#include <string.h>
+
 #include "filter.h"
 #include "filterChain.h"
 
@@ -124,7 +126,7 @@ void generateUI(){
 							waitForTerminal();
 							filterVariable = getFloat(); 
 							printfToTerminal("\n\r %f \n\r", filterVariable);
-							//enqueue(createFilterS(&echoF, filterVariable));
+							enqueue(createEchoF(filterVariable, 8000));
 							flag = 0;
 							break;
 						case '2':

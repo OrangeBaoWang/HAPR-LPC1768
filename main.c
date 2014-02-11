@@ -12,6 +12,7 @@
 #include "dacInit.h"
 #include "filter.h"
 #include "filterChain.h"
+#include "userInterface.h"
 
 #include "filters/linearGain.h"
 #include "filters/flange.h"
@@ -101,7 +102,7 @@ int main(void) {
 		//printfToTerminal("stuff %c \n\r", recieveBuffer);
 		//some awesome stuff that'll read and print the greatest things
 		//ever.
-		printToTerminal("Hello");
+		generateUI();
 		
 	}
 
