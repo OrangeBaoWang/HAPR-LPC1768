@@ -12,6 +12,8 @@ int enqueue(Filter *newFilter);
 
 int dequeue(Filter *targetFilter);
 
+int dequeueByIndex(float index);
+
 int filterEq(SFilter *targetFilter, SFilter *currentFilter);
 
 uint16_t applyFilters(uint16_t sample);

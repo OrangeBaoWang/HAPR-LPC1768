@@ -19,11 +19,11 @@
 #include "global.h"
 #include "userInterface.h"
 
-uint8_t terminalBuffer; //buffer to store read values from terminal
-float filterVariable;
+static uint8_t terminalBuffer; //buffer to store read values from terminal
+static float filterVariable[5];
 
-uint32_t received; //flag to check if there has been a keyboard input
-int flag = 1; //flag to loop through switch statements
+static uint32_t received; //flag to check if there has been a keyboard input
+static uint8_t stay = 1; //stay to loop through switch statements
 
 //recieves single char from keyboard input
 uint32_t receiveFromTerminal(void) {
@@ -70,6 +70,32 @@ float getFloat(void){
 	inputFloat = atof(terminalArray);
 	return inputFloat; //convert char array to float, return
 }
+
+// Will force the user to input a valid number for the given context
+float inputAndAssert(float min, float max) {
+
+	uint8_t incorrect = 1;
+	float input;
+
+	while (incorrect) {
+
+		waitForTerminal();
+		input = getFloat();
+
+		if (input > min) {
+			if (input < max) {
+				incorrect = 0;
+			}
+		}
+	}
+	return input;
+}
+
+void printEffects(void) {
+	printToTerminal("1 - Delay\n\r2 - Echo\n\r3 - Enveloper Follower\n\r"
+					"4 - Flange\n\r5 - Linear Gain\n\r6 - Reverb\n\r7 - Tremelo");
+	return;
+}
 	
 void generateUI(void){
 	
@@ -84,89 +110,95 @@ void generateUI(void){
 		waitForTerminal();
 		switch (terminalBuffer) {
 			case '1':
-				printToTerminal("1 - Echo\n\r2 - Reverb\n\r3 - Linear Gain\n\r"
-					"4 - Envelope Follower\n\r");
+				printEffects();
 				break;
 			case '2':
-				printToTerminal("DISPLAY ALL EFFECTS ADDED FUNCTION\n\r");
 				printQueue();
 				break;
 			case '3':
-				printToTerminal("Enter number of Effect to remove: \n\r");
-				while (flag){
-					waitForTerminal();
-					switch(terminalBuffer){
-						case '1':
-							//dequeue(createFilterS(&echoF, 0.8));
-							break;
-						case '2':
-							//dequeue(createFilterS(&reverbF, 0.4));
-							break;
-						case '3':
-							//dequeue(createFilterS(&linearGainF, 1.2));
-							break;
-						case '4':
-							//dequeue(createFilterS(&void ADC_IRQHandler(void) {envFollowerF, 0));
-							break;	
-						default:
-							printToTerminal("Enter a correct effect number\n\r");
-							flag = 1;	
-					}
+				printQueue();
+				printToTerminal("Enter index of effect to remove: \n\r");
+
+				waitForTerminal();
+				dequeueByIndex(getFloat());
 				break;
-				}
 			case '4':
-				printToTerminal("Enter number of Effect Required: \n\r");
-				printToTerminal("1 - Echo\n\r2 - Reverb\n\r3 - Linear Gain\n\r"
-					"4 - Envelope Follower\n\r5 - Flange \n\r6 - Tremelo");	
-				while (flag){
+				printToTerminal("Enter number of effect: \n\r");
+				printEffects();
+
+				while (stay){
 					waitForTerminal();
 					switch(terminalBuffer){
 						case '1':
-							printToTerminal("Enter amount of Echo (e.g 0.8), then press enter: \n\r");
-							waitForTerminal();
-							filterVariable = getFloat(); 
-							printfToTerminal("\n\r %f \n\r", filterVariable);
-							enqueue(createEchoF(filterVariable, 8000));
-							flag = 0;
+							printToTerminal("Enter the size of the delay (0-8000):\n\r");
+							filterVariable[0] = inputAndAssert(0, 8000);
+
+							enqueue(createDelayF(filterVariable[0]));
+							stay = 0;
 							break;
 						case '2':
-							printToTerminal("Enter amount of Reverb (e.g 0.8), then press enter: \n\r");
-							waitForTerminal();
-							filterVariable = getFloat(); 
-							enqueue(createReverbF(filterVariable, 8000));
-							flag = 0;
+							printToTerminal("Enter the mixing ratio (0-1):\n\r");
+							filterVariable[0] = inputAndAssert(0, 1);
+
+							printToTerminal("Enter the delay (0-8000):\n\r");
+							filterVariable[1] = inputAndAssert(0, 8000);
+
+							enqueue(createEchoF(filterVariable[0], filterVariable[1]));
+							stay = 0;
 							break;
 						case '3':
-							printToTerminal("Enter amount of Linear Gain (e.g 1.2), then press enter: \n\r");
-							waitForTerminal();
-							filterVariable = getFloat(); 
-							enqueue(createLinearGainF(filterVariable));
-							flag = 0;
+							printToTerminal("Enter the attack (ms):\n\r");
+							filterVariable[0] = inputAndAssert(0, 10000);
+
+							printToTerminal("Enter the release (ms):\n\r");
+							filterVariable[1] = inputAndAssert(0, 10000);
+
+							enqueue(createEnvFollowerF(filterVariable[0], filterVariable[1]));
+							stay = 0;
 							break;
 						case '4':
-							printToTerminal("Enter amount of Envolope Follower (e.g 0.8), then press enter: \n\r");
-							waitForTerminal();
-							filterVariable = getFloat(); 
-							//enqueue(createFilterS(&envFollowerF, 0));
-							flag = 0;
+							printToTerminal("Enter the mixing ratio (0-1):\n\r");
+							filterVariable[0] = inputAndAssert(0, 1);
+
+							printToTerminal("Enter the range of the sweep (0-8000):\n\r");
+							filterVariable[1] = inputAndAssert(0, 8000);
+
+							printToTerminal("Enter the frequency of the sweep (Hz)");
+							filterVariable[2] = inputAndAssert(0, 10000);
+
+							enqueue(createFlangeF(filterVariable[0], filterVariable[1], filterVariable[2]));
+							stay = 0;
 							break;
 						case '5':
-							printToTerminal("Enter a mixing ratio (eg. 0.4), then press enter:\n\r");
-							waitForTerminal();
-							filterVariable = getFloat();
-							enqueue(createFlangeF(filterVariable, 8000, 1));
-							flag = 0;
+							printToTerminal("Enter the magnitude of the gain (eg. 0.4 or 1.2) (0-3):\n\r");
+							filterVariable[0] = inputAndAssert(0, 3);
+
+							enqueue(createLinearGainF(filterVariable[0]));
+							stay = 0;
 							break;
 						case '6':
-							printToTerminal("Enter a range between 0 and 1 (eg. 0.7), then press enter:\n\r");
-							waitForTerminal();
-							filterVariable = getFloat();
-							enqueue(createTremeloF(filterVariable, 20));
-							flag = 0;
+							printToTerminal("Enter the mixing ratio (0-1):\n\r");
+							filterVariable[0] = inputAndAssert(0, 1);
+
+							printToTerminal("Enter the delay (0-8000):\n\r");
+							filterVariable[1] = inputAndAssert(0, 8000);
+
+							enqueue(createReverbF(filterVariable[0], filterVariable[1]));
+							stay = 0;
+							break;
+						case '6':
+							printToTerminal("Enter the range of the sweep (0-1):\n\r");
+							filterVariable[0] = inputAndAssert(0, 1);
+
+							printToTerminal("Enter the frequency of the sweep (Hz)");
+							filterVariable[1] = inputAndAssert(0, 10000);
+
+							enqueue(createTremeloF(filterVariable[0], filterVariable[1]));
+							stay = 0;
 							break;
 						default:
 							printToTerminal("Enter a correct effect number\n\r");
-							flag = 1;			
+							stay = 1;
 					}
 				}
 				break;
@@ -178,7 +210,7 @@ void generateUI(void){
 			default:
 				printToTerminal("Enter a correct command\n\r");
 		}
-		flag = 1; //reset flag to loop through switch statements again
+		stay = 1; //reset stay to loop through switch statements again
 		clearScreen();
 	}
 }

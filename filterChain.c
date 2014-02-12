@@ -84,6 +84,29 @@ int dequeue(Filter *targetFilter) {
 	return -1;
 }
 
+// Will dequeue a filter from the filter chain based on its position in the chain
+// Returns 0 on success, -1 otherwise
+int dequeueByIndex(float index) {
+
+	FilterNode *currentNode = root;
+
+	uint16_t indexInt = index;
+	uint16_t currentIndex = 1;
+
+	while (currentNode->next != NULL) {
+
+		if (currentIndex == indexInt) {
+			currentNode->next = (curretNode->next)->next;
+			return 0;
+		}
+		currentNode = currentNode->next;
+		currentIndex++;
+	}
+
+	return -1;
+
+}
+
 // Will return 1 if two filters are equivalent, 0 otherwise
 int filterEq(SFilter *targetFilter, SFilter *currentFilter) {
 
@@ -143,6 +166,8 @@ void printQueue(void) {
 
 	FilterNode *currentNode = root;
 
+	uint16_t index = 1;
+
 	printToTerminal("\n\rFILTER CHAIN:\n\r\r");
 
 	if (currentNode->next == NULL) {
@@ -153,6 +178,8 @@ void printQueue(void) {
 	while (currentNode->next != NULL) {
 
 		currentNode = currentNode->next;	
+
+		printfToTerminal("%d\n\r", index);
 
 		if ((currentNode->filter)->sfilter != NULL) {
 			(*(((currentNode->filter)->sfilter)->printFunction))

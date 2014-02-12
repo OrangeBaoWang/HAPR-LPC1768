@@ -33,7 +33,7 @@ uint32_t flangeF(uint32_t sample, SFilter *filter) {
 
 	// If the sine wave has completed one full revolution, set it back
 	// to zero
-	if (SINE_INPUT == 6.3) {
+	if (SINE_INPUT >= 6.3) {
 		SINE_INPUT = 0;
 	}
 

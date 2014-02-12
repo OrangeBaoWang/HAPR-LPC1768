@@ -7,6 +7,8 @@ void waitForTerminal(void);
 
 float getFloat(void);
 
+void printEffects(void);
+
 void generateUI(void);
 
 #endif

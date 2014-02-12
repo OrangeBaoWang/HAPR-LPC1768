@@ -23,7 +23,7 @@ uint32_t tremeloF(uint32_t sample, SFilter *filter) {
 
 	SINE_INPUT += SINE_INCREMENT;
 
-	if (SINE_INPUT > 6.3) {
+	if (SINE_INPUT >= 6.3) {
 		SINE_INPUT = 0;
 	}
 
