@@ -186,7 +186,7 @@ void generateUI(void){
 							enqueue(createReverbF(filterVariable[0], filterVariable[1]));
 							stay = 0;
 							break;
-						case '6':
+						case '7':
 							printToTerminal("Enter the range of the sweep (0-1):\n\r");
 							filterVariable[0] = inputAndAssert(0, 1);
 

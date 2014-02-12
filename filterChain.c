@@ -96,7 +96,7 @@ int dequeueByIndex(float index) {
 	while (currentNode->next != NULL) {
 
 		if (currentIndex == indexInt) {
-			currentNode->next = (curretNode->next)->next;
+			currentNode->next = (currentNode->next)->next;
 			return 0;
 		}
 		currentNode = currentNode->next;
