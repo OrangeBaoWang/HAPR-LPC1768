@@ -87,7 +87,7 @@ float inputAndAssert(float min, float max) {
 				incorrect = 0;
 			}
 		}
-		printfToTerminal("You must enter a number between %f and %f", min, max);
+		printfToTerminal("You must enter a number between %f and %f\n\r", min, max);
 	}
 	return input;
 }
