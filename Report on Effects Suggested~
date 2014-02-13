@@ -1,0 +1,132 @@
+Compressor
+	- Reduces volume of loud sound or amplifies quite sounds
+		- Does this by compressing an audio signals dynamic range
+	
+		- Downward Compression, reduces loud sounds, quiet sounds remain 			  unaffected
+			- Apply gain reduction to the loud section of signal
+			- http://en.wikipedia.org/wiki/File:Audio-level-compresion-    				  diagram-01.svg
+
+		- Upward Compression, increases sound of quiet sounds, loud sounds 			  unaffected
+			- Apply gain increase to quiet section of signal
+			- http://en.wikipedia.org/wiki/File:Upward_compression.svg
+
+
+	- HWWDT
+		- Clipping
+		- http://en.wikipedia.org/wiki/Clipping_%28signal_processing%	29#Analog_circuitry
+		-We can do it digitally, by using 16-bit signed integers, doubling the sample values
+
+		- UPDATED
+			- We need to clip it by using low and high pass filters
+				- Store signal
+					- Run it through low pass filter
+					- Run original through high pass filter
+					- Combine the 2 new signals
+			- Attack time is the time it takes for signal to become compressed
+			- Release time is the time it takes for signal to revert from compressed to normal
+			
+			- We can also use a FET to apply compression
+
+			- If we could build that circuit http://electronics.stackexchange.com/questions/87989/how-do-i-implement-soft-clipping-in-an-audio-circuit-or-should-i-just-attenuate
+
+
+Envolope Follower
+	- Responds to the incoming signal in different ways depending on the signal
+		- It could be set up so the filter is more closed on soft guitar strums
+		- Or it could be set up to be more open on loud guitar strums
+
+	- Can use the Envolope follower to vary the "attack" (fast/slow) based on the
+	  input signal for effects.
+		- Useful = http://www.abletonop.com/2011/07/auto-filter-        		  modulation-part-ii-envelope-follower/
+
+	- Used to curve parts of the signal to make it sound different
+	
+
+	- HWWDT
+		- Monitor incoming signal
+		- When it reaches part that we want it to have
+		- Apply filter to it
+			- Low Pass/High Pass perhaps to vary sound
+
+Phaser
+	- Creates a "sweeping" effect by making a series of peaks and troughs in the 		  signal
+		- Does this by using a low-frequency oscillator and below
+		- Split audio signal into 2 paths
+			- 1 Path uses an all-pass filter to preserve amplitude and 				  alter phase
+			- The other path can be anything, change the pitch, delay, etc
+		- These 2 paths are then joined together to create the overall effect
+
+	- Notch Filter frequently mentioned
+	
+	- http://en.wikipedia.org/wiki/Phaser_%28effect%29
+
+Chorus
+	- When individual sounds with similar tone and pitch, all come together and are
+	  perceived as one sound
+
+	- To create this
+		- Take input signal
+		- Mix it with one or more delayed, pitch modulated copies of itself
+			- To modulate pitch use a Low-frequency oscillator 
+	
+	- http://en.wikipedia.org/wiki/Chorus_effect
+
+Vibrato
+	- The effect of regular, pulsating change of pitch, the vibrating effect
+		- Can vary amount of pitch and speed of pitch is varied at
+	
+	- Useful http://en.wikipedia.org/wiki/Vibrato_unit
+
+	- To create this
+		- Use a combination of delays and filters
+		- NOT MUCH INFO AVAILABLE, COULD BE HARD
+
+Tremelo
+	- Very similar to Vibrato, the trembling effect
+	- Two types
+		- First type
+			- rapid reiteration, playing the same note again and again
+		- Second type
+			- variation in amplitude
+			- rapidly turning volume up or down
+	- "Whammy Bar"
+	
+	- http://en.wikipedia.org/wiki/Tremolo
+
+Reverb
+	- A reverb is when a sound is produced in an enclosed space, lots of echoes 		  build up then die down as the sound is absorbed
+	
+	- To create
+		- Use multiple feedback, delay circuits to create a large, decaying 			  series of echoes
+	
+	- Advanced
+		- Simulate the time and the frequency responses of the CS Lab
+
+
+Distortion
+	- Creates "warm", "dirty" and "fuzzy" sounds by compressing the peaks of the 		  audio signal
+
+	- For Fuzzy distortion 
+		-  Alter signal until it is nearly a square wave and add overtones by 			   way of a frequency multiplier
+			- Frequency multiplier use a bandpass filter to choose desired 				  frequency
+
+	- OverDrive
+		- Amplifies signal so it distorts massively
+			- Very easy
+
+Pitch Shift(Notes say Difficult)
+	- The pitch of the audio signal is raised or lowered
+	
+	- To create replaying the audio signal at a different speed than it was 	  recorded
+
+	- Note, not much information available
+
+Noise Filter
+	- Nothing comes up, closest is Noise Reduction 
+
+
+
+
+
+
+
