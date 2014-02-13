@@ -179,7 +179,7 @@ void printQueue(void) {
 
 		currentNode = currentNode->next;	
 
-		printfToTerminal("%d\n\r", index);
+		printfToTerminal("%d\n\r", index++);
 
 		if ((currentNode->filter)->sfilter != NULL) {
 			(*(((currentNode->filter)->sfilter)->printFunction))
