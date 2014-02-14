@@ -88,7 +88,22 @@ Oli - Big Boss
 - Daz and I 85% on UI.
 
 - Maybe change colours on UI for more aestheticness, yea zyzz brah!
+#######################################################################################
+Meeting 5
 
+Jay - Secretary
+Daz - Chair
+Oli - Big Boss
+########################
+
+- Project is 99% complete
+
+- Oli working on print chain and finishing off UI
+
+- Daz and Jay working on individual filters
+
+- Check that suitable bits of code are commented
+#######################################################################################
 
 
 

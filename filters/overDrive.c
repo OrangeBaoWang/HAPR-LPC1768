@@ -1,23 +1,27 @@
 #include "lpc_types.h"
-#include "../filter.h"
-#include "overDrive.h"
-#include "../global.h"
-#include "../debug.h"
+
 #include "<stdlib.h>"
 #include "<math.h>"
+
+#include "../global.h"
+#include "../debug.h"
+#include "../filter.h"
+
+#include "overDrive.h"
 
 uint32_t overDriveF(uint32_t sample, SFilter *filter) {
 
 	uint32_t output;
-	uint32_t boost;
+	uint32_t gain;
 	uint32_t a;
 	uint32_t k;
-	uint32_t inputDrive; //Drive much be between 0 and 100
-	uint32_t x; //Should be between 0 and 1
+	//Drive much be between 0 and 100
+	//X Should be between 0 and 1
 	
 
-	float gain = filter->parameters[0];
-	float drive = filter->parameters[1];
+	float boost = filter->parameters[0];
+	float inputDrive = filter->parameters[1];
+	float x = filter->parameters[2];
 
 	gain = ((boost/100)*100)+1; //Main equation for gain
 
@@ -25,20 +29,18 @@ uint32_t overDriveF(uint32_t sample, SFilter *filter) {
 	k = (2*a) / (1-a);
 	drive = ((1+k)*(x)) / (1+k*abs(x)); //Main equation for drive, needs a & k above
 	
-
-
-
+}
 
 void printOverDriveF(SFilter *filter) {
 
-	printfToTerminal("Overdrive:\n\r\t\tGain: %f\n\r\t\tDrive: %f\n\r\t\t",
-			filter->parameters[0], filter->parameters[1]);
+	printfToTerminal("Overdrive: %f\n\rBoost: %f\n\r\t\tDrive: %f\n\rX: %f\n\r",
+			filter->parameters[0], filter->parameters[1], filter->parameters[2]);
 }
 
-Filter *createOverDriveF(float gain, float drive) {
+Filter *createOverDriveF(float boost, float inputDrive, float x) {
 	
 	Filter *overDriveFilter = createFilterS(&overDriveF, &printOverDriveF,
-			gain, drive, UNUSED, UNUSED, UNUSED);
+			boost, inputDrive, x, UNUSED, UNUSED);
 
 	
 	return overDriveFilter;
