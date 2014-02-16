@@ -25,15 +25,17 @@ uint32_t envelope = 0;
 // ONE TIME
 uint32_t envFollowerF(uint32_t sample, SFilter *filter) {
 
-	//attack, follow rising wave
-  if (sample > envelope){
+  //attack, follow rising wave
+  if (sample > envelope) {
     envelope = ATTACK_COEFF * (envelope - sample) + sample;
-  else
+  } else {
   //release, follow falling wave
     envelope = RELEASE_COEFF  * (envelope - sample) + sample;
+  }
+  
   return envelope
 
-
+}
 /*
   //envWindow[oldestElem] = sample;
 	if (oldestElem == (WINDOW_SIZE - 1)) {
@@ -67,8 +69,6 @@ uint32_t envFollowerF(uint32_t sample, SFilter *filter) {
 
 	return max;
 */
-
-}
 
 void printEnvFollowerF(SFilter *filter) {
 
