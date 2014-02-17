@@ -113,9 +113,9 @@ void generateUI(void){
 		printToTerminal("\n\r################ MAIN MENU #################\n\r");
 		printToTerminal("1) Display all possible effects\n\r");
 		printToTerminal("2) Display all added effects\n\r");
-		printToTerminal("3) Remove effects\n\r");
-		printToTerminal("4) Add effects\n\r");
-		printToTerminal("5) Modify effects\n\r");
+		printToTerminal("3) Remove effect\n\r");
+		printToTerminal("4) Add effect\n\r");
+		printToTerminal("5) Replace effect\n\r");
 		printToTerminal("6) Exit \n\r\n\r");
 		
 		waitForTerminal();
@@ -136,9 +136,11 @@ void generateUI(void){
 				printToTerminal("Enter index of effect to remove:\n\r");
 
 				waitForTerminal();
-				dequeueByIndex(getFloat());
+				
+				if (dequeueByIndex(getFloat()) == -1) {
+					printToTerminal("Invalid index given\n\r");
+				}
 
-				// ADD SUCCESS OR FAILURE DEPENDING ON WHETHER INDEX EXISTS
 				forceInput();
 				break;
 			case '4':
@@ -202,7 +204,9 @@ void generateUI(void){
 			case '5':
 				clearScreen();
 				printQueue();
-				printToTerminal("Enter index of effect to modify:\n\r");
+				printToTerminal("Enter index of effect to replace:\n\r");
+				
+				// FUNCTIONALITY NEEDS TO BE IMPLEMENTED
 
 				waitForTerminal();
 				
