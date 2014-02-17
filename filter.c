@@ -23,6 +23,7 @@ uint32_t mixParallel(PFilter *pfilter, uint32_t sample) {
 
 }
 
+/*
 // Function that will create a new SFilter struct for adding to
 // PFilter structs for parallel filters
 SFilter *newSfilter(uint32_t (*filterAddr)(uint32_t, SFilter *), void (*printAddr)(SFilter *),
@@ -40,7 +41,7 @@ SFilter *newSfilter(uint32_t (*filterAddr)(uint32_t, SFilter *), void (*printAdd
 
 	return createdSfilter;
 }
-
+*/
 // Function to create each new filter struct so that it can be
 // added to the filterNode struct upon enqueueing
 Filter *createFilterS(uint32_t (*filterAddr)(uint32_t, SFilter *), void (*printAddr)(SFilter *),
