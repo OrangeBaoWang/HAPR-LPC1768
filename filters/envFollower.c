@@ -12,8 +12,8 @@
 #define ATTACK_COEFF filter->scratch[0]
 #define RELEASE_COEFF filter->scratch[1]
 
-static uint32_t envWindow[WINDOW_SIZE];
-static uint8_t oldestElem;
+//static uint32_t envWindow[WINDOW_SIZE];
+//static uint8_t oldestElem;
 
 uint32_t envelope = 0;
 
@@ -33,7 +33,7 @@ uint32_t envFollowerF(uint32_t sample, SFilter *filter) {
     envelope = RELEASE_COEFF  * (envelope - sample) + sample;
   }
   
-  return envelope
+  return envelope;
 
 }
 /*

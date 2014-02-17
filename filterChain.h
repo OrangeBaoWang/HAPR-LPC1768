@@ -10,6 +10,8 @@ typedef struct FilterNode {
 
 int enqueue(Filter *newFilter);
 
+int enqueueByIndex(Filter *newFilter, float index);
+
 int dequeue(Filter *targetFilter);
 
 int dequeueByIndex(float index);

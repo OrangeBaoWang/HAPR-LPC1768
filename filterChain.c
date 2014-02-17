@@ -42,6 +42,40 @@ int enqueue(Filter *newFilter) {
 	return 0;
 }
 
+// Returns 0 on success, -1 otherwise
+int enqueueByIndex(Filter *newFilter, float index) {
+
+	FilterNode *currentNode = root;
+
+	uint16_t indexInt = index;
+	uint16_t currentIndex = 1;
+
+	while (currentNode->next != NULL) {
+
+		if (currentIndex == indexInt) {
+
+			FilterNode *tempNode = currentNode->next;
+
+			currentNode->next = malloc(sizeof(FilterNode));
+			currentNode = currentNode->next;
+
+			currentNode->filter = newFilter;
+			currentNode->next = tempNode;
+
+			if (currentNode == NULL) {
+				THROW("Out of memory when allocating new node to filter queue");
+				return -1;
+			}
+
+			return 0;
+		}
+		currentNode = currentNode->next;
+		currentIndex++;
+	}
+
+	return -1;
+}
+
 int dequeue(Filter *targetFilter) {
 
 	FilterNode *currentNode = root;

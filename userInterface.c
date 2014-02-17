@@ -115,7 +115,8 @@ void generateUI(void){
 		printToTerminal("2) Display all added effects\n\r");
 		printToTerminal("3) Remove effects\n\r");
 		printToTerminal("4) Add effects\n\r");
-		printToTerminal("5) Exit \n\r\n\r");
+		printToTerminal("5) Modify effects\n\r");
+		printToTerminal("6) Exit \n\r\n\r");
 		
 		waitForTerminal();
 		switch (terminalBuffer) {
@@ -149,68 +150,43 @@ void generateUI(void){
 					waitForTerminal();
 					switch(terminalBuffer){
 						case '1':
-							printToTerminal("Enter the size of the delay (0-8000):\n\r");
-							filterVariable[0] = inputAndAssert(0, 8000);
+							inputDelay();
 
 							enqueue(createDelayF(filterVariable[0]));
 							stay = 0;
 							break;
 						case '2':
-							printToTerminal("Enter the mixing ratio (0-1):\n\r");
-							filterVariable[0] = inputAndAssert(0, 1);
-
-							printToTerminal("\n\rEnter the delay (0-8000):\n\r");
-							filterVariable[1] = inputAndAssert(0, 8000);
+							inputEcho();
 
 							enqueue(createEchoF(filterVariable[0], filterVariable[1]));
 							stay = 0;
 							break;
 						case '3':
-							printToTerminal("Enter the attack (ms):\n\r");
-							filterVariable[0] = inputAndAssert(0, 10000);
-
-							printToTerminal("\n\rEnter the release (ms):\n\r");
-							filterVariable[1] = inputAndAssert(0, 10000);
+							inputEnvFollower();
 
 							enqueue(createEnvFollowerF(filterVariable[0], filterVariable[1]));
 							stay = 0;
 							break;
 						case '4':
-							printToTerminal("Enter the mixing ratio (0-1):\n\r");
-							filterVariable[0] = inputAndAssert(0, 1);
-
-							printToTerminal("\n\rEnter the range of the sweep (0-8000):\n\r");
-							filterVariable[1] = inputAndAssert(0, 8000);
-
-							printToTerminal("\n\rEnter the frequency of the sweep (Hz)");
-							filterVariable[2] = inputAndAssert(0, 10000);
+							inputFlange();
 
 							enqueue(createFlangeF(filterVariable[0], filterVariable[1], filterVariable[2]));
 							stay = 0;
 							break;
 						case '5':
-							printToTerminal("Enter the magnitude of the gain (eg. 0.4 or 1.2) (0-3):\n\r");
-							filterVariable[0] = inputAndAssert(0, 3);
+							inputLinearGain();
 
 							enqueue(createLinearGainF(filterVariable[0]));
 							stay = 0;
 							break;
 						case '6':
-							printToTerminal("Enter the mixing ratio (0-1):\n\r");
-							filterVariable[0] = inputAndAssert(0, 1);
-
-							printToTerminal("\n\rEnter the delay (0-8000):\n\r");
-							filterVariable[1] = inputAndAssert(0, 8000);
+							inputReverb();
 
 							enqueue(createReverbF(filterVariable[0], filterVariable[1]));
 							stay = 0;
 							break;
 						case '7':
-							printToTerminal("Enter the range of the sweep (0-1):\n\r");
-							filterVariable[0] = inputAndAssert(0, 1);
-
-							printToTerminal("\n\rEnter the frequency of the sweep (Hz)");
-							filterVariable[1] = inputAndAssert(0, 10000);
+							inputTremelo();
 
 							enqueue(createTremeloF(filterVariable[0], filterVariable[1]));
 							stay = 0;
@@ -222,8 +198,15 @@ void generateUI(void){
 					}
 				}
 				break;
-				
+
 			case '5':
+				clearScreen();
+				printQueue();
+				printToTerminal("Enter index of effect to modify:\n\r");
+
+				waitForTerminal();
+				
+			case '6':
 				printToTerminal("System will now terminate");
 				disableTimer();
 				exit(0);
@@ -236,4 +219,56 @@ void generateUI(void){
 	}
 }
 
+void inputDelay(void) {
+	printToTerminal("Enter the size of the delay (0-8000):\n\r");
+	filterVariable[0] = inputAndAssert(0, 8000);
+}
+
+void inputEcho(void) {
+	printToTerminal("Enter the mixing ratio (0-1):\n\r");
+	filterVariable[0] = inputAndAssert(0, 1);
+
+	printToTerminal("\n\rEnter the delay (0-8000):\n\r");
+	filterVariable[1] = inputAndAssert(0, 8000);
+}
+
+void inputEnvFollower(void) {
+	printToTerminal("Enter the attack (ms):\n\r");
+	filterVariable[0] = inputAndAssert(0, 10000);
+
+	printToTerminal("\n\rEnter the release (ms):\n\r");
+	filterVariable[1] = inputAndAssert(0, 10000);
+}
+
+void inputFlange(void) {
+	printToTerminal("Enter the mixing ratio (0-1):\n\r");
+	filterVariable[0] = inputAndAssert(0, 1);
+
+	printToTerminal("\n\rEnter the range of the sweep (0-8000):\n\r");
+	filterVariable[1] = inputAndAssert(0, 8000);
+
+	printToTerminal("\n\rEnter the frequency of the sweep (Hz)");
+	filterVariable[2] = inputAndAssert(0, 10000);
+}
+
+void inputLinearGain(void) {
+	printToTerminal("Enter the magnitude of the gain (eg. 0.4 or 1.2) (0-3):\n\r");
+	filterVariable[0] = inputAndAssert(0, 3);
+}
+
+void inputReverb(void) {
+	printToTerminal("Enter the mixing ratio (0-1):\n\r");
+	filterVariable[0] = inputAndAssert(0, 1);
+
+	printToTerminal("\n\rEnter the delay (0-8000):\n\r");
+	filterVariable[1] = inputAndAssert(0, 8000);
+}
+
+void inputTremelo(void) {
+	printToTerminal("Enter the range of the sweep (0-1):\n\r");
+	filterVariable[0] = inputAndAssert(0, 1);
+
+	printToTerminal("\n\rEnter the frequency of the sweep (Hz)");
+	filterVariable[1] = inputAndAssert(0, 10000);
+}
 
