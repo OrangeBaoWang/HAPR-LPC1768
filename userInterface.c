@@ -109,7 +109,7 @@ void generateUI(void){
 	uint8_t testEnqueue;
 
 	// A float for use when dequeueing and enqueueing by an index
-	float index
+	float index;
 
 	clearScreen();
 	
@@ -216,7 +216,7 @@ void generateUI(void){
 				index = getFloat();
 
 				if (dequeueByIndex(index) == -1) {
-					printToTerminal("Modification failed - Invalid dequeue index given\n\r")
+					printToTerminal("Modification failed - Invalid dequeue index given\n\r");
 				}
 				
 				while (stay){

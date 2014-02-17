@@ -8,7 +8,7 @@ typedef struct FilterNode {
 	struct FilterNode *next;
 } FilterNode;
 
-int enqueue(Filter *newFilter);
+void enqueue(Filter *newFilter);
 
 int enqueueByIndex(Filter *newFilter, float index);
 
