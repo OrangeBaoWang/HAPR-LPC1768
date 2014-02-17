@@ -16,7 +16,7 @@ FilterNode *root;
 uint32_t dSample;
 
 // Need to add way for node to contain filter parameters
-int enqueue(Filter *newFilter) {
+void enqueue(Filter *newFilter) {
 
 	FilterNode *currentNode = root;
 
@@ -30,16 +30,15 @@ int enqueue(Filter *newFilter) {
 	// Moves the currentNode pointer to the new node
 	currentNode = currentNode->next;
 
+	// Test to check malloc did not fail
+	// Will not continue executing after throw
 	if (currentNode == NULL) {
 		THROW("Out of memory when allocating new node to filter queue");
-		return -1;
 	}
 
 	// Initialize the new node
 	currentNode->next = NULL;
 	currentNode->filter = newFilter;
-
-	return 0;
 }
 
 // Returns 0 on success, -1 otherwise
@@ -76,6 +75,9 @@ int enqueueByIndex(Filter *newFilter, float index) {
 	return -1;
 }
 
+// Takes a filter as input and attempts to find a filter of the
+// same parameters. If found, that filter will be dequeued and 0 returned
+// Otherwise, -1 returned
 int dequeue(Filter *targetFilter) {
 
 	FilterNode *currentNode = root;

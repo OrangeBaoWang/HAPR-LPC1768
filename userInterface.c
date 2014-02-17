@@ -106,9 +106,14 @@ void printEffects(void) {
 	
 void generateUI(void){
 
+	uint8_t testEnqueue;
+
+	// A float for use when dequeueing and enqueueing by an index
+	float index
+
 	clearScreen();
 	
-	while (1){
+	while (1) {
 
 		printToTerminal("\n\r################ MAIN MENU #################\n\r");
 		printToTerminal("1) Display all possible effects\n\r");
@@ -205,10 +210,70 @@ void generateUI(void){
 				clearScreen();
 				printQueue();
 				printToTerminal("Enter index of effect to replace:\n\r");
-				
-				// FUNCTIONALITY NEEDS TO BE IMPLEMENTED
 
 				waitForTerminal();
+
+				index = getFloat();
+
+				if (dequeueByIndex(index) == -1) {
+					printToTerminal("Modification failed - Invalid dequeue index given\n\r")
+				}
+				
+				while (stay){
+					waitForTerminal();
+					switch(terminalBuffer){
+						case '1':
+							inputDelay();
+
+							testEnqueue = enqueueByIndex(createDelayF(filterVariable[0]), index);
+							stay = 0;
+							break;
+						case '2':
+							inputEcho();
+
+							testEnqueue = enqueueByIndex(createEchoF(filterVariable[0], filterVariable[1]), index);
+							stay = 0;
+							break;
+						case '3':
+							inputEnvFollower();
+
+							testEnqueue = enqueueByIndex(createEnvFollowerF(filterVariable[0], filterVariable[1]), index);
+							stay = 0;
+							break;
+						case '4':
+							inputFlange();
+
+							testEnqueue = enqueueByIndex(createFlangeF(filterVariable[0], filterVariable[1], filterVariable[2]), index);
+							stay = 0;
+							break;
+						case '5':
+							inputLinearGain();
+
+							testEnqueue = enqueueByIndex(createLinearGainF(filterVariable[0]), index);
+							stay = 0;
+							break;
+						case '6':
+							inputReverb();
+
+							testEnqueue = enqueueByIndex(createReverbF(filterVariable[0], filterVariable[1]), index);
+							stay = 0;
+							break;
+						case '7':
+							inputTremelo();
+
+							testEnqueue = enqueueByIndex(createTremeloF(filterVariable[0], filterVariable[1]),index);
+							stay = 0;
+							break;
+						default:
+							printToTerminal("Enter a correct effect number\n\r");
+							stay = 1;
+							break;
+					}
+				}
+				if (testEnqueue != 0) {
+					printToTerminal("Modification failed - Invalid enqueue given\n\r");
+				}
+				break;
 				
 			case '6':
 				printToTerminal("System will now terminate");
