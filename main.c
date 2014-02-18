@@ -72,6 +72,7 @@ void tests() {
 	enqueue(createFilterP((createFlangeF(0.4, 8000, 0.5)),
 				createReverbF(0.4, 8000), 0.5));
 */
+	return;
 }
 
 int main(void) {
@@ -82,20 +83,14 @@ int main(void) {
 	chain_init();
 	printfToTerminal("FILTER CHAIN INITIALISED. SAMPLE RATE IS :%d\n\r", ADC_SAMPLE_RATE);
 
-	tests();
+	//tests();
 	
 
 	sadc_init(ADC_SAMPLE_RATE);
 	sdac_init();
 	timer_init((uint32_t) ((1.0/ADC_SAMPLE_RATE) * 1000000));
-	printQueue();
 
-
-		//read_usb_serial_none_blocking(&recieveBuffer, 10);
-		//printfToTerminal("stuff %c \n\r", recieveBuffer);
-		//some awesome stuff that'll read and print the greatest things
-		//ever.
-		generateUI();
+	generateUI();
 
 	return 0;
 }
