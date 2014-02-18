@@ -7,7 +7,7 @@
 #include "../debug.h"
 #include "../global.h"
 
-#define WINDOW_SIZE 30
+#define WINDOW_SIZE 2
 
 #define ATTACK_COEFF filter->scratch[0]
 #define RELEASE_COEFF filter->scratch[1]
@@ -17,6 +17,9 @@
 
 uint32_t envelope = 0;
 
+uint32_t envWindow[WINDOW_SIZE];
+int index = 1; //used to check where in envWindow
+
 // See and reference:
 // http://www.kvraudio.com/forum/viewtopic.php?p=5178628
 //http://www.musicdsp.org/archive.php?classid=2
@@ -24,7 +27,10 @@ uint32_t envelope = 0;
 // ONLY ONE ENVELOPE FOLLOWER CAN BE IN THE FILTER CHAIN AT ANY
 // ONE TIME
 uint32_t envFollowerF(uint32_t sample, SFilter *filter) {
+  
+  envWindow[index] = sample;
 
+	envelope = envWindow[index - 1]; //get previous value
   //attack, follow rising wave
   if (sample > envelope) {
     envelope = ATTACK_COEFF * (envelope - sample) + sample;
@@ -33,6 +39,16 @@ uint32_t envFollowerF(uint32_t sample, SFilter *filter) {
     envelope = RELEASE_COEFF  * (envelope - sample) + sample;
   }
   
+  //if at end of envWindow, loop back round
+	if (index == (WINDOW_SIZE - 1)) {
+		index = 0;
+	} else {
+		index++;
+	}
+	
+  printfToTerminal("env value %d \n\r", envelope);
+  //printfToTerminal("attack %f \n", ATTACK_COEFF);
+  //printfToTerminal("release %f \n", RELEASE_COEFF);
   return envelope;
 
 }
