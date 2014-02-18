@@ -121,7 +121,8 @@ void generateUI(void){
 		printToTerminal("3) Remove effect\n\r");
 		printToTerminal("4) Add effect\n\r");
 		printToTerminal("5) Replace effect\n\r");
-		printToTerminal("6) Exit \n\r\n\r");
+		printToTerminal("6) Empty chain (pass-through");
+		printToTerminal("7) Exit \n\r\n\r");
 		
 		waitForTerminal();
 		switch (terminalBuffer) {
@@ -282,8 +283,18 @@ void generateUI(void){
 
 				forceInput();
 				break;
-				
 			case '6':
+				printToTerminal("Removing all effects from the filter chain...");
+				
+				if (dequeueAll() == -1) {
+					printToTerminal("Filter chain already empty\n\r");
+				} else {
+					printToTerminal("COMPLETE\n\r");
+				}
+
+				forceInput();
+				break;
+			case '7':
 				printToTerminal("System will now terminate");
 				disableTimer();
 				exit(0);

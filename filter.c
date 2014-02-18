@@ -28,11 +28,11 @@ uint32_t mixParallel(PFilter *pfilter, uint32_t sample) {
 Filter *createFilterS(uint32_t (*filterAddr)(uint32_t, SFilter *), void (*printAddr)(SFilter *),
 		float param0, float param1, float param2, float param3, float param4) {
 
-	Filter *createdFilter;
-	createdFilter = malloc(sizeof(Filter));
-
 	SFilter *createdSfilter;
 	createdSfilter = malloc(sizeof(SFilter));
+
+	Filter *createdFilter;
+	createdFilter = malloc(sizeof(Filter));
 
 	createdFilter->sfilter = createdSfilter;
 	createdFilter->pfilter = NULL;
@@ -53,11 +53,11 @@ Filter *createFilterS(uint32_t (*filterAddr)(uint32_t, SFilter *), void (*printA
 Filter *createFilterP(Filter *filter1, Filter *filter2,
 					float mixingRatio) {
 
-	Filter *createdFilter;
-	createdFilter = malloc(sizeof(Filter));
-
 	PFilter *createdPfilter;
 	createdPfilter = malloc(sizeof(PFilter));
+
+	Filter *createdFilter;
+	createdFilter = malloc(sizeof(Filter));
 
 	createdFilter->sfilter = NULL;
 	createdFilter->pfilter = createdPfilter;
@@ -65,6 +65,8 @@ Filter *createFilterP(Filter *filter1, Filter *filter2,
 	createdPfilter->filterOne = filter1->sfilter;
 	createdPfilter->filterTwo = filter2->sfilter;
 	createdPfilter->mixRatio = mixingRatio;
+
+
 
 	return createdFilter;
 }

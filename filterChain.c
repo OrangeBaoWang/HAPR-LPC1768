@@ -15,7 +15,26 @@ FilterNode *root;
 // takes place
 uint32_t dSample;
 
-// Need to add way for node to contain filter parameters
+void freeNode(FilterNode *nodeToFree) {
+
+	// Freed in the reverse order to how they were allocated
+
+	free(nodeToFree);
+	free(nodeToFree->filter);
+
+	// If the filterNode contains a parallel filter:
+	if ((nodeToFree->filter)->sfilter == NULL) {
+		free((nodeToFree->filter)->pfilter);
+		free(((nodeToFree->filter)->pfilter)->filterTwo);
+		free(((nodeToFree->filter)->pfilter)->filterOne);
+	} else {
+		// FilterNode contains a serial filter:
+		free((nodeToFree->filter)->sfilter);
+	}
+
+	return;
+}
+
 void enqueue(Filter *newFilter) {
 
 	FilterNode *currentNode = root;
@@ -138,9 +157,37 @@ int dequeueByIndex(float index) {
 		currentNode = currentNode->next;
 		currentIndex++;
 	}
-
 	return -1;
+}
 
+// Will empty the filter chain of all filterNodes
+// Returns -1 if the chain is already empty, 0 otherwise
+int dequeueAll(void) {
+
+	FilterNode *nodeToFree;
+
+	if (root->next == NULL) {
+		return -1;
+	}
+
+	nodeToFree = root->next;
+
+	while (root->next != NULL) {
+		// If at the last filter in the chain, free the filter node and return
+		if ((root->next)->next == NULL) {
+				root->next = NULL;
+				freeNode(nodeToFree);
+				return 0;
+		}
+		// Not at the last filter in the chain - rearrange root to point to the next filter
+		// after the one to free and then free the node no longer in the chain
+		root->next = nodeToFree->next;
+		freeNode(nodeToFree);
+
+		// nodeToFree becomes the first filterNode in the chain
+		nodeToFree = root->next;
+	}
+	return 0;
 }
 
 // Will return 1 if two filters are equivalent, 0 otherwise
