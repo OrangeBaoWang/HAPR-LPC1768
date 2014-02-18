@@ -17,6 +17,8 @@
 #include "filters/tremelo.h"
 #include "filters/overDrive.h"
 #include "filters/lowPass.h"
+#include "filters/highPass.h"
+#include "filters/bandPass.h"
 
 #include "debug.h"
 #include "global.h"
@@ -103,7 +105,8 @@ float inputAndAssert(float min, float max) {
 void printEffects(void) {
 	printToTerminal("\n\r1 - Delay\n\r2 - Echo\n\r3 - Enveloper Follower\n\r"
 					"4 - Flange\n\r5 - Linear Gain\n\r6 - Reverb\n\r7 - Tremelo\n\r"
-					"8 - Overdrive\n\r9 - Low-pass\n\r10 - High-pass\n\r\n\r");
+					"8 - Overdrive\n\r9 - Low-pass\n\r10 - High-pass\n\r"
+					"11 - Band-pass\n\r\n\r");
 	return;
 }
 	
@@ -214,6 +217,18 @@ void generateUI(void){
 							enqueue(createLowPassF(filterVariable[0]));
 							stay = 0;
 							break;
+						case 10:
+							inputHighPass();
+
+							enqueue(createHighPassF(filterVariable[0]));
+							stay = 0;
+							break;
+						case 11:
+							inputBandPass();
+
+							enqueue(createBandPassF(filterVariable[0], filterVariable[1]));
+							stay = 0;
+							break;
 						default:
 							printToTerminal("Enter a correct effect number:\n\r");
 							stay = 1;
@@ -296,6 +311,18 @@ void generateUI(void){
 							inputLowPass();
 
 							testEnqueue = enqueueByIndex(createLowPassF(filterVariable[0]), index);
+							stay = 0;
+							break;
+						case 10:
+							inputHighPass();
+
+							testEnqueue = enqueueByIndex(createHighPassF(filterVariable[0]), index);
+							stay = 0;
+							break;
+						case 11:
+							inputBandPass();
+
+							testEnqueue = enqueueByIndex(createBandPassF(filterVariable[0], filterVariable[1]), index);
 							stay = 0;
 							break;
 						default:
@@ -401,4 +428,17 @@ void inputOverdrive(void) {
 void inputLowPass(void) {
 	printToTerminal("Enter the cutoff amplitude (0-4000):\n\r");
 	filterVariable[0] = inputAndAssert(0, 4000);
+}
+
+void inputHighPass(void) {
+	printToTerminal("Enter the cutoff amplitude (0-4000):\n\r");
+	filterVariable[0] = inputAndAssert(0, 4000);
+}
+
+void inputBandPass(void) {
+	printToTerminal("Enter the bottom cutoff amplitude (0-4000):\n\r");
+	filterVariable[0] = inputAndAssert(0, 4000);
+
+	printToTerminal("Enter the top cutoff amplitude (0-4000):\n\r");
+	filterVariable[1] = inputAndAssert(0, 4000);
 }

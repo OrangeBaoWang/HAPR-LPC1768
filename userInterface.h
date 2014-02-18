@@ -31,4 +31,8 @@ void inputOverdrive(void);
 
 void inputLowPass(void);
 
+void inputHighPass(void);
+
+void inputBandPass(void);
+
 #endif

@@ -6,17 +6,19 @@
 #include "../debug.h"
 
 uint32_t bandPassF(uint32_t sample, SFilter *filter) {
+  
   float cutOffLow = filter->parameters[0];
   float cutOffHigh = filter->parameters[1];
+  
   //if sample is above cutOffLow and below cutOffHigh then return
-  if (sample > cutOffLow){
-    if (sample < cutOffHigh){
+  if (sample > cutOffLow) {
+    if (sample < cutOffHigh) {
       return sample;
     } 
-    else return 0; //return nothing
   }
+
   //else return nothing
-  else return 0;
+  return 0;
 }
 
 void printBandPassF(SFilter *filter) {
