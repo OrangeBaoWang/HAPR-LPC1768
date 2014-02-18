@@ -99,8 +99,8 @@ float inputAndAssert(float min, float max) {
 }
 
 void printEffects(void) {
-	printToTerminal("1 - Delay\n\r2 - Echo\n\r3 - Enveloper Follower\n\r"
-					"4 - Flange\n\r5 - Linear Gain\n\r6 - Reverb\n\r7 - Tremelo\n\r");
+	printToTerminal("\n\r1 - Delay\n\r2 - Echo\n\r3 - Enveloper Follower\n\r"
+					"4 - Flange\n\r5 - Linear Gain\n\r6 - Reverb\n\r7 - Tremelo\n\r\n\r");
 	return;
 }
 	
@@ -199,11 +199,13 @@ void generateUI(void){
 							stay = 0;
 							break;
 						default:
-							printToTerminal("Enter a correct effect number\n\r");
+							printToTerminal("Enter a correct effect number:\n\r");
 							stay = 1;
 							break;
 					}
 				}
+
+				forceInput();
 				break;
 
 			case '5':
@@ -212,12 +214,16 @@ void generateUI(void){
 				printToTerminal("Enter index of effect to replace:\n\r");
 
 				waitForTerminal();
+				index = getFloat() - 1;
 
-				index = getFloat();
-
-				if (dequeueByIndex(index) == -1) {
+				if (dequeueByIndex(index+1) == -1) {
 					printToTerminal("Modification failed - Invalid dequeue index given\n\r");
+					forceInput();
+					break;
 				}
+
+				printEffects();
+				printToTerminal("Enter number of effect to add:\n\r");
 				
 				while (stay){
 					waitForTerminal();
@@ -265,7 +271,7 @@ void generateUI(void){
 							stay = 0;
 							break;
 						default:
-							printToTerminal("Enter a correct effect number\n\r");
+							printToTerminal("Enter a correct effect number:\n\r");
 							stay = 1;
 							break;
 					}
@@ -273,6 +279,8 @@ void generateUI(void){
 				if (testEnqueue != 0) {
 					printToTerminal("Modification failed - Invalid enqueue given\n\r");
 				}
+
+				forceInput();
 				break;
 				
 			case '6':
