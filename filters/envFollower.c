@@ -12,18 +12,32 @@
 #define ATTACK_COEFF filter->scratch[0]
 #define RELEASE_COEFF filter->scratch[1]
 
-static uint32_t envWindow[WINDOW_SIZE];
-static uint8_t oldestElem;
+//static uint32_t envWindow[WINDOW_SIZE];
+//static uint8_t oldestElem;
+
+uint32_t envelope = 0;
 
 // See and reference:
 // http://www.kvraudio.com/forum/viewtopic.php?p=5178628
+//http://www.musicdsp.org/archive.php?classid=2
 
 // ONLY ONE ENVELOPE FOLLOWER CAN BE IN THE FILTER CHAIN AT ANY
 // ONE TIME
 uint32_t envFollowerF(uint32_t sample, SFilter *filter) {
 
-	//envWindow[oldestElem] = sample;
+  //attack, follow rising wave
+  if (sample > envelope) {
+    envelope = ATTACK_COEFF * (envelope - sample) + sample;
+  } else {
+  //release, follow falling wave
+    envelope = RELEASE_COEFF  * (envelope - sample) + sample;
+  }
+  
+  return envelope;
 
+}
+/*
+  //envWindow[oldestElem] = sample;
 	if (oldestElem == (WINDOW_SIZE - 1)) {
 		oldestElem = 0;
 	} else {
@@ -54,7 +68,7 @@ uint32_t envFollowerF(uint32_t sample, SFilter *filter) {
 //	printfToTerminal("Intial: %d, final: %d\n\r", sample, max);
 
 	return max;
-}
+*/
 
 void printEnvFollowerF(SFilter *filter) {
 

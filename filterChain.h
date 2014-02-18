@@ -8,11 +8,17 @@ typedef struct FilterNode {
 	struct FilterNode *next;
 } FilterNode;
 
-int enqueue(Filter *newFilter);
+void freeNode(FilterNode *nodeToFree);
+
+void enqueue(Filter *newFilter);
+
+int enqueueByIndex(Filter *newFilter, float index);
 
 int dequeue(Filter *targetFilter);
 
 int dequeueByIndex(float index);
+
+int dequeueAll(void);
 
 int filterEq(SFilter *targetFilter, SFilter *currentFilter);
 

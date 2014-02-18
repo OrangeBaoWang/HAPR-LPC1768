@@ -13,4 +13,18 @@ void printEffects(void);
 
 void generateUI(void);
 
+void inputDelay(void);
+
+void inputEcho(void);
+
+void inputEnvFollower(void);
+
+void inputFlange(void);
+
+void inputLinearGain(void);
+
+void inputReverb(void);
+
+void inputTremelo(void);
+
 #endif
