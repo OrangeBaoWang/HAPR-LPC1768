@@ -15,6 +15,8 @@
 #include "filters/envFollower.h"
 #include "filters/echo.h"
 #include "filters/tremelo.h"
+#include "filters/overDrive.h"
+#include "filters/lowPass.h"
 
 #include "debug.h"
 #include "global.h"
@@ -206,10 +208,12 @@ void generateUI(void){
 							enqueue(createOverdriveF(filterVariable[0], filterVariable[1], filterVariable[2]));
 							stay = 0;
 							break;
-						case '0':
+						case '9':
 							inputLowPass();
 
-							enqueue(creat)
+							enqueue(createLowPassF(filterVariable[0]));
+							stay = 0;
+							break;
 						default:
 							printToTerminal("Enter a correct effect number:\n\r");
 							stay = 1;
@@ -285,7 +289,13 @@ void generateUI(void){
 						case '8':
 							inputOverdrive();
 
-							testEnqueue = enqueueByIndex(createOverdriverF(filterVariable[0], filterVariable[1], filterVariable[2]), index);
+							testEnqueue = enqueueByIndex(createOverdriveF(filterVariable[0], filterVariable[1], filterVariable[2]), index);
+							stay = 0;
+							break;
+						case '9':
+							inputLowPass();
+
+							testEnqueue = enqueueByIndex(createLowPassF(filterVariable[0]), index);
 							stay = 0;
 							break;
 						default:
@@ -386,4 +396,9 @@ void inputOverdrive(void) {
 
 	printToTerminal("\n\rEnter the drive scalar (0-1):\n\r");
 	filterVariable[2] = inputAndAssert(0, 1);
+}
+
+void inputLowPass(void) {
+	printToTerminal("Enter the cutoff amplitude (0-4000):\n\r");
+	filterVariable[0] = inputAndAssert(0, 4000);
 }

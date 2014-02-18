@@ -29,4 +29,6 @@ void inputTremelo(void);
 
 void inputOverdrive(void);
 
+void inputLowPass(void);
+
 #endif

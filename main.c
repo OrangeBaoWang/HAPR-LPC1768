@@ -21,6 +21,8 @@
 #include "filters/envFollower.h"
 #include "filters/echo.h"
 #include "filters/tremelo.h"
+#include "filters/overDrive.h"
+#include "filters/lowPass.h"
 
 uint16_t sampleBuffer[BUFFER_SIZE];
 uint16_t *sampleP = sampleBuffer;
