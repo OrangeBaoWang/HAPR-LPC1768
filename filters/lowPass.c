@@ -7,10 +7,11 @@
 
 uint32_t lowPassF(uint32_t sample, SFilter *filter) {
   float cutOff = filter->parameters[0];
-
+  //if input sample is below cut off, return it
   if (sample < cutOff){
     return sample;
   }
+  //else return nothing
   else return 0;
 }
 

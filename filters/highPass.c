@@ -7,10 +7,11 @@
 
 uint32_t highPassF(uint32_t sample, SFilter *filter) {
   float cutOff = filter->parameters[0];
-
+//if input sample is above cut off, return it
   if (sample > cutOff){
     return sample;
   }
+  //else return nothing
   else return 0;
 }
 
