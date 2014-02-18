@@ -128,18 +128,18 @@ void generateUI(void){
 		printToTerminal("7) Exit \n\r\n\r");
 		
 		waitForTerminal();
-		switch (terminalBuffer) {
-			case '1':
+		switch ((uint32_t) getFloat()) {
+			case 1:
 				clearScreen();
 				printEffects();
 				forceInput();
 				break;
-			case '2':
+			case 2:
 				clearScreen();
 				printQueue();
 				forceInput();
 				break;
-			case '3':
+			case 3:
 				clearScreen();
 				printQueue();
 				printToTerminal("Enter index of effect to remove:\n\r");
@@ -152,63 +152,63 @@ void generateUI(void){
 
 				forceInput();
 				break;
-			case '4':
+			case 4:
 				clearScreen();
 				printToTerminal("Enter number of effect to add:\n\r");
 				printEffects();
 
 				while (stay){
 					waitForTerminal();
-					switch(terminalBuffer){
-						case '1':
+					switch((uint32_t) getFloat()){
+						case 1:
 							inputDelay();
 
 							enqueue(createDelayF(filterVariable[0]));
 							stay = 0;
 							break;
-						case '2':
+						case 2:
 							inputEcho();
 
 							enqueue(createEchoF(filterVariable[0], filterVariable[1]));
 							stay = 0;
 							break;
-						case '3':
+						case 3:
 							inputEnvFollower();
 
 							enqueue(createEnvFollowerF(filterVariable[0], filterVariable[1]));
 							stay = 0;
 							break;
-						case '4':
+						case 4:
 							inputFlange();
 
 							enqueue(createFlangeF(filterVariable[0], filterVariable[1], filterVariable[2]));
 							stay = 0;
 							break;
-						case '5':
+						case 5:
 							inputLinearGain();
 
 							enqueue(createLinearGainF(filterVariable[0]));
 							stay = 0;
 							break;
-						case '6':
+						case 6:
 							inputReverb();
 
 							enqueue(createReverbF(filterVariable[0], filterVariable[1]));
 							stay = 0;
 							break;
-						case '7':
+						case 7:
 							inputTremelo();
 
 							enqueue(createTremeloF(filterVariable[0], filterVariable[1]));
 							stay = 0;
 							break;
-						case '8':
+						case 8:
 							inputOverdrive();
 
 							enqueue(createOverdriveF(filterVariable[0], filterVariable[1], filterVariable[2]));
 							stay = 0;
 							break;
-						case '9':
+						case 9:
 							inputLowPass();
 
 							enqueue(createLowPassF(filterVariable[0]));
@@ -224,7 +224,7 @@ void generateUI(void){
 				forceInput();
 				break;
 
-			case '5':
+			case 5:
 				clearScreen();
 				printQueue();
 				printToTerminal("Enter index of effect to replace:\n\r");
@@ -243,56 +243,56 @@ void generateUI(void){
 				
 				while (stay){
 					waitForTerminal();
-					switch(terminalBuffer){
-						case '1':
+					switch((uint32_t) getFloat()){
+						case 1:
 							inputDelay();
 
 							testEnqueue = enqueueByIndex(createDelayF(filterVariable[0]), index);
 							stay = 0;
 							break;
-						case '2':
+						case 2:
 							inputEcho();
 
 							testEnqueue = enqueueByIndex(createEchoF(filterVariable[0], filterVariable[1]), index);
 							stay = 0;
 							break;
-						case '3':
+						case 3:
 							inputEnvFollower();
 
 							testEnqueue = enqueueByIndex(createEnvFollowerF(filterVariable[0], filterVariable[1]), index);
 							stay = 0;
 							break;
-						case '4':
+						case 4:
 							inputFlange();
 
 							testEnqueue = enqueueByIndex(createFlangeF(filterVariable[0], filterVariable[1], filterVariable[2]), index);
 							stay = 0;
 							break;
-						case '5':
+						case 5:
 							inputLinearGain();
 
 							testEnqueue = enqueueByIndex(createLinearGainF(filterVariable[0]), index);
 							stay = 0;
 							break;
-						case '6':
+						case 6:
 							inputReverb();
 
 							testEnqueue = enqueueByIndex(createReverbF(filterVariable[0], filterVariable[1]), index);
 							stay = 0;
 							break;
-						case '7':
+						case 7:
 							inputTremelo();
 
 							testEnqueue = enqueueByIndex(createTremeloF(filterVariable[0], filterVariable[1]), index);
 							stay = 0;
 							break;
-						case '8':
+						case 8:
 							inputOverdrive();
 
 							testEnqueue = enqueueByIndex(createOverdriveF(filterVariable[0], filterVariable[1], filterVariable[2]), index);
 							stay = 0;
 							break;
-						case '9':
+						case 9:
 							inputLowPass();
 
 							testEnqueue = enqueueByIndex(createLowPassF(filterVariable[0]), index);
@@ -310,7 +310,7 @@ void generateUI(void){
 
 				forceInput();
 				break;
-			case '6':
+			case 6:
 				printToTerminal("Removing all effects from the filter chain...");
 
 				if (dequeueAll() == -1) {
@@ -321,7 +321,7 @@ void generateUI(void){
 
 				forceInput();
 				break;
-			case '7':
+			case 7:
 				printToTerminal("System will now terminate");
 				disableTimer();
 				exit(0);

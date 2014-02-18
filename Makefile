@@ -1,17 +1,16 @@
 PKG=/usr/local/pkg
-SOURCERY=~/HAPR/Project/HAPR/bin/arm-2013.11
-ARCH=arm-none-eabi
-CC=$(SOURCERY)/bin/$(ARCH)-gcc
-HCC	= /usr/bin/gcc
-OBJCOPY=$(SOURCERY)/bin/$(ARCH)-objcopy
- 
-USER:=$(shell whoami)
- 
- 
-GNU_VERSION=4.8.1
-THUMB2GNULIB=$(SOURCERY)/$(ARCH)/lib/thumb2
-THUMB2GNULIB2=$(SOURCERY)/lib/gcc/$(ARCH)/$(GNU_VERSION)/thumb2
 
+ARCH=arm-none-eabi
+CC=$(ARCH)-gcc
+HCC	= /usr/bin/gcc
+OBJCOPY=$(ARCH)-objcopy
+
+USER:=$(shell whoami)
+
+SOURCERY=$(PKG)/sourcery-g++-lite-arm-eabi-2010.09.51-i686-1
+GNU_VERSION=4.5.0
+THUMB2GNULIB=$(SOURCERY)/$(ARCH)/lib/$(GNU_VERSION)/thumb2
+THUMB2GNULIB2=$(SOURCERY)/$(ARCH)/lib/thumb2
 
 # "Cortex Microcontroller Software Interface Standard" Startup files
 CMSIS=$(PKG)/lpc1700-cmsis-lite-2011.01.26-i686-1
@@ -35,7 +34,7 @@ LDFLAGS+=-L$(CMSIS)/lib -lDriversLPC17xxgnu
 
 EXECNAME	= bin/LIBS
 
-OBJ		= main.o userInterface.o debug.o adcInit.o timerInit.o dacInit.o filterChain.o filter.o filters/envFollower.o filters/flange.o filters/linearGain.o filters/delay.o filters/echo.o filters/reverb.o filters/tremelo.o filters/overDrive.h filters/lowPass.o filters/highPass.o filters/bandPass.o
+OBJ		= main.o userInterface.o debug.o adcInit.o timerInit.o dacInit.o filterChain.o filter.o filters/envFollower.o filters/flange.o filters/linearGain.o filters/delay.o filters/echo.o filters/reverb.o filters/tremelo.o filters/overDrive.o filters/lowPass.o
 
 all: 	main
 	@echo "Build finished"

@@ -18,7 +18,7 @@ uint32_t overdriveF(uint32_t sample, SFilter *filter) {
 	//Drive much be between 0 and 100
 	//X Should be between 0 and 1
 	
-	output = (sample*GAIN)*DRIVE;
+	output = sample*GAIN*DRIVE;
 	
 	return output;
 }
