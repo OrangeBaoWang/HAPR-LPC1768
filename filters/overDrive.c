@@ -29,6 +29,9 @@ uint32_t overDriveF(uint32_t sample, SFilter *filter) {
 	k = (2*a) / (1-a);
 	drive = ((1+k)*(x)) / (1+k*abs(x)); //Main equation for drive, needs a & k above
 	
+	output = (sample*gain)*drive;
+	
+	return (output);
 }
 
 void printOverDriveF(SFilter *filter) {
