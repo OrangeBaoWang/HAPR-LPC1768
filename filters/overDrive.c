@@ -9,7 +9,7 @@
 
 #include "overDrive.h"
 
-uint32_t overDriveF(uint32_t sample, SFilter *filter) {
+uint32_t overdriveF(uint32_t sample, SFilter *filter) {
 
 	uint32_t output;
 	uint32_t gain;
@@ -34,13 +34,13 @@ uint32_t overDriveF(uint32_t sample, SFilter *filter) {
 	return (output);
 }
 
-void printOverDriveF(SFilter *filter) {
+void printOverdriveF(SFilter *filter) {
 
 	printfToTerminal("Overdrive: %f\n\rBoost: %f\n\r\t\tDrive: %f\n\rX: %f\n\r",
 			filter->parameters[0], filter->parameters[1], filter->parameters[2]);
 }
 
-Filter *createOverDriveF(float boost, float inputDrive, float x) {
+Filter *createOverdriveF(float boost, float inputDrive, float x) {
 	
 	Filter *overDriveFilter = createFilterS(&overDriveF, &printOverDriveF,
 			boost, inputDrive, x, UNUSED, UNUSED);

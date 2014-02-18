@@ -100,7 +100,8 @@ float inputAndAssert(float min, float max) {
 
 void printEffects(void) {
 	printToTerminal("\n\r1 - Delay\n\r2 - Echo\n\r3 - Enveloper Follower\n\r"
-					"4 - Flange\n\r5 - Linear Gain\n\r6 - Reverb\n\r7 - Tremelo\n\r\n\r");
+					"4 - Flange\n\r5 - Linear Gain\n\r6 - Reverb\n\r7 - Tremelo\n\r"
+					"8 - Overdrive\n\r9 - Low-pass\n\r10 - High-pass\n\r\n\r");
 	return;
 }
 	
@@ -199,6 +200,16 @@ void generateUI(void){
 							enqueue(createTremeloF(filterVariable[0], filterVariable[1]));
 							stay = 0;
 							break;
+						case '8':
+							inputOverdrive();
+
+							enqueue(createOverdriveF(filterVariable[0], filterVariable[1], filterVariable[2]));
+							stay = 0;
+							break;
+						case '0':
+							inputLowPass();
+
+							enqueue(creat)
 						default:
 							printToTerminal("Enter a correct effect number:\n\r");
 							stay = 1;
@@ -268,7 +279,13 @@ void generateUI(void){
 						case '7':
 							inputTremelo();
 
-							testEnqueue = enqueueByIndex(createTremeloF(filterVariable[0], filterVariable[1]),index);
+							testEnqueue = enqueueByIndex(createTremeloF(filterVariable[0], filterVariable[1]), index);
+							stay = 0;
+							break;
+						case '8':
+							inputOverdrive();
+
+							testEnqueue = enqueueByIndex(createOverdriverF(filterVariable[0], filterVariable[1], filterVariable[2]), index);
 							stay = 0;
 							break;
 						default:
@@ -285,7 +302,7 @@ void generateUI(void){
 				break;
 			case '6':
 				printToTerminal("Removing all effects from the filter chain...");
-				
+
 				if (dequeueAll() == -1) {
 					printToTerminal("Filter chain already empty\n\r");
 				} else {
@@ -360,3 +377,13 @@ void inputTremelo(void) {
 	filterVariable[1] = inputAndAssert(0, 10000);
 }
 
+void inputOverdrive(void) {
+	printToTerminal("Enter the boost (0-100):\n\r");
+	filterVariable[0] = inputAndAssert(0, 100);
+
+	printToTerminal("\n\rEnter the input drive (0-100):\n\r");
+	filterVariable[1] = inputAndAssert(0, 100);
+
+	printToTerminal("\n\rEnter the drive scalar (0-1):\n\r");
+	filterVariable[2] = inputAndAssert(0, 1);
+}

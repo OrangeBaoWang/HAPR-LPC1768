@@ -27,4 +27,6 @@ void inputReverb(void);
 
 void inputTremelo(void);
 
+void inputOverdrive(void);
+
 #endif
