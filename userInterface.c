@@ -110,10 +110,10 @@ void generateUI(void){
 
 	// A float for use when dequeueing and enqueueing by an index
 	float index;
-
-	clearScreen();
 	
 	while (1) {
+
+		clearScreen();
 
 		printToTerminal("\n\r################ MAIN MENU #################\n\r");
 		printToTerminal("1) Display all possible effects\n\r");
@@ -316,7 +316,7 @@ void inputFlange(void) {
 	printToTerminal("\n\rEnter the range of the sweep (0-8000):\n\r");
 	filterVariable[1] = inputAndAssert(0, 8000);
 
-	printToTerminal("\n\rEnter the frequency of the sweep (Hz)");
+	printToTerminal("\n\rEnter the frequency of the sweep (Hz)\n\r");
 	filterVariable[2] = inputAndAssert(0, 10000);
 }
 
