@@ -111,11 +111,6 @@ void printEffects(void) {
 }
 	
 void generateUI(void){
-
-	uint8_t testEnqueue;
-
-	// A float for use when dequeueing and enqueueing by an index
-	float index;
 	
 	while (1) {
 
@@ -160,102 +155,7 @@ void generateUI(void){
 				break;
 
 			case 5:
-				clearScreen();
-				printQueue();
-				printToTerminal("Enter index of effect to replace:\n\r");
-
-				waitForTerminal();
-				index = getFloat() - 1;
-
-				if (dequeueByIndex(index+1) == -1) {
-					printToTerminal("Modification failed - Invalid dequeue index given\n\r");
-					forceInput();
-					break;
-				}
-
-				printEffects();
-				printToTerminal("Enter number of effect to add:\n\r");
-				
-				while (stay){
-					waitForTerminal();
-					switch((uint32_t) getFloat()){
-						case 1:
-							inputDelay();
-
-							testEnqueue = enqueueByIndex(createDelayF(filterVariable[0]), index);
-							stay = 0;
-							break;
-						case 2:
-							inputEcho();
-
-							testEnqueue = enqueueByIndex(createEchoF(filterVariable[0], filterVariable[1]), index);
-							stay = 0;
-							break;
-						case 3:
-							inputEnvFollower();
-
-							testEnqueue = enqueueByIndex(createEnvFollowerF(filterVariable[0], filterVariable[1]), index);
-							stay = 0;
-							break;
-						case 4:
-							inputFlange();
-
-							testEnqueue = enqueueByIndex(createFlangeF(filterVariable[0], filterVariable[1], filterVariable[2]), index);
-							stay = 0;
-							break;
-						case 5:
-							inputLinearGain();
-
-							testEnqueue = enqueueByIndex(createLinearGainF(filterVariable[0]), index);
-							stay = 0;
-							break;
-						case 6:
-							inputReverb();
-
-							testEnqueue = enqueueByIndex(createReverbF(filterVariable[0], filterVariable[1]), index);
-							stay = 0;
-							break;
-						case 7:
-							inputTremelo();
-
-							testEnqueue = enqueueByIndex(createTremeloF(filterVariable[0], filterVariable[1]), index);
-							stay = 0;
-							break;
-						case 8:
-							inputOverdrive();
-
-							testEnqueue = enqueueByIndex(createOverdriveF(filterVariable[0], filterVariable[1], filterVariable[2]), index);
-							stay = 0;
-							break;
-						case 9:
-							inputLowPass();
-
-							testEnqueue = enqueueByIndex(createLowPassF(filterVariable[0]), index);
-							stay = 0;
-							break;
-						case 10:
-							inputHighPass();
-
-							testEnqueue = enqueueByIndex(createHighPassF(filterVariable[0]), index);
-							stay = 0;
-							break;
-						case 11:
-							inputBandPass();
-
-							testEnqueue = enqueueByIndex(createBandPassF(filterVariable[0], filterVariable[1]), index);
-							stay = 0;
-							break;
-						default:
-							printToTerminal("\n\rEnter a correct effect number:\n\r");
-							stay = 1;
-							break;
-					}
-				}
-				if (testEnqueue != 0) {
-					printToTerminal("\n\rModification failed - Invalid enqueue given\n\r");
-				}
-
-				forceInput();
+				enqueueEffectByIndex();
 				break;
 			case 6:
 				printToTerminal("\n\rRemoving all effects from the filter chain...");
@@ -364,6 +264,113 @@ void enqueueEffect(void) {
 				break;
 		}
 	}
+	forceInput();
+
+	return;
+}
+
+void enqueueEffectByIndex(void) {
+
+	uint8_t testEnqueue;
+	uint8_t stay = 1;
+
+	float index;
+
+	clearScreen();
+	printQueue();
+	printToTerminal("Enter index of effect to replace:\n\r");
+
+	waitForTerminal();
+	index = getFloat() - 1;
+
+	if (dequeueByIndex(index+1) == -1) {
+		printToTerminal("\n\rModification failed - Invalid dequeue index given\n\r");
+		forceInput();
+		return;
+	}
+
+	printEffects();
+	printToTerminal("Enter number of effect to add:\n\r");
+
+	while (stay){
+		waitForTerminal();
+		switch((uint32_t) getFloat()){
+			case 1:
+				inputDelay();
+
+				testEnqueue = enqueueByIndex(createDelayF(filterVariable[0]), index);
+				stay = 0;
+				break;
+			case 2:
+				inputEcho();
+
+				testEnqueue = enqueueByIndex(createEchoF(filterVariable[0], filterVariable[1]), index);
+				stay = 0;
+				break;
+			case 3:
+				inputEnvFollower();
+
+				testEnqueue = enqueueByIndex(createEnvFollowerF(filterVariable[0], filterVariable[1]), index);
+				stay = 0;
+				break;
+			case 4:
+				inputFlange();
+
+				testEnqueue = enqueueByIndex(createFlangeF(filterVariable[0], filterVariable[1], filterVariable[2]), index);
+				stay = 0;
+				break;
+			case 5:
+				inputLinearGain();
+
+				testEnqueue = enqueueByIndex(createLinearGainF(filterVariable[0]), index);
+				stay = 0;
+				break;
+			case 6:
+				inputReverb();
+
+				testEnqueue = enqueueByIndex(createReverbF(filterVariable[0], filterVariable[1]), index);
+				stay = 0;
+				break;
+			case 7:
+				inputTremelo();
+
+				testEnqueue = enqueueByIndex(createTremeloF(filterVariable[0], filterVariable[1]), index);
+				stay = 0;
+				break;
+			case 8:
+				inputOverdrive();
+
+				testEnqueue = enqueueByIndex(createOverdriveF(filterVariable[0], filterVariable[1], filterVariable[2]), index);
+				stay = 0;
+				break;
+			case 9:
+				inputLowPass();
+
+				testEnqueue = enqueueByIndex(createLowPassF(filterVariable[0]), index);
+				stay = 0;
+				break;
+			case 10:
+				inputHighPass();
+
+				testEnqueue = enqueueByIndex(createHighPassF(filterVariable[0]), index);
+				stay = 0;
+				break;
+			case 11:
+				inputBandPass();
+
+				testEnqueue = enqueueByIndex(createBandPassF(filterVariable[0], filterVariable[1]), index);
+				stay = 0;
+				break;
+			default:
+				printToTerminal("\n\rEnter a correct effect number:\n\r");
+				stay = 1;
+				break;
+		}
+	}
+	if (testEnqueue != 0) {
+		printToTerminal("\n\rModification failed - Invalid enqueue given\n\r");
+	}
+
 	forceInput();
 
 	return;

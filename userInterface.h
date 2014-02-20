@@ -15,6 +15,8 @@ void generateUI(void);
 
 void enqueueEffect(void);
 
+void enqueueEffectByIndex(void);
+
 void inputDelay(void);
 
 void inputEcho(void);
