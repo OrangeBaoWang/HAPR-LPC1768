@@ -35,6 +35,22 @@ void freeNode(FilterNode *nodeToFree) {
 	return;
 }
 
+void freeNode2(FilterNode *nodeToFree) {
+
+	if ((nodeToFree->filter)->sfilter == NULL) {
+		free(((nodeToFree->filter)->pfilter)->filterOne);
+		free(((nodeToFree->filter)->pfilter)->filterTwo);
+		free((nodeToFree->filter)->pfilter);
+	} else {
+		free((nodeToFree->filter)->sfilter);
+	}
+
+	free(nodeToFree->filter);
+	free(nodeToFree);
+
+	return;
+}
+
 void enqueue(Filter *newFilter) {
 
 	FilterNode *currentNode = root;
@@ -179,13 +195,17 @@ int dequeueAll(void) {
 		// If at the last filter in the chain, free the filter node and return
 		if ((root->next)->next == NULL) {
 				root->next = NULL;
-				freeNode(nodeToFree);
+				
+				//freeNode(nodeToFree);
+				freeNode2(nodeToFree);
 				return 0;
 		}
 		// Not at the last filter in the chain - rearrange root to point to the next filter
 		// after the one to free and then free the node no longer in the chain
-		root->next = nodeToFree->next;
-		freeNode(nodeToFree);
+		root->next = (root->next)->next;
+
+		//freeNode(nodeToFree);
+		freeNode2(nodeToFree);
 
 		// nodeToFree becomes the first filterNode in the chain
 		nodeToFree = root->next;
