@@ -2,6 +2,7 @@
 #define __GLOBAL_H__
 
 #define ADC_SAMPLE_RATE	44000
+#define AMPLITUDE_PIVOT 2048
 #define BUFFER_SIZE 8192
 
 // For passing parameters to the createFilterS function that requires

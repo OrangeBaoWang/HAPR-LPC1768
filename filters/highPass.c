@@ -14,7 +14,7 @@ uint32_t highPassF(uint32_t sample, SFilter *filter) {
     return sample;
   }
   //else return nothing
-  else return 0;
+  else return AMPLITUDE_PIVOT;
 }
 
 void printHighPassF(SFilter *filter) {

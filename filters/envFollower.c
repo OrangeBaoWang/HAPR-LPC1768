@@ -7,7 +7,7 @@
 #include "../debug.h"
 #include "../global.h"
 
-#define WINDOW_SIZE 2
+#define WINDOW_SIZE 10
 
 #define ATTACK_COEFF filter->scratch[0]
 #define RELEASE_COEFF filter->scratch[1]
@@ -27,31 +27,35 @@ int index = 1; //used to check where in envWindow
 // ONLY ONE ENVELOPE FOLLOWER CAN BE IN THE FILTER CHAIN AT ANY
 // ONE TIME
 uint32_t envFollowerF(uint32_t sample, SFilter *filter) {
-  
-  envWindow[index] = sample;
+
+	envWindow[index] = sample;
 
 	envelope = envWindow[index - 1]; //get previous value
-  //attack, follow rising wave
-  if (sample > envelope) {
-    envelope = ATTACK_COEFF * (envelope - sample) + sample;
-  } else {
-  //release, follow falling wave
-    envelope = RELEASE_COEFF  * (envelope - sample) + sample;
+
+	//attack, follow rising wave
+	if (sample > envelope) {
+    	envelope = ATTACK_COEFF * (envelope - sample) + sample;
+    	//printfToTerminal("ATTACKenv value %d \n\r", envelope);
+  	} else {
+  		//release, follow falling wave
+    	envelope = RELEASE_COEFF  * (envelope - sample) + sample;
+    	//printfToTerminal("RELEASEenv value %d \n\r", envelope);
   }
   
-  //if at end of envWindow, loop back round
+	//if at end of envWindow, loop back round
 	if (index == (WINDOW_SIZE - 1)) {
 		index = 0;
 	} else {
 		index++;
 	}
-	
-  printfToTerminal("env value %d \n\r", envelope);
-  //printfToTerminal("attack %f \n", ATTACK_COEFF);
-  //printfToTerminal("release %f \n", RELEASE_COEFF);
-  return envelope;
+
+	//printfToTerminal("attack %f \n", ATTACK_COEFF);
+	//printfToTerminal("release %f \n", RELEASE_COEFF);
+
+	return envelope;
 
 }
+
 /*
   //envWindow[oldestElem] = sample;
 	if (oldestElem == (WINDOW_SIZE - 1)) {
@@ -100,7 +104,7 @@ Filter *createEnvFollowerF(float attack_ms, float release_ms) {
 			UNUSED, UNUSED, UNUSED);
 
 	(envFollow->sfilter)->scratch[0] = exp(log(0.01) / (attack_ms * ADC_SAMPLE_RATE * 0.001));
-	(envFollow->sfilter)->scratch[1] = exp(log(0.01) / (release_ms * ADC_SAMPLE_RATE * 0.001));
+	(envFollow->sfilter)->scratch[1] = exp(0.01 / (release_ms * ADC_SAMPLE_RATE * 0.001));
 
 	return envFollow;
 }

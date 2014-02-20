@@ -18,7 +18,7 @@ uint32_t bandPassF(uint32_t sample, SFilter *filter) {
   }
 
   //else return nothing
-  return 0;
+  return AMPLITUDE_PIVOT;
 }
 
 void printBandPassF(SFilter *filter) {
