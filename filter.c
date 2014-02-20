@@ -66,7 +66,10 @@ Filter *createFilterP(Filter *filter1, Filter *filter2,
 	createdPfilter->filterTwo = filter2->sfilter;
 	createdPfilter->mixRatio = mixingRatio;
 
-
+	// Free the now unused filter structs passed into the function
+	// as only the sfilters they contain are used
+	free(filter1);
+	free(filter2);
 
 	return createdFilter;
 }
