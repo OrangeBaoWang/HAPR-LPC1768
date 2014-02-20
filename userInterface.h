@@ -13,6 +13,8 @@ void printEffects(void);
 
 void generateUI(void);
 
+void enqueueEffect(void);
+
 void inputDelay(void);
 
 void inputEcho(void);

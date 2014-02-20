@@ -91,7 +91,10 @@ int enqueueByIndex(Filter *newFilter, float index) {
 		currentIndex++;
 	}
 
-	return -1;
+	// Otherwise, if the chain is empty
+	enqueue(newFilter);
+	
+	return 0;
 }
 
 // Takes a filter as input and attempts to find a filter of the

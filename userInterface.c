@@ -127,7 +127,7 @@ void generateUI(void){
 		printToTerminal("3) Remove effect\n\r");
 		printToTerminal("4) Add effect\n\r");
 		printToTerminal("5) Replace effect\n\r");
-		printToTerminal("6) Empty chain (pass-through");
+		printToTerminal("6) Empty chain (pass-through)\n\r");
 		printToTerminal("7) Exit \n\r\n\r");
 		
 		waitForTerminal();
@@ -156,87 +156,7 @@ void generateUI(void){
 				forceInput();
 				break;
 			case 4:
-				clearScreen();
-				printToTerminal("Enter number of effect to add:\n\r");
-				printEffects();
-
-				while (stay){
-					waitForTerminal();
-					switch((uint32_t) getFloat()){
-						case 1:
-							inputDelay();
-
-							enqueue(createDelayF(filterVariable[0]));
-							stay = 0;
-							break;
-						case 2:
-							inputEcho();
-
-							enqueue(createEchoF(filterVariable[0], filterVariable[1]));
-							stay = 0;
-							break;
-						case 3:
-							inputEnvFollower();
-
-							enqueue(createEnvFollowerF(filterVariable[0], filterVariable[1]));
-							stay = 0;
-							break;
-						case 4:
-							inputFlange();
-
-							enqueue(createFlangeF(filterVariable[0], filterVariable[1], filterVariable[2]));
-							stay = 0;
-							break;
-						case 5:
-							inputLinearGain();
-
-							enqueue(createLinearGainF(filterVariable[0]));
-							stay = 0;
-							break;
-						case 6:
-							inputReverb();
-
-							enqueue(createReverbF(filterVariable[0], filterVariable[1]));
-							stay = 0;
-							break;
-						case 7:
-							inputTremelo();
-
-							enqueue(createTremeloF(filterVariable[0], filterVariable[1]));
-							stay = 0;
-							break;
-						case 8:
-							inputOverdrive();
-
-							enqueue(createOverdriveF(filterVariable[0], filterVariable[1], filterVariable[2]));
-							stay = 0;
-							break;
-						case 9:
-							inputLowPass();
-
-							enqueue(createLowPassF(filterVariable[0]));
-							stay = 0;
-							break;
-						case 10:
-							inputHighPass();
-
-							enqueue(createHighPassF(filterVariable[0]));
-							stay = 0;
-							break;
-						case 11:
-							inputBandPass();
-
-							enqueue(createBandPassF(filterVariable[0], filterVariable[1]));
-							stay = 0;
-							break;
-						default:
-							printToTerminal("Enter a correct effect number:\n\r");
-							stay = 1;
-							break;
-					}
-				}
-
-				forceInput();
+				enqueueEffect();
 				break;
 
 			case 5:
@@ -326,19 +246,19 @@ void generateUI(void){
 							stay = 0;
 							break;
 						default:
-							printToTerminal("Enter a correct effect number:\n\r");
+							printToTerminal("\n\rEnter a correct effect number:\n\r");
 							stay = 1;
 							break;
 					}
 				}
 				if (testEnqueue != 0) {
-					printToTerminal("Modification failed - Invalid enqueue given\n\r");
+					printToTerminal("\n\rModification failed - Invalid enqueue given\n\r");
 				}
 
 				forceInput();
 				break;
 			case 6:
-				printToTerminal("Removing all effects from the filter chain...");
+				printToTerminal("\n\rRemoving all effects from the filter chain...");
 
 				if (dequeueAll() == -1) {
 					printToTerminal("Filter chain already empty\n\r");
@@ -361,13 +281,101 @@ void generateUI(void){
 	}
 }
 
+void enqueueEffect(void) {
+
+	uint8_t stay = 1;
+
+	clearScreen();
+	printToTerminal("Enter number of effect to add:\n\r");
+	printEffects();
+
+	while (stay){
+		waitForTerminal();
+		switch((uint32_t) getFloat()){
+			case 1:
+				inputDelay();
+
+				enqueue(createDelayF(filterVariable[0]));
+				stay = 0;
+				break;
+			case 2:
+				inputEcho();
+
+				enqueue(createEchoF(filterVariable[0], filterVariable[1]));
+				stay = 0;
+				break;
+			case 3:
+				inputEnvFollower();
+
+				enqueue(createEnvFollowerF(filterVariable[0], filterVariable[1]));
+				stay = 0;
+				break;
+			case 4:
+				inputFlange();
+
+				enqueue(createFlangeF(filterVariable[0], filterVariable[1], filterVariable[2]));
+				stay = 0;
+				break;
+			case 5:
+				inputLinearGain();
+
+				enqueue(createLinearGainF(filterVariable[0]));
+				stay = 0;
+				break;
+			case 6:
+				inputReverb();
+
+				enqueue(createReverbF(filterVariable[0], filterVariable[1]));
+				stay = 0;
+				break;
+			case 7:
+				inputTremelo();
+
+				enqueue(createTremeloF(filterVariable[0], filterVariable[1]));
+				stay = 0;
+				break;
+			case 8:
+				inputOverdrive();
+
+				enqueue(createOverdriveF(filterVariable[0], filterVariable[1], filterVariable[2]));
+				stay = 0;
+				break;
+			case 9:
+				inputLowPass();
+
+				enqueue(createLowPassF(filterVariable[0]));
+				stay = 0;
+				break;
+			case 10:
+				inputHighPass();
+
+				enqueue(createHighPassF(filterVariable[0]));
+				stay = 0;
+				break;
+			case 11:
+				inputBandPass();
+
+				enqueue(createBandPassF(filterVariable[0], filterVariable[1]));
+				stay = 0;
+				break;
+			default:
+				printToTerminal("Enter a correct effect number:\n\r");
+				stay = 1;
+				break;
+		}
+	}
+	forceInput();
+
+	return;
+}
+
 void inputDelay(void) {
-	printToTerminal("Enter the size of the delay (0-8000):\n\r");
+	printToTerminal("\n\rEnter the size of the delay (0-8000):\n\r");
 	filterVariable[0] = inputAndAssert(0, 8000);
 }
 
 void inputEcho(void) {
-	printToTerminal("Enter the mixing ratio (0-1):\n\r");
+	printToTerminal("\n\rEnter the mixing ratio (0-1):\n\r");
 	filterVariable[0] = inputAndAssert(0, 1);
 
 	printToTerminal("\n\rEnter the delay (0-8000):\n\r");
@@ -375,7 +383,7 @@ void inputEcho(void) {
 }
 
 void inputEnvFollower(void) {
-	printToTerminal("Enter the attack (ms):\n\r");
+	printToTerminal("\n\rEnter the attack (ms):\n\r");
 	filterVariable[0] = inputAndAssert(0, 10000);
 
 	printToTerminal("\n\rEnter the release (ms):\n\r");
@@ -383,7 +391,7 @@ void inputEnvFollower(void) {
 }
 
 void inputFlange(void) {
-	printToTerminal("Enter the mixing ratio (0-1):\n\r");
+	printToTerminal("\n\rEnter the mixing ratio (0-1):\n\r");
 	filterVariable[0] = inputAndAssert(0, 1);
 
 	printToTerminal("\n\rEnter the range of the sweep (0-8000):\n\r");
@@ -399,7 +407,7 @@ void inputLinearGain(void) {
 }
 
 void inputReverb(void) {
-	printToTerminal("Enter the mixing ratio (0-1):\n\r");
+	printToTerminal("\n\rEnter the mixing ratio (0-1):\n\r");
 	filterVariable[0] = inputAndAssert(0, 1);
 
 	printToTerminal("\n\rEnter the delay (0-8000):\n\r");
@@ -407,7 +415,7 @@ void inputReverb(void) {
 }
 
 void inputTremelo(void) {
-	printToTerminal("Enter the range of the sweep (0-1):\n\r");
+	printToTerminal("\n\rEnter the range of the sweep (0-1):\n\r");
 	filterVariable[0] = inputAndAssert(0, 1);
 
 	printToTerminal("\n\rEnter the frequency of the sweep (Hz)");
@@ -415,7 +423,7 @@ void inputTremelo(void) {
 }
 
 void inputOverdrive(void) {
-	printToTerminal("Enter the boost (0-100):\n\r");
+	printToTerminal("\n\rEnter the boost (0-100):\n\r");
 	filterVariable[0] = inputAndAssert(0, 100);
 
 	printToTerminal("\n\rEnter the input drive (0-100):\n\r");
@@ -426,17 +434,17 @@ void inputOverdrive(void) {
 }
 
 void inputLowPass(void) {
-	printToTerminal("Enter the cutoff amplitude (0-4000):\n\r");
+	printToTerminal("\n\rEnter the cutoff amplitude (0-4000):\n\r");
 	filterVariable[0] = inputAndAssert(0, 4000);
 }
 
 void inputHighPass(void) {
-	printToTerminal("Enter the cutoff amplitude (0-4000):\n\r");
+	printToTerminal("\n\rEnter the cutoff amplitude (0-4000):\n\r");
 	filterVariable[0] = inputAndAssert(0, 4000);
 }
 
 void inputBandPass(void) {
-	printToTerminal("Enter the bottom cutoff amplitude (0-4000):\n\r");
+	printToTerminal("\n\rEnter the bottom cutoff amplitude (0-4000):\n\r");
 	filterVariable[0] = inputAndAssert(0, 4000);
 
 	printToTerminal("Enter the top cutoff amplitude (0-4000):\n\r");

@@ -25,7 +25,7 @@ uint32_t overdriveF(uint32_t sample, SFilter *filter) {
 
 void printOverdriveF(SFilter *filter) {
 
-	printfToTerminal("Overdrive: %f\n\r\t\tBoost: %f\n\r\t\tDrive: %f\n\r\t\tX: %f\n\r",
+	printfToTerminal("Overdrive: \n\r\t\tBoost: %f\n\r\t\tDrive: %f\n\r\t\tX: %f\n\r",
 			filter->parameters[0], filter->parameters[1], filter->parameters[2]);
 }
 
