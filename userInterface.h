@@ -15,28 +15,30 @@ void generateUI(void);
 
 void enqueueEffect(void);
 
-void enqueueEffectByIndex(void);
+void replaceEffect(void);
 
-void inputDelay(void);
+Filter *getEffect(void);
 
-void inputEcho(void);
+Filter *inputDelay(void);
 
-void inputEnvFollower(void);
+Filter *inputEcho(void);
 
-void inputFlange(void);
+Filter *inputEnvFollower(void);
 
-void inputLinearGain(void);
+Filter *inputFlange(void);
 
-void inputReverb(void);
+Filter *inputLinearGain(void);
 
-void inputTremelo(void);
+Filter *inputReverb(void);
 
-void inputOverdrive(void);
+Filter *inputTremelo(void);
 
-void inputLowPass(void);
+Filter *inputOverdrive(void);
 
-void inputHighPass(void);
+Filter *inputLowPass(void);
 
-void inputBandPass(void);
+Filter *inputHighPass(void);
+
+Filter *inputBandPass(void);
 
 #endif
