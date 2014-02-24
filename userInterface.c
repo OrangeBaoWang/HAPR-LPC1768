@@ -248,7 +248,6 @@ void replaceEffect(void) {
 		switch((uint32_t) getFloat()) {
 			case 1:
 				// For serial effects
-				printToTerminal("Please enter the index");
 				testEnqueue = enqueueByIndex(getEffect(), index);
 
 				stay = 0;
@@ -362,7 +361,7 @@ Filter *inputFlange(void) {
 }
 
 Filter *inputLinearGain(void) {
-	printToTerminal("Enter the magnitude of the gain (eg. 0.4 or 1.2) (0-3):\n\r");
+	printToTerminal("\n\rEnter the magnitude of the gain (eg. 0.4 or 1.2) (0-3):\n\r");
 	filterVariable[0] = inputAndAssert(0, 3);
 
 	return createLinearGainF(filterVariable[0]);
@@ -419,7 +418,7 @@ Filter *inputBandPass(void) {
 	printToTerminal("\n\rEnter the bottom cutoff amplitude (0-4000):\n\r");
 	filterVariable[0] = inputAndAssert(0, 4000);
 
-	printToTerminal("Enter the top cutoff amplitude (0-4000):\n\r");
+	printToTerminal("\n\rEnter the top cutoff amplitude (0-4000):\n\r");
 	filterVariable[1] = inputAndAssert(0, 4000);
 
 	return createBandPassF(filterVariable[0], filterVariable[1]);
