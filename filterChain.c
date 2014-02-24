@@ -17,26 +17,6 @@ uint32_t dSample;
 
 void freeNode(FilterNode *nodeToFree) {
 
-	// Freed in the reverse order to how they were allocated
-
-	free(nodeToFree);
-	free(nodeToFree->filter);
-
-	// If the filterNode contains a parallel filter:
-	if ((nodeToFree->filter)->sfilter == NULL) {
-		free((nodeToFree->filter)->pfilter);
-		free(((nodeToFree->filter)->pfilter)->filterTwo);
-		free(((nodeToFree->filter)->pfilter)->filterOne);
-	} else {
-		// FilterNode contains a serial filter:
-		free((nodeToFree->filter)->sfilter);
-	}
-
-	return;
-}
-
-void freeNode2(FilterNode *nodeToFree) {
-
 	if ((nodeToFree->filter)->sfilter == NULL) {
 		free(((nodeToFree->filter)->pfilter)->filterOne);
 		free(((nodeToFree->filter)->pfilter)->filterTwo);
@@ -118,6 +98,7 @@ int enqueueByIndex(Filter *newFilter, float index) {
 // Otherwise, -1 returned
 int dequeue(Filter *targetFilter) {
 
+	FilterNode *nodeToFree;
 	FilterNode *currentNode = root;
 
 	if (currentNode->next == NULL) {
@@ -131,7 +112,11 @@ int dequeue(Filter *targetFilter) {
 			if (((currentNode->next)->filter)->pfilter == NULL) {
 				if (filterEq(targetFilter->sfilter,
 						((currentNode->next)->filter)->sfilter) == 1) {
+
+					nodeToFree = currentNode->next;
 					currentNode->next = (currentNode->next)->next;
+
+					freeNode(nodeToFree);
 					return 0;
 				}
 			}
@@ -147,7 +132,10 @@ int dequeue(Filter *targetFilter) {
 					if (filterEq((targetFilter->pfilter)->filterTwo,
 							(((currentNode->next)->filter)->pfilter)->filterTwo) == 1) {
 
+						nodeToFree = currentNode->next;
 						currentNode->next = (currentNode->next)->next;
+
+						freeNode(nodeToFree);
 						return 0;
 					}
 				}
@@ -162,6 +150,7 @@ int dequeue(Filter *targetFilter) {
 // Returns 0 on success, -1 otherwise
 int dequeueByIndex(float index) {
 
+	FilterNode *nodeToFree;
 	FilterNode *currentNode = root;
 
 	uint16_t indexInt = index;
@@ -170,7 +159,10 @@ int dequeueByIndex(float index) {
 	while (currentNode->next != NULL) {
 
 		if (currentIndex == indexInt) {
+			nodeToFree = currentNode->next;
 			currentNode->next = (currentNode->next)->next;
+
+			freeNode(nodeToFree);
 			return 0;
 		}
 		currentNode = currentNode->next;
@@ -196,16 +188,14 @@ int dequeueAll(void) {
 		if ((root->next)->next == NULL) {
 				root->next = NULL;
 				
-				//freeNode(nodeToFree);
-				freeNode2(nodeToFree);
+				freeNode(nodeToFree);
 				return 0;
 		}
 		// Not at the last filter in the chain - rearrange root to point to the next filter
 		// after the one to free and then free the node no longer in the chain
 		root->next = (root->next)->next;
 
-		//freeNode(nodeToFree);
-		freeNode2(nodeToFree);
+		freeNode(nodeToFree);
 
 		// nodeToFree becomes the first filterNode in the chain
 		nodeToFree = root->next;
