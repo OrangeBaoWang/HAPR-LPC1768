@@ -1,5 +1,6 @@
 #include "lpc17xx_adc.h"
 #include "lpc17xx_dac.h"
+#include "lpc17xx_wdt.h"
 #include "lpc17xx_timer.h"
 #include "lpc_types.h"
 
@@ -35,6 +36,8 @@ uint16_t output;
 // Interrupt handler that samples the ADC and sends the sample
 // on to be filtered
 void TIMER0_IRQHandler(void) {
+
+	WDT_Feed();
 
 	*sampleP = getAdcSample();
 
