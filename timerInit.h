@@ -9,6 +9,8 @@ void disableTimer(void);
 
 void enableTimer(void);
 
-void timer_init(uint32_t timeInterval);
+void sample_timer_init(uint32_t timeInterval);
+
+// void status_timer_init(void);
 
 #endif

@@ -94,7 +94,9 @@ int main(void) {
 
 	sadc_init(ADC_SAMPLE_RATE);
 	sdac_init();
-	timer_init((uint32_t) ((1.0/ADC_SAMPLE_RATE) * 1000000));
+	sample_timer_init(SAMPLE_RATE_US);
+	watchdog_init()
+
 
 	tests();
 
