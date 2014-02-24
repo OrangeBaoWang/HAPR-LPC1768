@@ -55,16 +55,16 @@ void TIMER0_IRQHandler(void) {
 
 void tests() {
 
-//	enqueue(createReverbF(0.4, 7000));
+	enqueue(createReverbF(0.4, 7000));
 
-//	enqueue(createEchoF(0.8, 8000));
-//	enqueue(createEchoF(0.8, 8000));
+	enqueue(createEchoF(0.8, 8000));
+	enqueue(createEchoF(0.8, 8000));
 
-//	enqueue(createDelayF(8000));
+	enqueue(createDelayF(8000));
 
 //	enqueue(createEnvFollowerF(5, 5));
 
-//	enqueue(createTremeloF(0.5,2));
+	enqueue(createTremeloF(0.5,2));
 
 //	enqueue(createFlangeF(0.5, 8000, 1));
 
@@ -85,12 +85,11 @@ int main(void) {
 	chain_init();
 	printfToTerminal("FILTER CHAIN INITIALISED. SAMPLE RATE IS :%d\n\r", ADC_SAMPLE_RATE);
 
-	//tests();
-	
-
 	sadc_init(ADC_SAMPLE_RATE);
 	sdac_init();
 	timer_init((uint32_t) ((1.0/ADC_SAMPLE_RATE) * 1000000));
+
+	tests();
 
 	generateUI();
 

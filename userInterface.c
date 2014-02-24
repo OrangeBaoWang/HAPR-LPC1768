@@ -169,7 +169,7 @@ void generateUI(void){
 				forceInput();
 				break;
 			case 7:
-				printToTerminal("System will now terminate");
+				printToTerminal("\n\rSystem will now terminate");
 				disableTimer();
 				exit(0);
 				break;
@@ -182,6 +182,8 @@ void generateUI(void){
 }
 
 void enqueueEffect(void) {
+
+	float mixingRatio;
 
 	uint8_t stay = 1;
 
@@ -201,8 +203,10 @@ void enqueueEffect(void) {
 				break;
 			case 2:
 				// For parallel effects
-				printToTerminal("Please enter a mixing ratio:\n\r");
-				enqueue(createFilterP(getEffect(), getEffect(), inputAndAssert(0, 1)));
+				printToTerminal("\n\rPlease enter a mixing ratio:\n\r");
+				mixingRatio = inputAndAssert(0, 1);
+
+				enqueue(createFilterP(getEffect(), getEffect(), mixingRatio));
 				stay = 0;
 				break;
 			default:
@@ -221,6 +225,7 @@ void replaceEffect(void) {
 	uint8_t testEnqueue;
 
 	float index;
+	float mixingRatio;
 
 	clearScreen();
 	printQueue();
@@ -251,7 +256,9 @@ void replaceEffect(void) {
 			case 2:
 				// For parallel effects
 				printToTerminal("Please enter a mixing ratio:\n\r");
-				testEnqueue = enqueueByIndex(createFilterP(getEffect(), getEffect(), inputAndAssert(0, 1)), index);
+				mixingRatio = inputAndAssert(0, 1);
+
+				testEnqueue = enqueueByIndex(createFilterP(getEffect(), getEffect(), mixingRatio), index);
 				stay = 0;
 				break;
 			default:
