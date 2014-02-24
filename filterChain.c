@@ -249,9 +249,10 @@ uint16_t applyFilters(uint16_t sample) {
 	}
 
 	// If the value from the filters is greater than 2^12 (the
-	// highest value of the ADC, sample is clipped to 2^12
-	if (dSample > 4096) {
-		sample = 4096;
+	// highest value of the ADC (defined as AMPLITUDE_MAX),
+	// sample is clipped to 2^12
+	if (dSample > AMPLITUDE_MAX) {
+		sample = AMPLITUDE_MAX;
 	} else {sample = dSample;}
 
 
