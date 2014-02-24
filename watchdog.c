@@ -1,5 +1,3 @@
-#ifndef __WATCHDOG_H_
-#define __WATCHDOG_H_
 
 #include "lpc17xx_wdt.h"
 
@@ -18,7 +16,7 @@ void watchdog_init(void) {
 
 	// Initialize the timer. Counting by the internal clock and interrupting
 	// when the maximum value of the timer is reached
-	WDC_Init(WDT_CLKSRC_IRC, WDT_MODE_INT_ONLY);
+	WDT_Init(WDT_CLKSRC_IRC, WDT_MODE_INT_ONLY);
 
 	// Enable the watchdog timer interrupt
 	NVIC_EnableIRQ(WDT_IRQn);
