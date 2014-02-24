@@ -3,7 +3,7 @@
 
 #define ADC_SAMPLE_RATE	44000
 #define AMPLITUDE_MAX 4096
-#define AMPLITUDE_PIVOT 2048
+#define AMPLITUDE_PIVOT AMPLITUDE_MAX/2
 #define BUFFER_SIZE 8192
 
 // For passing parameters to the createFilterS function that requires
