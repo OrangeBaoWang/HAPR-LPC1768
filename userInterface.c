@@ -116,14 +116,20 @@ void generateUI(void){
 
 		clearScreen();
 
-		printToTerminal("\n\r################ MAIN MENU #################\n\r");
+		printToTerminal("\n\r################ MAIN MENU #################\n\r\n\r");
+
+		if (passThrough) {
+			printToTerminal("PASS-THROUGH ENABLED\n\r\n\r");
+		}
+
 		printToTerminal("1) Display all possible effects\n\r");
 		printToTerminal("2) Display all added effects\n\r");
 		printToTerminal("3) Remove effect\n\r");
 		printToTerminal("4) Add effect\n\r");
 		printToTerminal("5) Replace effect\n\r");
-		printToTerminal("6) Empty chain (pass-through)\n\r");
-		printToTerminal("7) Exit \n\r\n\r");
+		printToTerminal("6) Enable/Disable pass-through\n\r");
+		printToTerminal("7) Empty filter chain\n\r");
+		printToTerminal("8) Exit \n\r\n\r");
 		
 		waitForTerminal();
 		switch ((uint32_t) getFloat()) {
@@ -158,6 +164,17 @@ void generateUI(void){
 				replaceEffect();
 				break;
 			case 6:
+				if (passThrough) {
+					passThrough = 0;
+					printToTerminal("\n\rPass-through disabled\n\r");
+				} else {
+					passThrough = 1;
+					printToTerminal("\n\rPass-through enabled\n\r");
+				}
+
+				forceInput();
+				break;
+			case 7:
 				printToTerminal("\n\rRemoving all effects from the filter chain...");
 
 				if (dequeueAll() == -1) {
@@ -168,7 +185,7 @@ void generateUI(void){
 
 				forceInput();
 				break;
-			case 7:
+			case 8:
 				printToTerminal("\n\rSystem will now terminate");
 				disableTimer();
 				exit(0);

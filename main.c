@@ -27,6 +27,8 @@
 uint16_t sampleBuffer[BUFFER_SIZE];
 uint16_t *sampleP = sampleBuffer;
 
+volatile uint8_t passThrough = 0;
+
 uint16_t output;
 
 // Interrupt handler that samples the ADC and sends the sample
@@ -34,7 +36,12 @@ uint16_t output;
 void TIMER0_IRQHandler(void) {
 
 	*sampleP = getAdcSample();
-	output = applyFilters(*sampleP);
+
+	if (passThrough) {
+		output = *sampleP;
+	} else {
+		output = applyFilters(*sampleP);
+	}
 
 	dacSetValue(output>>2);
 
