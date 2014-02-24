@@ -4,6 +4,7 @@
 
 #include "stdlib.h"
 
+#include "global.h"
 #include "filter.h"
 #include "filterChain.h"
 #include "debug.h"
