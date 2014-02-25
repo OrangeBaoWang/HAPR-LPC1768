@@ -17,8 +17,10 @@ uint32_t overdriveF(uint32_t sample, SFilter *filter) {
 
 	//Drive much be between 0 and 100
 	//X Should be between 0 and 1
+
+	float gain = (2*sample); //+(1-(2-(3*sample))*(2-(3*sample)) /3); //Boost between 0.33 and 0.66
 	
-	output = GAIN;
+	output = gain;
 
 	//printfToTerminal("Output is: %d", output);
 	
@@ -39,17 +41,13 @@ Filter *createOverdriveF(float boost) {
 	//float a = sin(((inputDrive+1)/101)*(3.14/2));
 	//float k = (2*a) / (1-a);
 	//float drive = ((1+k)*(x)) / (1+k*abs(x)); //Main equation for drive, needs a & k above
-<<<<<<< HEAD
 	//float gain = ((boost/100)*100)+1; //Main equation for gain
-	float gain = (1 - (2-3*boost)^2 /3) //Boost between 0.33 and 0.66
-=======
+	//float gain = (1 - (2-3*boost)^2 /3) //Boost between 0.33 and 0.66
+
 	//float gain = ((boost/100)*100)+1; // Main equation for gain
-	float gain = (2*sample) +(1-(2-(3*sample))*(2-(3*sample)) /3) //Boost between 0.33 and 0.66
->>>>>>> 75ccbd6730aec1cef714dcf4b847f336cf450c9a
-	printfToTerminal("Gain: %f\n\r", gain);
 
 	//(overdriveFilter->sfilter)->scratch[0] = drive;
-	(overdriveFilter->sfilter)->scratch[0] = gain;
+	//(overdriveFilter->sfilter)->scratch[0] = gain;
 
 	return overdriveFilter;
 }
