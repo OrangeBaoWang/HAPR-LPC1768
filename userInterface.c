@@ -441,7 +441,7 @@ Filter *inputTremelo(void) {
 	printToTerminal("\n\rEnter the range of the sweep (0-1):\n\r");
 	filterVariable[0] = inputAndAssert(0, 1);
 
-	printToTerminal("\n\rEnter the frequency of the sweep (Hz)");
+	printToTerminal("\n\rEnter the frequency of the sweep (Hz):\n\r");
 	filterVariable[1] = inputAndAssert(0, 10000);
 
 	return createTremeloF(filterVariable[0], filterVariable[1]);
