@@ -128,7 +128,7 @@ void printUsage(void) {
 
 	printfToTerminal("WDT: %d", wdtCounter);
 
-	printToTerminal("\n\rCPU Usage\t%d%%\t|", usedTime));
+	printfToTerminal("\n\rCPU Usage\t%d%%\t|", usedTime);
 
 	if (usedTime > 100) {
 		printToTerminal("==========|");
