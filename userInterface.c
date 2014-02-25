@@ -448,8 +448,8 @@ Filter *inputTremelo(void) {
 }
 
 Filter *inputOverdrive(void) {
-	printToTerminal("\n\rEnter the boost (0-100):\n\r");
-	filterVariable[0] = inputAndAssert(0, 100);
+	printToTerminal("\n\rEnter the boost magnitude (1.7-4):\n\r");
+	filterVariable[0] = inputAndAssert(1.7, 4);
 /*
 	printToTerminal("\n\rEnter the input drive (0-100):\n\r");
 	filterVariable[1] = inputAndAssert(0, 100);
