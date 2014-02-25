@@ -159,7 +159,7 @@ void generateUI(void){
 
 		printToTerminal("\n\r################ MAIN MENU #################\n\r\n\r");
 
-		printUsage();
+		//printUsage();
 
 		if (passThrough) {
 			printToTerminal("PASS-THROUGH ENABLED\n\r\n\r");
@@ -450,14 +450,14 @@ Filter *inputTremelo(void) {
 Filter *inputOverdrive(void) {
 	printToTerminal("\n\rEnter the boost (0-100):\n\r");
 	filterVariable[0] = inputAndAssert(0, 100);
-
+/*
 	printToTerminal("\n\rEnter the input drive (0-100):\n\r");
 	filterVariable[1] = inputAndAssert(0, 100);
 
 	printToTerminal("\n\rEnter the drive scalar (0-1):\n\r");
 	filterVariable[2] = inputAndAssert(0, 1);
-
-	return createOverdriveF(filterVariable[0], filterVariable[1], filterVariable[2]);
+*/
+	return createOverdriveF(filterVariable[0]);
 }
 
 Filter *inputLowPass(void) {
