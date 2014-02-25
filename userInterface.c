@@ -159,6 +159,8 @@ void generateUI(void){
 
 		printToTerminal("\n\r################ MAIN MENU #################\n\r\n\r");
 
+		printfToTerminal("WDT is: %d\n\r", wdtCounter - 255);
+
 		//printUsage();
 
 		if (passThrough) {
