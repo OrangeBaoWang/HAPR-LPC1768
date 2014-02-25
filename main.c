@@ -1,5 +1,6 @@
 #include "lpc17xx_adc.h"
 #include "lpc17xx_dac.h"
+#include "lpc17xx_wdt.h"
 #include "lpc17xx_timer.h"
 #include "lpc_types.h"
 
@@ -9,6 +10,7 @@
 #include "debug.h"
 #include "adcInit.h"
 #include "timerInit.h"
+#include "watchdog.h"
 #include "dacInit.h"
 #include "filter.h"
 #include "filterChain.h"
@@ -21,9 +23,17 @@
 #include "filters/envFollower.h"
 #include "filters/echo.h"
 #include "filters/tremelo.h"
+#include "filters/overDrive.h"
+#include "filters/lowPass.h"
 
 uint16_t sampleBuffer[BUFFER_SIZE];
 uint16_t *sampleP = sampleBuffer;
+
+// Variable to hold the counter value of the WDT at the end of the sampling ISR
+uint32_t wdtCounter = 0;
+
+// 0 if pass-through not selected. 1 if pass-through is selected
+volatile uint8_t passThrough = 0;
 
 uint16_t output;
 
@@ -31,8 +41,15 @@ uint16_t output;
 // on to be filtered
 void TIMER0_IRQHandler(void) {
 
+	WDT_Feed();
+
 	*sampleP = getAdcSample();
-	output = applyFilters(*sampleP);
+
+	if (passThrough) {
+		output = *sampleP;
+	} else {
+		output = applyFilters(*sampleP);
+	}
 
 	dacSetValue(output>>2);
 
@@ -48,21 +65,23 @@ void TIMER0_IRQHandler(void) {
 	// and begin counting again
 	TIM_ClearIntPending(LPC_TIM0, TIM_MR0_INT);
 
+	wdtCounter = WDT_GetCurrentCount();
+
 	return;
 }
 
 void tests() {
 
-//	enqueue(createReverbF(0.4, 7000));
+	enqueue(createReverbF(0.4, 7000));
 
-//	enqueue(createEchoF(0.8, 8000));
-//	enqueue(createEchoF(0.8, 8000));
+	enqueue(createEchoF(0.8, 8000));
+	enqueue(createEchoF(0.8, 8000));
 
-//	enqueue(createDelayF(8000));
+	enqueue(createDelayF(8000));
 
 //	enqueue(createEnvFollowerF(5, 5));
 
-//	enqueue(createTremeloF(0.5,2));
+	enqueue(createTremeloF(0.5,2));
 
 //	enqueue(createFlangeF(0.5, 8000, 1));
 
@@ -83,12 +102,13 @@ int main(void) {
 	chain_init();
 	printfToTerminal("FILTER CHAIN INITIALISED. SAMPLE RATE IS :%d\n\r", ADC_SAMPLE_RATE);
 
-	//tests();
-	
-
 	sadc_init(ADC_SAMPLE_RATE);
 	sdac_init();
-	timer_init((uint32_t) ((1.0/ADC_SAMPLE_RATE) * 1000000));
+	sample_timer_init(SAMPLE_RATE_US);
+	watchdog_init();
+
+
+	tests();
 
 	generateUI();
 

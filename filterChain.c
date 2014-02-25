@@ -4,6 +4,7 @@
 
 #include "stdlib.h"
 
+#include "global.h"
 #include "filter.h"
 #include "filterChain.h"
 #include "debug.h"
@@ -17,20 +18,16 @@ uint32_t dSample;
 
 void freeNode(FilterNode *nodeToFree) {
 
-	// Freed in the reverse order to how they were allocated
-
-	free(nodeToFree);
-	free(nodeToFree->filter);
-
-	// If the filterNode contains a parallel filter:
 	if ((nodeToFree->filter)->sfilter == NULL) {
-		free((nodeToFree->filter)->pfilter);
-		free(((nodeToFree->filter)->pfilter)->filterTwo);
 		free(((nodeToFree->filter)->pfilter)->filterOne);
+		free(((nodeToFree->filter)->pfilter)->filterTwo);
+		free((nodeToFree->filter)->pfilter);
 	} else {
-		// FilterNode contains a serial filter:
 		free((nodeToFree->filter)->sfilter);
 	}
+
+	free(nodeToFree->filter);
+	free(nodeToFree);
 
 	return;
 }
@@ -91,7 +88,10 @@ int enqueueByIndex(Filter *newFilter, float index) {
 		currentIndex++;
 	}
 
-	return -1;
+	// Otherwise, if the chain is empty
+	enqueue(newFilter);
+	
+	return 0;
 }
 
 // Takes a filter as input and attempts to find a filter of the
@@ -99,6 +99,7 @@ int enqueueByIndex(Filter *newFilter, float index) {
 // Otherwise, -1 returned
 int dequeue(Filter *targetFilter) {
 
+	FilterNode *nodeToFree;
 	FilterNode *currentNode = root;
 
 	if (currentNode->next == NULL) {
@@ -112,7 +113,11 @@ int dequeue(Filter *targetFilter) {
 			if (((currentNode->next)->filter)->pfilter == NULL) {
 				if (filterEq(targetFilter->sfilter,
 						((currentNode->next)->filter)->sfilter) == 1) {
+
+					nodeToFree = currentNode->next;
 					currentNode->next = (currentNode->next)->next;
+
+					freeNode(nodeToFree);
 					return 0;
 				}
 			}
@@ -128,7 +133,10 @@ int dequeue(Filter *targetFilter) {
 					if (filterEq((targetFilter->pfilter)->filterTwo,
 							(((currentNode->next)->filter)->pfilter)->filterTwo) == 1) {
 
+						nodeToFree = currentNode->next;
 						currentNode->next = (currentNode->next)->next;
+
+						freeNode(nodeToFree);
 						return 0;
 					}
 				}
@@ -143,6 +151,7 @@ int dequeue(Filter *targetFilter) {
 // Returns 0 on success, -1 otherwise
 int dequeueByIndex(float index) {
 
+	FilterNode *nodeToFree;
 	FilterNode *currentNode = root;
 
 	uint16_t indexInt = index;
@@ -151,7 +160,10 @@ int dequeueByIndex(float index) {
 	while (currentNode->next != NULL) {
 
 		if (currentIndex == indexInt) {
+			nodeToFree = currentNode->next;
 			currentNode->next = (currentNode->next)->next;
+
+			freeNode(nodeToFree);
 			return 0;
 		}
 		currentNode = currentNode->next;
@@ -176,12 +188,14 @@ int dequeueAll(void) {
 		// If at the last filter in the chain, free the filter node and return
 		if ((root->next)->next == NULL) {
 				root->next = NULL;
+				
 				freeNode(nodeToFree);
 				return 0;
 		}
 		// Not at the last filter in the chain - rearrange root to point to the next filter
 		// after the one to free and then free the node no longer in the chain
-		root->next = nodeToFree->next;
+		root->next = (root->next)->next;
+
 		freeNode(nodeToFree);
 
 		// nodeToFree becomes the first filterNode in the chain
@@ -236,9 +250,10 @@ uint16_t applyFilters(uint16_t sample) {
 	}
 
 	// If the value from the filters is greater than 2^12 (the
-	// highest value of the ADC, sample is clipped to 2^12
-	if (dSample > 4096) {
-		sample = 4096;
+	// highest value of the ADC (defined as AMPLITUDE_MAX),
+	// sample is clipped to 2^12
+	if (dSample > AMPLITUDE_MAX) {
+		sample = AMPLITUDE_MAX;
 	} else {sample = dSample;}
 
 

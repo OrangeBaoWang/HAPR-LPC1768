@@ -105,5 +105,24 @@ Oli - Big Boss
 - Check that suitable bits of code are commented
 #######################################################################################
 
+#######################################################################################
+Meeting 6
 
+Daz - Secretary
+Oli - Chair
+Jay - Big Boss
+########################
+
+-> A lot of small things that need to be done. 
+ - Implement pass through. Easy. 
+ - Jay test his filter. Jay "Nah mate."
+ - Daz needs finish/start his filter. 
+ - Add comments to every function. Description of what its doing, what it returns.
+ - Also comment in function for things that not obvious. 
+ 
+-> Replace filter finished, son.
+
+-> Discussed presentation.
+
+Plan: Be done by Week 9, working only on commenting by then. 
 

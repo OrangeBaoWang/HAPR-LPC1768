@@ -12,7 +12,7 @@ uint32_t linearGainF(uint32_t sample, SFilter *filter) {
 
 	float gain = filter->parameters[0];
 
-	if (sample > 2048) {
+	if (sample > AMPLITUDE_PIVOT) {
 		return (sample * gain);
 	} else {
 		return (sample * (1 - (1-gain)));

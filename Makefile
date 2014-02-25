@@ -20,7 +20,7 @@ CMSISFL=$(CMSIS)/lib/core_cm3.o \
 	$(CMSIS)/lib/startup_LPC17xx.o
 LDSCRIPT = $(CMSIS)/lib/ldscript_rom_gnu.ld
 
-CFLAGS=-mcpu=cortex-m3  -mthumb  -Wall  -O0  -mapcs-frame  -D__thumb2__=1 \
+CFLAGS=-mcpu=cortex-m3 -mthumb  -Wall  -O2  -mapcs-frame  -D__thumb2__=1 \
   -msoft-float  -gdwarf-2  -mno-sched-prolog  -fno-hosted  -mtune=cortex-m3 \
   -march=armv7-m  -mfix-cortex-m3-ldrd   -ffunction-sections  -fdata-sections \
           -D__RAM_MODE__=0 $(CMSISINCLUDES) -I. 
@@ -34,7 +34,7 @@ LDFLAGS+=-L$(CMSIS)/lib -lDriversLPC17xxgnu
 
 EXECNAME	= bin/LIBS
 
-OBJ		= main.o userInterface.o debug.o adcInit.o timerInit.o dacInit.o filterChain.o filter.o filters/envFollower.o filters/flange.o filters/linearGain.o filters/delay.o filters/echo.o filters/reverb.o filters/tremelo.o
+OBJ		= main.o userInterface.o debug.o adcInit.o timerInit.o watchdog.o dacInit.o filterChain.o filter.o filters/envFollower.o filters/flange.o filters/linearGain.o filters/delay.o filters/echo.o filters/reverb.o filters/tremelo.o filters/overDrive.o filters/lowPass.o filters/highPass.o filters/bandPass.o
 
 all: 	main
 	@echo "Build finished"
