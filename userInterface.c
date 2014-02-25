@@ -109,6 +109,47 @@ void printEffects(void) {
 					"11 - Band-pass\n\r\n\r");
 	return;
 }
+
+void printUsage(void) {
+
+	uint32_t usedTime;
+	uint32_t usage;
+	uint32_t remaining;
+
+	usedTime = ((float) wdtCounter / (float) SAMPLE_RATE_US) * 100;
+	usage = usedTime;
+
+	printfToTerminal("WDT: %d", wdtCounter);
+
+	printToTerminal("\n\rCPU Usage:  |");
+
+	if (usedTime > 100) {
+		while (usedTime > 100) {
+			printToTerminal("=");
+			usedTime -= 10;
+		}
+	}
+
+
+	uint8_t i = 0;
+	while (usage > 10 ) {
+
+		usage -= 10;
+		i++;
+		printToTerminal("=");
+	}
+
+	printToTerminal("=>");
+
+	remaining = 10;
+
+	uint8_t y;
+	for (y = 0; y < remaining; y++) {
+		printToTerminal(" ");
+	}
+
+	printfToTerminal("|\t%d%%\n\r", usedTime);
+}
 	
 void generateUI(void){
 	
@@ -117,6 +158,8 @@ void generateUI(void){
 		clearScreen();
 
 		printToTerminal("\n\r################ MAIN MENU #################\n\r\n\r");
+
+		printUsage();
 
 		if (passThrough) {
 			printToTerminal("PASS-THROUGH ENABLED\n\r\n\r");

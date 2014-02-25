@@ -30,7 +30,7 @@ uint16_t sampleBuffer[BUFFER_SIZE];
 uint16_t *sampleP = sampleBuffer;
 
 // Variable to hold the counter value of the WDT at the end of the sampling ISR
-uint32_t wdtCounter = 0;
+volatile uint32_t wdtCounter = 0;
 
 // 0 if pass-through not selected. 1 if pass-through is selected
 volatile uint8_t passThrough = 0;
@@ -65,7 +65,9 @@ void TIMER0_IRQHandler(void) {
 	// and begin counting again
 	TIM_ClearIntPending(LPC_TIM0, TIM_MR0_INT);
 
-	wdtCounter = WDT_GetCurrentCount();
+	// WDT seems to produce a value of 235 in the counter
+	// immediately after being fed
+	wdtCounter = WDT_GetCurrentCount() - 200;
 
 	return;
 }

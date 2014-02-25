@@ -18,7 +18,7 @@
 extern uint16_t sampleBuffer[BUFFER_SIZE];
 extern uint16_t *sampleP;
 
-extern uint32_t wdtCounter;
+extern volatile uint32_t wdtCounter;
 
 extern volatile uint8_t passThrough;
 
