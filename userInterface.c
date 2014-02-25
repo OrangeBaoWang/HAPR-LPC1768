@@ -166,9 +166,10 @@ void generateUI(void){
 		if (passThrough) {
 			printToTerminal("PASS-THROUGH ENABLED\n\r\n\r");
 		}
-		else if (infaMix) {
-		  printToTerminal("INFA-RED MIX ENABLED\n\r\n\r");
-    }
+		else if (infraMix) {
+			printToTerminal("INFA-RED MIX ENABLED\n\r\n\r");
+    	}
+
 		printToTerminal("1) Display all possible effects\n\r");
 		printToTerminal("2) Display all added effects\n\r");
 		printToTerminal("3) Remove effect\n\r");
@@ -236,14 +237,14 @@ void generateUI(void){
 				forceInput();
 				break;
 			case 8:
-				if (infaMix) {
-					infaMix = 0;
+				if (infraMix) {
+					infraMix = 0;
 					printToTerminal("\n\rInfrared mix disabled\n\r");
 				} else {
-					infaMix = 1;
+					infraMix = 1;
 					printToTerminal("\n\rInfrared mix enabled\n\r");
-				}			
-			
+				}
+				break;
 			case 9:
 				printToTerminal("\n\rSystem will now terminate");
 				disableTimer();

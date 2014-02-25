@@ -37,7 +37,8 @@ volatile uint8_t passThrough = 0;
 
 // 0 if infraMix not selected. 1 if infraMix selected
 volatile uint8_t infraMix = 0;
-uint16_t infraValue; //infrared sensor value
+float infraValue; //infrared sensor value
+float scalar = 3.3 / 4096.0;
 
 uint16_t output;
 
@@ -48,18 +49,18 @@ void TIMER0_IRQHandler(void) {
 	WDT_Feed();
 
 	*sampleP = getAdcSample();
-  infraValue = ADC_ChannelGetData(LPC_ADC, ADC_CHANNEL_2);	
-	
 
 	if (passThrough) {
 		output = *sampleP;
-	} 
-	else if (infraMix){
-	  //infraValue will be between 0 (no hand) and 1 (hand close)
-	  infraValue = ((((float)getAdcData()/1000)-0.5)/3);
-	  output = (*sampleP * (1 - infraValue)) + (applyFilters(*sampleP) * infraValue)
-	}
-	else {
+	} else if (infraMix) {
+
+	  // infraValue will be between 0 (no hand) and 1 (hand close)
+	  infraValue = (ADC_ChannelGetData(LPC_ADC, ADC_CHANNEL_2)) *scalar * (1.0/15.0);
+	  output = (*sampleP * (1 - infraValue)) + (applyFilters(*sampleP) * infraValue);
+
+	  printfToTerminal("infrared: %f\n\r", infraValue);
+	  printfToTerminal("ADC_CHANNEL_2: %d\n\r", ADC_ChannelGetData(LPC_ADC, ADC_CHANNEL_2));
+	} else {
 		output = applyFilters(*sampleP);
 	}
 
@@ -126,7 +127,7 @@ int main(void) {
 	sadc_init(ADC_SAMPLE_RATE);
 	sdac_init();
 	sample_timer_init(SAMPLE_RATE_US);
-	watchdog_init();
+	//watchdog_init();
 
 
 	tests();

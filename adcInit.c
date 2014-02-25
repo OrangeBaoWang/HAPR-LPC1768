@@ -75,7 +75,8 @@ void sadc_init(int sampleRate) {
 	ADC_ChannelCmd(LPC_ADC, ADC_CHANNEL_4, ENABLE);
 	ADC_ChannelCmd(LPC_ADC, ADC_CHANNEL_0, ENABLE);
 	ADC_ChannelCmd(LPC_ADC, ADC_CHANNEL_1, ENABLE);
-  ADC_ChannelCmd(LPC_ADC, ADC_CHANNEL_2, ENABLE); //infrared channel
+
+	ADC_ChannelCmd(LPC_ADC, ADC_CHANNEL_2, ENABLE); //infrared channel
 //	ADC_StartCmd(LPC_ADC, ADC_START_CONTINUOUS);
 
 	ADC_BurstCmd(LPC_ADC, ENABLE);

@@ -22,5 +22,7 @@ extern volatile uint32_t wdtCounter;
 
 extern volatile uint8_t passThrough;
 
+extern volatile uint8_t infraMix;
+
 
 #endif
