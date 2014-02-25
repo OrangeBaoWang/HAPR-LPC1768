@@ -112,43 +112,49 @@ void printEffects(void) {
 
 void printUsage(void) {
 
+	// usedTime is the percentage of the available time for each interrupt
+	// that is being used
 	uint32_t usedTime;
-	uint32_t usage;
-	uint32_t remaining;
 
-	usedTime = (((float) wdtCounter / (float) SAMPLE_RATE_US) * 100);
-	usage = usedTime;
+	uint32_t difference;
+
+	// Remaining used to calculate how much whitespace needs to be printed
+	// for when the usedTime is < 100%
+	uint32_t remaining = 0;
+
+	difference = WDT_TIMEOUT_US - wdtCounter;
+
+	usedTime = (((float) difference / (float) SAMPLE_RATE_US) * 100);
 
 	printfToTerminal("WDT: %d", wdtCounter);
 
-	printToTerminal("\n\rCPU Usage:  |");
+	printToTerminal("\n\rCPU Usage\t%d%%\t|", usedTime));
 
 	if (usedTime > 100) {
+		printToTerminal("==========|");
+
 		while (usedTime > 100) {
-			//printToTerminal("=");
 			usedTime -= 10;
+			printToTerminal("=");
 		}
+		printToTerminal(">\n\r");
+
+	} else {
+		while (usedTime > 0) {
+			remaining++;
+			usedTime -= 10;
+			printToTerminal("=");
+		}
+		printToTerminal(">");
+
+		int i;
+		for (i = 0; i < remaining; i++) {
+			printToTerminal(" ");
+		}
+		printToTerminal("|\n\r");
 	}
 
-
-	uint8_t i = 0;
-	while (usage > 10 ) {
-
-		usage -= 10;
-		i++;
-		printToTerminal("=");
-	}
-
-	printToTerminal("=>");
-
-	remaining = 10;
-
-	uint8_t y;
-	for (y = 0; y < remaining; y++) {
-		printToTerminal(" ");
-	}
-
-	printfToTerminal("|\t%d%%\n\r", usedTime);
+	return;
 }
 	
 void generateUI(void){
@@ -167,7 +173,7 @@ void generateUI(void){
 			printToTerminal("PASS-THROUGH ENABLED\n\r\n\r");
 		}
 		else if (infraMix) {
-			printToTerminal("INFA-RED MIX ENABLED\n\r\n\r");
+			printToTerminal("INFRARED MIX ENABLED\n\r\n\r");
     	}
 
 		printToTerminal("1) Display all possible effects\n\r");
@@ -176,10 +182,8 @@ void generateUI(void){
 		printToTerminal("4) Add effect\n\r");
 		printToTerminal("5) Replace effect\n\r");
 		printToTerminal("6) Enable/Disable pass-through\n\r");
-		printToTerminal("7) Empty filter chain\n\r");
-		
-		printToTerminal("8) Enable/Disable infrared mix\n\r");
-		
+		printToTerminal("7) Enable/Disable infrared mix\n\r");
+		printToTerminal("8) Empty filter chain\n\r");
 		printToTerminal("9) Exit \n\r\n\r");
 		
 		waitForTerminal();
@@ -204,7 +208,6 @@ void generateUI(void){
 				if (dequeueByIndex(getFloat()) == -1) {
 					printToTerminal("Invalid index given\n\r");
 				}
-
 				forceInput();
 				break;
 			case 4:
@@ -222,21 +225,9 @@ void generateUI(void){
 					passThrough = 1;
 					printToTerminal("\n\rPass-through enabled\n\r");
 				}
-
 				forceInput();
 				break;
 			case 7:
-				printToTerminal("\n\rRemoving all effects from the filter chain...");
-
-				if (dequeueAll() == -1) {
-					printToTerminal("Filter chain already empty\n\r");
-				} else {
-					printToTerminal("COMPLETE\n\r");
-				}
-
-				forceInput();
-				break;
-			case 8:
 				if (infraMix) {
 					infraMix = 0;
 					printToTerminal("\n\rInfrared mix disabled\n\r");
@@ -244,6 +235,17 @@ void generateUI(void){
 					infraMix = 1;
 					printToTerminal("\n\rInfrared mix enabled\n\r");
 				}
+				forceInput();
+				break;
+			case 8:
+				printToTerminal("\n\rRemoving all effects from the filter chain...");
+
+				if (dequeueAll() == -1) {
+					printToTerminal("Filter chain already empty\n\r");
+				} else {
+					printToTerminal("COMPLETE\n\r");
+				}
+				forceInput();
 				break;
 			case 9:
 				printToTerminal("\n\rSystem will now terminate");
@@ -467,13 +469,7 @@ Filter *inputTremelo(void) {
 Filter *inputOverdrive(void) {
 	printToTerminal("\n\rEnter the boost magnitude (1.5-2):\n\r");
 	filterVariable[0] = inputAndAssert(1.5, 2);
-/*
-	printToTerminal("\n\rEnter the input drive (0-100):\n\r");
-	filterVariable[1] = inputAndAssert(0, 100);
 
-	printToTerminal("\n\rEnter the drive scalar (0-1):\n\r");
-	filterVariable[2] = inputAndAssert(0, 1);
-*/
 	return createOverdriveF(filterVariable[0]);
 }
 

@@ -37,6 +37,7 @@ volatile uint8_t passThrough = 0;
 
 // 0 if infraMix not selected. 1 if infraMix selected
 volatile uint8_t infraMix = 0;
+
 float infraValue; //infrared sensor value
 float scalar = 3.3 / 4096.0;
 
@@ -60,6 +61,7 @@ void TIMER0_IRQHandler(void) {
 
 	  printfToTerminal("infrared: %f\n\r", infraValue);
 	  printfToTerminal("ADC_CHANNEL_2: %d\n\r", ADC_ChannelGetData(LPC_ADC, ADC_CHANNEL_2));
+
 	} else {
 		output = applyFilters(*sampleP);
 	}
@@ -78,8 +80,6 @@ void TIMER0_IRQHandler(void) {
 	// and begin counting again
 	TIM_ClearIntPending(LPC_TIM0, TIM_MR0_INT);
 
-	// WDT seems to produce a value of 235 in the counter
-	// immediately after being fed
 	wdtCounter = WDT_GetCurrentCount();
 
 	return;
