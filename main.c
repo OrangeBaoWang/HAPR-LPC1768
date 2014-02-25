@@ -35,6 +35,10 @@ uint32_t wdtCounter = 0;
 // 0 if pass-through not selected. 1 if pass-through is selected
 volatile uint8_t passThrough = 0;
 
+// 0 if infraMix not selected. 1 if infraMix selected
+volatile uint8_t infraMix = 0;
+uint16_t infraValue; //infrared sensor value
+
 uint16_t output;
 
 // Interrupt handler that samples the ADC and sends the sample
@@ -44,10 +48,18 @@ void TIMER0_IRQHandler(void) {
 	WDT_Feed();
 
 	*sampleP = getAdcSample();
+  infraValue = ADC_ChannelGetData(LPC_ADC, ADC_CHANNEL_2);	
+	
 
 	if (passThrough) {
 		output = *sampleP;
-	} else {
+	} 
+	else if (infraMix){
+	  //infraValue will be between 0 (no hand) and 1 (hand close)
+	  infraValue = ((((float)getAdcData()/1000)-0.5)/3);
+	  output = (*sampleP * (1 - infraValue)) + (applyFilters(*sampleP) * infraValue)
+	}
+	else {
 		output = applyFilters(*sampleP);
 	}
 

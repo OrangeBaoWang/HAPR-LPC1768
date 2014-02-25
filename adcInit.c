@@ -61,13 +61,21 @@ void sadc_init(int sampleRate) {
 	PinCfg.Pinnum = 24;		// Refers to pin 16 on board
 	PinCfg.Portnum = 0;
 	PINSEL_ConfigPin(&PinCfg);
+	
+	//init for infrared sensor
+	PinCfg.Funcnum = 1;
+	PinCfg.OpenDrain = 0;
+	PinCfg.Pinmode = 0;
+	PinCfg.Pinnum = 25;		// Refers to pin 17 on board
+	PinCfg.Portnum = 0;
+	PINSEL_ConfigPin(&PinCfg);
 
 	ADC_Init(LPC_ADC, sampleRate);
 
 	ADC_ChannelCmd(LPC_ADC, ADC_CHANNEL_4, ENABLE);
 	ADC_ChannelCmd(LPC_ADC, ADC_CHANNEL_0, ENABLE);
 	ADC_ChannelCmd(LPC_ADC, ADC_CHANNEL_1, ENABLE);
-
+  ADC_ChannelCmd(LPC_ADC, ADC_CHANNEL_2, ENABLE); //infrared channel
 //	ADC_StartCmd(LPC_ADC, ADC_START_CONTINUOUS);
 
 	ADC_BurstCmd(LPC_ADC, ENABLE);
