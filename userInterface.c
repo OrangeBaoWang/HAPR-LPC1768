@@ -166,7 +166,9 @@ void generateUI(void){
 		if (passThrough) {
 			printToTerminal("PASS-THROUGH ENABLED\n\r\n\r");
 		}
-
+		else if (infaMix) {
+		  printToTerminal("INFA-RED MIX ENABLED\n\r\n\r");
+    }
 		printToTerminal("1) Display all possible effects\n\r");
 		printToTerminal("2) Display all added effects\n\r");
 		printToTerminal("3) Remove effect\n\r");
@@ -174,7 +176,10 @@ void generateUI(void){
 		printToTerminal("5) Replace effect\n\r");
 		printToTerminal("6) Enable/Disable pass-through\n\r");
 		printToTerminal("7) Empty filter chain\n\r");
-		printToTerminal("8) Exit \n\r\n\r");
+		
+		printToTerminal("8) Enable/Disable infrared mix\n\r");
+		
+		printToTerminal("9) Exit \n\r\n\r");
 		
 		waitForTerminal();
 		switch ((uint32_t) getFloat()) {
@@ -231,6 +236,15 @@ void generateUI(void){
 				forceInput();
 				break;
 			case 8:
+				if (infaMix) {
+					infaMix = 0;
+					printToTerminal("\n\rInfrared mix disabled\n\r");
+				} else {
+					infaMix = 1;
+					printToTerminal("\n\rInfrared mix enabled\n\r");
+				}			
+			
+			case 9:
 				printToTerminal("\n\rSystem will now terminate");
 				disableTimer();
 				exit(0);
