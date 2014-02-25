@@ -31,7 +31,7 @@ uint32_t overDriveF(uint32_t sample, SFilter *filter) {
 	
 	output = (sample*gain)*drive;
 	
-	return (output);
+	return output;
 }
 
 void printOverDriveF(SFilter *filter) {
