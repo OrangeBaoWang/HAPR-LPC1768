@@ -41,7 +41,6 @@ uint16_t output;
 // on to be filtered
 void TIMER0_IRQHandler(void) {
 
-	wdtCounter = WDT_GetCurrentCount();
 	WDT_Feed();
 
 	*sampleP = getAdcSample();
@@ -68,12 +67,19 @@ void TIMER0_IRQHandler(void) {
 
 	// WDT seems to produce a value of 235 in the counter
 	// immediately after being fed
-	//wdtCounter = WDT_GetCurrentCount() - 200;
+	//wdtCounter = WDT_GetCurrentCount() / WDT_RATIO;
 
 	return;
 }
 
 void tests() {
+
+	enqueue(createReverbF(0.4, 7000));
+
+	enqueue(createEchoF(0.8, 8000));
+	enqueue(createEchoF(0.8, 8000));
+
+	enqueue(createDelayF(8000));
 
 	enqueue(createReverbF(0.4, 7000));
 

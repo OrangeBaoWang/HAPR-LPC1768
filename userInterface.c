@@ -116,7 +116,7 @@ void printUsage(void) {
 	uint32_t usage;
 	uint32_t remaining;
 
-	usedTime = ((float) wdtCounter / (float) SAMPLE_RATE_US) * 100;
+	usedTime = (((float) wdtCounter / (float) SAMPLE_RATE_US) * 100);
 	usage = usedTime;
 
 	printfToTerminal("WDT: %d", wdtCounter);
@@ -125,7 +125,7 @@ void printUsage(void) {
 
 	if (usedTime > 100) {
 		while (usedTime > 100) {
-			printToTerminal("=");
+			//printToTerminal("=");
 			usedTime -= 10;
 		}
 	}

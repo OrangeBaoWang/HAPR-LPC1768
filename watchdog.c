@@ -23,6 +23,7 @@ void watchdog_init(void) {
 
 	// Sets the watchdog timer to generate an interrupt after twice the
 	// number of microseconds as the rate of the sampling
-	WDT_Start(WDT_TIMEOUT_US);
+	WDT_Start(WDT_TIMEOUT_US - 40);
 
+	printfToTerminal("Timeout is %d\n\r", WDT_TIMEOUT_US);
 }
