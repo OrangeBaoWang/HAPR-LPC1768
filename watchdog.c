@@ -10,6 +10,8 @@ void WDT_IRQHandler(void) {
 
 	// Clear the timeout flag
 	WDT_ClrTimeOutFlag();
+
+	WDT_Feed();
 }
 
 void watchdog_init(void) {
@@ -23,6 +25,28 @@ void watchdog_init(void) {
 
 	// Sets the watchdog timer to generate an interrupt after twice the
 	// number of microseconds as the rate of the sampling
-	WDT_Start(WDT_TIMEOUT_US);
+	WDT_Start(WDT_TIMEOUT_US + 255);
 
+	WDT_Feed();
+
+	/*
+
+	wdtCounter = WDT_GetCurrentCount();
+
+	printfToTerminal("Timeout is %d\n\rTime is:%d\n\r", WDT_TIMEOUT_US, wdtCounter - 200);
+
+		wdtCounter = WDT_GetCurrentCount();
+
+	printfToTerminal("Timeout is %d\n\rTime is:%d\n\r", WDT_TIMEOUT_US, wdtCounter);
+		wdtCounter = WDT_GetCurrentCount();
+
+	printfToTerminal("Timeout is %d\n\rTime is:%d\n\r", WDT_TIMEOUT_US, wdtCounter);
+
+		wdtCounter = WDT_GetCurrentCount();
+
+	printfToTerminal("Timeout is %d\n\rTime is:%d\n\r", WDT_TIMEOUT_US, wdtCounter);
+
+	*/
+
+	//NVIC_DisableIRQ(WDT_IRQn);
 }
