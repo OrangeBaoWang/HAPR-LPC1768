@@ -16,9 +16,9 @@
 #include "filters/echo.h"
 #include "filters/tremelo.h"
 #include "filters/overDrive.h"
-#include "filters/lowPass.h"
-#include "filters/highPass.h"
-#include "filters/bandPass.h"
+#include "filters/lowPassNoise.h"
+#include "filters/highPassNoise.h"
+#include "filters/bandPassNoise.h"
 
 #include "debug.h"
 #include "global.h"
@@ -114,8 +114,8 @@ float inputAndAssert(float min, float max) {
 void printEffects(void) {
 	printToTerminal("\n\r1 - Delay\n\r2 - Echo\n\r3 - Enveloper Follower\n\r"
 					"4 - Flange\n\r5 - Linear Gain\n\r6 - Reverb\n\r7 - Tremelo\n\r"
-					"8 - Overdrive\n\r9 - Low-pass\n\r10 - High-pass\n\r"
-					"11 - Band-pass\n\r\n\r");
+					"8 - Overdrive\n\r9 - Low-pass Noise Gate\n\r10 - High-pass Noise Gate\n\r"
+					"11 - Band-pass Noise Gate\n\r\n\r");
 	return;
 }
 
@@ -427,13 +427,13 @@ Filter *getEffect(void) {
 				return inputOverdrive();
 				break;
 			case 9:
-				return inputLowPass();
+				return inputLowPassNoise();
 				break;
 			case 10:
-				return inputHighPass();
+				return inputHighPassNoise();
 				break;
 			case 11:
-				return inputBandPass();
+				return inputBandPassNoise();
 				break;
 			default:
 				printToTerminal("\n\rEnter a correct effect number:\n\r");
@@ -516,26 +516,26 @@ Filter *inputOverdrive(void) {
 	return createOverdriveF(filterVariable[0]);
 }
 
-Filter *inputLowPass(void) {
+Filter *inputLowPassNoise(void) {
 	printToTerminal("\n\rEnter the cutoff amplitude (0-4000):\n\r");
 	filterVariable[0] = inputAndAssert(0, 4000);
 
-	return createLowPassF(filterVariable[0]);
+	return createLowPassNoiseF(filterVariable[0]);
 }
 
-Filter *inputHighPass(void) {
+Filter *inputHighPassNoise(void) {
 	printToTerminal("\n\rEnter the cutoff amplitude (0-4000):\n\r");
 	filterVariable[0] = inputAndAssert(0, 4000);
 
-	return createHighPassF(filterVariable[0]);
+	return createHighPassNoiseF(filterVariable[0]);
 }
 
-Filter *inputBandPass(void) {
+Filter *inputBandPassNoise(void) {
 	printToTerminal("\n\rEnter the bottom cutoff amplitude (0-4000):\n\r");
 	filterVariable[0] = inputAndAssert(0, 4000);
 
 	printToTerminal("\n\rEnter the top cutoff amplitude (0-4000):\n\r");
 	filterVariable[1] = inputAndAssert(0, 4000);
 
-	return createBandPassF(filterVariable[0], filterVariable[1]);
+	return createBandPassNoiseF(filterVariable[0], filterVariable[1]);
 }

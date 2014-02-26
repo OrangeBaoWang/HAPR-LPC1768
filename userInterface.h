@@ -35,10 +35,10 @@ Filter *inputTremelo(void);
 
 Filter *inputOverdrive(void);
 
-Filter *inputLowPass(void);
+Filter *inputLowPassNoise(void);
 
-Filter *inputHighPass(void);
+Filter *inputHighPassNoise(void);
 
-Filter *inputBandPass(void);
+Filter *inputBandPassNoise(void);
 
 #endif
