@@ -27,6 +27,9 @@
 static uint8_t terminalBuffer; //buffer to store read values from terminal
 static float filterVariable[5];
 
+// Boolean used to decide when to show CPU usage in the main UI loop
+static uint8_t showUsage = 0;
+
 static uint32_t received; //flag to check if there has been a keyboard input
 static uint8_t stay = 1; //stay to loop through switch statements
 
@@ -36,8 +39,8 @@ uint32_t receiveFromTerminal(void) {
 }
 
 //waits for keyboard input. loops until user inputs something
-void waitForTerminal(void){
-	while (!received){
+void waitForTerminal(void) {
+	while (!received) {
 		received = receiveFromTerminal();
 	}
 	received = 0;
@@ -50,25 +53,25 @@ void forceInput(void) {
 }
 
 //takes string input from terminal, converts and returns a float
-float getFloat(void){
+float getFloat(void) {
 	char terminalArray[9];
 	int index = 0;
 	float inputFloat;
 	
-	while (terminalBuffer != 0x0D){ //while enter hasn't been pressed
-		if (index > sizeof terminalArray){ //if end of input array
+	while (terminalBuffer != 0x0D) { //while enter hasn't been pressed
+		if (index > sizeof terminalArray) { //if end of input array
 			printToTerminal("Input too long. Try again. \n\r");
 			memset(terminalArray, 0, sizeof terminalArray);
 			index = 0;
 			waitForTerminal();
 		}
 		//if correct input character
-		if (((terminalBuffer >= 0x30) && (terminalBuffer <= 0x39)) || terminalBuffer == 0x2E){ 
+		if (((terminalBuffer >= 0x30) && (terminalBuffer <= 0x39)) || terminalBuffer == 0x2E) { 
 			terminalArray[index] = terminalBuffer;
 			printfToTerminal("%c", terminalBuffer);
 			index++; 
 			waitForTerminal();		
-		} else{
+		} else {
 			printToTerminal("\n\rIncorrect input. Try again. \n\r");
 			memset(terminalArray, 0, sizeof terminalArray);
 			index = 0;
@@ -164,7 +167,7 @@ void printUsage(void) {
 	return;
 }
 	
-void generateUI(void){
+void generateUI(void) {
 	
 	while (1) {
 
@@ -172,24 +175,29 @@ void generateUI(void){
 
 		printToTerminal("\n\r################ MAIN MENU #################\n\r\n\r");
 
-		printUsage();
-
+		if (showUsage) {
+			printUsage();
+		}
 		if (passThrough) {
 			printToTerminal("PASS-THROUGH ENABLED\n\r\n\r");
 		}
-		else if (infraMix) {
+		if (infraMix) {
 			printToTerminal("INFRARED MIX ENABLED\n\r\n\r");
     	}
 
 		printToTerminal("1) Display all possible effects\n\r");
 		printToTerminal("2) Display all added effects\n\r\n\r");
+
 		printToTerminal("3) Remove effect\n\r");
 		printToTerminal("4) Add effect\n\r");
 		printToTerminal("5) Replace effect\n\r\n\r");
-		printToTerminal("6) Enable/Disable pass-through\n\r");
-		printToTerminal("7) Enable/Disable infrared mix\n\r\n\r");
-		printToTerminal("8) Empty filter chain\n\r");
-		printToTerminal("9) Exit \n\r\n\r");
+
+		printToTerminal("6) Enable/disable pass-through\n\r");
+		printToTerminal("7) Enable/disable infrared mix\n\r\n\r");
+
+		printToTerminal("8) Show/hide CPU usage\n\r");
+		printToTerminal("9) Empty filter chain\n\r");
+		printToTerminal("10) Exit \n\r\n\r");
 		
 		waitForTerminal();
 		switch ((uint32_t) getFloat()) {
@@ -213,6 +221,7 @@ void generateUI(void){
 				if (dequeueByIndex(getFloat()) == -1) {
 					printToTerminal("Invalid index given\n\r");
 				}
+
 				forceInput();
 				break;
 			case 4:
@@ -230,6 +239,7 @@ void generateUI(void){
 					passThrough = 1;
 					printToTerminal("\n\rPass-through enabled\n\r");
 				}
+
 				forceInput();
 				break;
 			case 7:
@@ -240,9 +250,20 @@ void generateUI(void){
 					infraMix = 1;
 					printToTerminal("\n\rInfrared mix enabled\n\r");
 				}
+
 				forceInput();
 				break;
 			case 8:
+				if (showUsage) {
+					showUsage = 0;
+					printToTerminal("\n\rHiding CPU usage\n\r");
+				} else {
+					showUsage = 1;
+					printToTerminal("\n\rShowing CPU usage\n\r");
+				}
+				forceInput();
+				break;
+			case 9:
 				printToTerminal("\n\rRemoving all effects from the filter chain...");
 
 				if (dequeueAll() == -1) {
@@ -252,7 +273,7 @@ void generateUI(void){
 				}
 				forceInput();
 				break;
-			case 9:
+			case 10:
 				printToTerminal("\n\rSystem terminating...");
 
 				// Disable sampling timer
@@ -280,7 +301,7 @@ void enqueueEffect(void) {
 
 	clearScreen();
 
-	printToTerminal("\n\rPlease choose the type of effect desired:\n\r"
+	printToTerminal("\n\rPlease choose the type of effect to add:\n\r"
 					"1: Serial\n\r2: Parallel\n\r");
 
 	while(stay) {
