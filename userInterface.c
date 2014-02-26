@@ -144,9 +144,10 @@ void printUsage(void) {
 	if (usedTime > 100) {
 		sRate = (ADC_SAMPLE_RATE / ((float) usedTime / 100.0));
 	}
-	printfToTerminal("Sample rate is approximately:\t%dHz\n\r", sRate);
 
-	printfToTerminal("CPU Usage: %d%%\t|", usedTime);
+	printfToTerminal("Approx. Sample Rate:\t%dHz\n\r", sRate);
+
+	printfToTerminal("CPU Usage:\n\r\t\t%d%%\n\r\t\t|", usedTime);
 
 	if (usedTime > 100) {
 		printToTerminal("==========|");
