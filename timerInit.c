@@ -45,27 +45,3 @@ void sample_timer_init(uint32_t timeInterval) {
 	// To start timer 0
 	TIM_Cmd(LPC_TIM0, ENABLE);
 }
-
-/*
-// Uses TIM1
-void status_timer_init(void) {
-
-	// Use microsecond time intervals
-	timer_cfg.PrescaleOption = TIM_PRESCALE_USVAL;
-	timer_cfg.PrescaleValue = 1;
-	TIM_Init(LPC_TIM1, TIM_TIMER_MODE, &timer_cfg);
-
-	timerMatch_cfg.MatchChannel = 1;
-	timerMatch_cfg.IntOnMatch   = FALSE;
-	timerMatch_cfg.ResetOnMatch = FALSE;
-	timerMatch_cfg.StopOnMatch  = FALSE;
-	timerMatch_cfg.ExtMatchOutputType = TIM_EXTMATCH_TOGGLE;
-
-	// Large match value chosen as the timer should never reach this number
-	timerMatch_cfg.MatchValue   = 1000000;
-	TIM_ConfigMatch(LPC_TIM1, &timerMatch_cfg);
-	
-	// To start timer 1
-	TIM_Cmd(LPC_TIM1, ENABLE);
-}
-*/
