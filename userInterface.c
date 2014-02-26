@@ -60,7 +60,7 @@ float getFloat(void) {
 	
 	while (terminalBuffer != 0x0D) { //while enter hasn't been pressed
 		if (index > sizeof terminalArray) { //if end of input array
-			printToTerminal("Input too long. Try again. \n\r");
+			printToTerminal("\n\rInput too long - try again:\n\r");
 			memset(terminalArray, 0, sizeof terminalArray);
 			index = 0;
 			waitForTerminal();
@@ -72,7 +72,7 @@ float getFloat(void) {
 			index++; 
 			waitForTerminal();		
 		} else {
-			printToTerminal("\n\rIncorrect input. Try again. \n\r");
+			printToTerminal("\n\rIncorrect input - try again:\n\r");
 			memset(terminalArray, 0, sizeof terminalArray);
 			index = 0;
 			waitForTerminal();
@@ -127,13 +127,24 @@ void printUsage(void) {
 
 	uint32_t difference;
 
+	uint32_t sRate = ADC_SAMPLE_RATE;
+
 	// Remaining used to calculate how much whitespace needs to be printed
 	// for when the usedTime is < 100%
 	uint32_t remaining = 0;
 
 	difference = WDT_TIMEOUT_US - wdtCounter;
 
+	// Calculates the percentage of the time being used for each sampling ISR
+	// compared to how long between interrupts at SAMPLE_RATE_US
 	usedTime = (((float) difference / (float) SAMPLE_RATE_US) * 100);
+
+	// If the usedTime percentage is greater than 100%, calculate an approximation
+	// for the current actual sampling rate
+	if (usedTime > 100) {
+		sRate = (ADC_SAMPLE_RATE / ((float) usedTime / 100.0));
+	}
+	printfToTerminal("Sample rate is approximately:\t%dHz\n\r", sRate);
 
 	printfToTerminal("CPU Usage: %d%%\t|", usedTime);
 
