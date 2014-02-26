@@ -185,19 +185,19 @@ void generateUI(void) {
 			printToTerminal("INFRARED MIX ENABLED\n\r\n\r");
     	}
 
-		printToTerminal("1) Display all possible effects\n\r");
-		printToTerminal("2) Display all added effects\n\r\n\r");
+		printToTerminal("1)\tDisplay all possible effects\n\r");
+		printToTerminal("2)\tDisplay all added effects\n\r\n\r");
 
-		printToTerminal("3) Remove effect\n\r");
-		printToTerminal("4) Add effect\n\r");
-		printToTerminal("5) Replace effect\n\r\n\r");
+		printToTerminal("3)\tAdd effect\n\r");
+		printToTerminal("4)\tRemove effect\n\r");
+		printToTerminal("5)\tReplace effect\n\r\n\r");
 
-		printToTerminal("6) Enable/disable pass-through\n\r");
-		printToTerminal("7) Enable/disable infrared mix\n\r\n\r");
+		printToTerminal("6)\tEnable/disable pass-through\n\r");
+		printToTerminal("7)\tEnable/disable infrared mix\n\r\n\r");
 
-		printToTerminal("8) Show/hide CPU usage\n\r");
-		printToTerminal("9) Empty filter chain\n\r");
-		printToTerminal("10) Exit \n\r\n\r");
+		printToTerminal("8)\tShow/hide CPU usage\n\r");
+		printToTerminal("9)\tEmpty filter chain\n\r");
+		printToTerminal("10)\tExit \n\r\n\r");
 		
 		waitForTerminal();
 		switch ((uint32_t) getFloat()) {
@@ -212,6 +212,9 @@ void generateUI(void) {
 				forceInput();
 				break;
 			case 3:
+				enqueueEffect();
+				break;
+			case 4:
 				clearScreen();
 				printQueue();
 				printToTerminal("Enter index of effect to remove:\n\r");
@@ -224,10 +227,6 @@ void generateUI(void) {
 
 				forceInput();
 				break;
-			case 4:
-				enqueueEffect();
-				break;
-
 			case 5:
 				replaceEffect();
 				break;
@@ -301,8 +300,8 @@ void enqueueEffect(void) {
 
 	clearScreen();
 
-	printToTerminal("\n\rPlease choose the type of effect to add:\n\r"
-					"1: Serial\n\r2: Parallel\n\r");
+	printToTerminal("\n\rPlease choose the type of effect to add:\n\r\n\r"
+					"1:\tSerial\n\r2:\tParallel\n\r\n\r");
 
 	while(stay) {
 		waitForTerminal();
@@ -352,8 +351,8 @@ void replaceEffect(void) {
 		return;
 	}
 
-	printToTerminal("\n\rPlease choose the type of effect desired:\n\r"
-					"1: Serial\n\r2: Parallel\n\r");
+	printToTerminal("\n\rPlease choose the type of effect to add:\n\r\n\r"
+					"1:\tSerial\n\r2:\tParallel\n\r\n\r");
 
 	while(stay) {
 		waitForTerminal();

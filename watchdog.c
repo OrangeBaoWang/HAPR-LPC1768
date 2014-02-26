@@ -31,27 +31,4 @@ void watchdog_init(void) {
 	// The counter register is decremented until it reaches zero. When this happens
 	// the interrupt is generated
 	WDT_Start(WDT_TIMEOUT_US);
-
-	//WDT_Feed();
-
-	/*
-
-	wdtCounter = WDT_GetCurrentCount();
-
-	printfToTerminal("Timeout is %d\n\rTime is:%d\n\r", WDT_TIMEOUT_US, wdtCounter - 200);
-
-		wdtCounter = WDT_GetCurrentCount();
-
-	printfToTerminal("Timeout is %d\n\rTime is:%d\n\r", WDT_TIMEOUT_US, wdtCounter);
-		wdtCounter = WDT_GetCurrentCount();
-
-	printfToTerminal("Timeout is %d\n\rTime is:%d\n\r", WDT_TIMEOUT_US, wdtCounter);
-
-		wdtCounter = WDT_GetCurrentCount();
-
-	printfToTerminal("Timeout is %d\n\rTime is:%d\n\r", WDT_TIMEOUT_US, wdtCounter);
-
-	*/
-
-	//NVIC_DisableIRQ(WDT_IRQn);
 }
