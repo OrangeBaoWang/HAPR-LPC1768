@@ -127,7 +127,7 @@ int main(void) {
 	sadc_init(ADC_SAMPLE_RATE);
 	sdac_init();
 	sample_timer_init(SAMPLE_RATE_US);
-	//watchdog_init();
+	watchdog_init();
 
 
 	tests();

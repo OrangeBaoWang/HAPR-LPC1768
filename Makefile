@@ -59,3 +59,6 @@ install:
 	@echo "Now press the reset button on all MBED file systems"
 
 now: clean main install
+
+show: clean main install \
+	screen /dev/ttyACM0

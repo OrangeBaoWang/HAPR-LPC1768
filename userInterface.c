@@ -49,7 +49,7 @@ void forceInput(void) {
 	clearScreen();
 }
 
-//takes string input from terminal converts and returns a float
+//takes string input from terminal, converts and returns a float
 float getFloat(void){
 	char terminalArray[9];
 	int index = 0;
@@ -79,6 +79,11 @@ float getFloat(void){
 	terminalArray[index] = '\0'; //add null char at end so it recognises string
 	index = 0;
 	inputFloat = atof(terminalArray);
+
+	// Ensures there is always a space between the input of a
+	// number and the next line printed
+	printToTerminal("\n\r");
+
 	return inputFloat; //convert char array to float, return
 }
 
@@ -99,6 +104,7 @@ float inputAndAssert(float min, float max) {
 		}
 		printfToTerminal("You must enter a number between %f and %f\n\r", min, max);
 	}
+
 	return input;
 }
 
@@ -114,7 +120,7 @@ void printUsage(void) {
 
 	// usedTime is the percentage of the available time for each interrupt
 	// that is being used
-	uint32_t usedTime;
+	int32_t usedTime;
 
 	uint32_t difference;
 
@@ -126,9 +132,7 @@ void printUsage(void) {
 
 	usedTime = (((float) difference / (float) SAMPLE_RATE_US) * 100);
 
-	printfToTerminal("WDT: %d", wdtCounter);
-
-	printfToTerminal("\n\rCPU Usage\t%d%%\t|", usedTime);
+	printfToTerminal("CPU Usage: %d%%\t|", usedTime);
 
 	if (usedTime > 100) {
 		printToTerminal("==========|");
@@ -137,7 +141,7 @@ void printUsage(void) {
 			usedTime -= 10;
 			printToTerminal("=");
 		}
-		printToTerminal(">\n\r");
+		printToTerminal(">\n\r\n\r");
 
 	} else {
 		while (usedTime > 0) {
@@ -147,11 +151,14 @@ void printUsage(void) {
 		}
 		printToTerminal(">");
 
+		// Calculate the number of spaces that need to be printed
+		remaining = 10 - remaining;
+
 		int i;
 		for (i = 0; i < remaining; i++) {
 			printToTerminal(" ");
 		}
-		printToTerminal("|\n\r");
+		printToTerminal("|\n\r\n\r");
 	}
 
 	return;
@@ -165,9 +172,7 @@ void generateUI(void){
 
 		printToTerminal("\n\r################ MAIN MENU #################\n\r\n\r");
 
-		printfToTerminal("WDT is: %d\n\r", wdtCounter - 255);
-
-		//printUsage();
+		printUsage();
 
 		if (passThrough) {
 			printToTerminal("PASS-THROUGH ENABLED\n\r\n\r");
@@ -177,12 +182,12 @@ void generateUI(void){
     	}
 
 		printToTerminal("1) Display all possible effects\n\r");
-		printToTerminal("2) Display all added effects\n\r");
+		printToTerminal("2) Display all added effects\n\r\n\r");
 		printToTerminal("3) Remove effect\n\r");
 		printToTerminal("4) Add effect\n\r");
-		printToTerminal("5) Replace effect\n\r");
+		printToTerminal("5) Replace effect\n\r\n\r");
 		printToTerminal("6) Enable/Disable pass-through\n\r");
-		printToTerminal("7) Enable/Disable infrared mix\n\r");
+		printToTerminal("7) Enable/Disable infrared mix\n\r\n\r");
 		printToTerminal("8) Empty filter chain\n\r");
 		printToTerminal("9) Exit \n\r\n\r");
 		
@@ -248,8 +253,15 @@ void generateUI(void){
 				forceInput();
 				break;
 			case 9:
-				printToTerminal("\n\rSystem will now terminate");
+				printToTerminal("\n\rSystem terminating...");
+
+				// Disable sampling timer
 				disableTimer();
+
+				// Disable WDT
+				NVIC_DisableIRQ(WDT_IRQn);
+
+				printToTerminal("COMPLETE");
 				exit(0);
 				break;
 			default:

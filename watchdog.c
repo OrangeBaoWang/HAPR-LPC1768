@@ -32,7 +32,7 @@ void watchdog_init(void) {
 	// the interrupt is generated
 	WDT_Start(WDT_TIMEOUT_US);
 
-	WDT_Feed();
+	//WDT_Feed();
 
 	/*
 
