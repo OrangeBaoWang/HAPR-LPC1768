@@ -31,8 +31,16 @@ Filter *createFilterS(uint32_t (*filterAddr)(uint32_t, SFilter *), void (*printA
 	SFilter *createdSfilter;
 	createdSfilter = malloc(sizeof(SFilter));
 
+	if (createdSfilter == NULL) {
+		THROW("Malloc for SFilter struct returned NULL");
+	}
+
 	Filter *createdFilter;
 	createdFilter = malloc(sizeof(Filter));
+
+	if (createdFilter == NULL) {
+		THROW("Malloc for Filter struct returned NULL");
+	}
 
 	createdFilter->sfilter = createdSfilter;
 	createdFilter->pfilter = NULL;
@@ -56,8 +64,16 @@ Filter *createFilterP(Filter *filter1, Filter *filter2,
 	PFilter *createdPfilter;
 	createdPfilter = malloc(sizeof(PFilter));
 
+	if (createdPfilter == NULL) {
+		THROW("Malloc for PFilter struct returned NULL");
+	}
+
 	Filter *createdFilter;
 	createdFilter = malloc(sizeof(Filter));
+
+	if (createdFilter == NULL) {
+		THROW("Malloc for Filter struct returned NULL");
+	}
 
 	createdFilter->sfilter = NULL;
 	createdFilter->pfilter = createdPfilter;
