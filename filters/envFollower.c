@@ -9,16 +9,15 @@
 
 #define WINDOW_SIZE 10
 
+// COEFFS not used currently
 #define ATTACK_COEFF filter->scratch[0]
 #define RELEASE_COEFF filter->scratch[1]
 
-//static uint32_t envWindow[WINDOW_SIZE];
-//static uint8_t oldestElem;
+#define SMOOTHING_MULT 0.8
+#define SMOOTHING_EXP 1.01
 
-uint32_t envelope = 0;
-
-uint32_t envWindow[WINDOW_SIZE];
-int index = 1; //used to check where in envWindow
+static uint32_t envWindow[WINDOW_SIZE];
+static uint8_t oldestElem = 0;
 
 // See and reference:
 // http://www.kvraudio.com/forum/viewtopic.php?p=5178628
@@ -28,31 +27,30 @@ int index = 1; //used to check where in envWindow
 // ONE TIME
 uint32_t envFollowerF(uint32_t sample, SFilter *filter) {
 
-	envWindow[index] = sample;
+		envWindow[oldestElem] = sample;
 
-	envelope = envWindow[index - 1]; //get previous value
+		if (oldestElem == (WINDOW_SIZE - 1)) {
+			oldestElem = 0;
+		} else {
+			oldestElem++;
+		}
 
-	//attack, follow rising wave
-	if (sample > envelope) {
-    	envelope = ATTACK_COEFF * (envelope - sample) + sample;
-    	//printfToTerminal("ATTACKenv value %d \n\r", envelope);
-  	} else {
-  		//release, follow falling wave
-    	envelope = RELEASE_COEFF  * (envelope - sample) + sample;
-    	//printfToTerminal("RELEASEenv value %d \n\r", envelope);
-  }
-  
-	//if at end of envWindow, loop back round
-	if (index == (WINDOW_SIZE - 1)) {
-		index = 0;
-	} else {
-		index++;
-	}
+		uint32_t max = 0;
 
-	//printfToTerminal("attack %f \n", ATTACK_COEFF);
-	//printfToTerminal("release %f \n", RELEASE_COEFF);
+		int i;
+		for (i = 0; i < WINDOW_SIZE; i++) {
 
-	return envelope;
+			if (envWindow[i] > max) {
+				max = envWindow[i];
+			}
+		}
+
+		if (max > sample) {
+			//max  = pow((max * SMOOTHING_MULT), SMOOTHING_EXP);
+			max = max * SMOOTHING_MULT;
+		}
+		//printfToTerminal("Max: %d", max);
+		return max;
 
 }
 
@@ -103,6 +101,7 @@ Filter *createEnvFollowerF(float attack_ms, float release_ms) {
 	Filter *envFollow = createFilterS(&envFollowerF, &printEnvFollowerF, attack_ms, release_ms,
 			UNUSED, UNUSED, UNUSED);
 
+	// Coeffs not used currently
 	(envFollow->sfilter)->scratch[0] = exp(log(0.01) / (attack_ms * ADC_SAMPLE_RATE * 0.001));
 	(envFollow->sfilter)->scratch[1] = exp(0.01 / (release_ms * ADC_SAMPLE_RATE * 0.001));
 
