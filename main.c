@@ -66,6 +66,8 @@ void TIMER0_IRQHandler(void) {
 		output = applyFilters(*sampleP);
 	}
 
+	// Discard the least significant two bits (10bit DAC instead of 12bit ADC)
+	// and output to the DAC
 	dacSetValue(output>>2);
 
 	//Select next buffer location based on previous location
@@ -140,7 +142,7 @@ int main(void) {
 
 	sadc_init(ADC_SAMPLE_RATE);
 	sdac_init();
-	
+
 	sample_timer_init(SAMPLE_RATE_US);
 	watchdog_init();
 
