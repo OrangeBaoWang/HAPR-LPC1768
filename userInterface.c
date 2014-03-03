@@ -460,7 +460,11 @@ Filter *inputEcho(void) {
 	return createEchoF(filterVariable[0], filterVariable[1]);
 }
 
+// Ideal attack is 2 (ms) and ideal release is 2 (ms)
 Filter *inputEnvFollower(void) {
+
+	printToTerminal("\n\rRecommended:\n\r\t\tAttack: 2 (ms)\n\r\t\tRelease: 2 (ms)\n\r");
+
 	printToTerminal("\n\rEnter the attack (ms):\n\r");
 	filterVariable[0] = inputAndAssert(0, 10000);
 

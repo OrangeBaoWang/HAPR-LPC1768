@@ -101,7 +101,7 @@ void tests() {
 
 	enqueue(createDelayF(8000));
 
-	enqueue(createEnvFollowerF(5, 5));
+	//enqueue(createEnvFollowerF(5, 5));
 
 	enqueue(createTremeloF(0.5,2));
 
@@ -140,11 +140,12 @@ int main(void) {
 
 	sadc_init(ADC_SAMPLE_RATE);
 	sdac_init();
+	
 	sample_timer_init(SAMPLE_RATE_US);
 	watchdog_init();
 
 
-	tests();
+	//tests();
 
 	generateUI();
 
