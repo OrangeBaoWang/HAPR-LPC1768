@@ -1,3 +1,8 @@
+// Created by Oliver Lea - 14/1/2014
+
+// J-Edit - Set parameters for timer
+// O-Edit - Enabled interupt for timer and completed function
+
 #include "lpc17xx_timer.h"
 
 TIM_TIMERCFG_Type timer_cfg;
