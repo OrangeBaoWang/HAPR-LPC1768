@@ -8,12 +8,12 @@
 #include "../global.h"
 #include "../debug.h"
 
-#define GAIN filter->scratch[0]
-
 uint32_t overdriveF(uint32_t sample, SFilter *filter) {
 
 	uint32_t output;
-	output = sample*gain; //gain should be between 1.8 and 4	
+	float boost = filter->parameters[0];
+
+	output = sample*boost; //boost should be between 1.8 and 4	
 	return output;
 }
 
@@ -28,10 +28,9 @@ Filter *createOverdriveF(float boost) {
 	Filter *overdriveFilter = createFilterS(&overdriveF, &printOverdriveF,
 			boost, UNUSED, UNUSED, UNUSED, UNUSED);
 
-	float gain = boost;
-	printfToTerminal("Boost: %f\n\r", gain);
+	printfToTerminal("Boost: %f\n\r", boost);
 
-	(overdriveFilter->sfilter)->scratch[0] = gain;
+	(overdriveFilter->sfilter)->parameters[0] = boost;
 
 	return overdriveFilter;
 }

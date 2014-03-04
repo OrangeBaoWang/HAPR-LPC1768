@@ -1,11 +1,11 @@
 #include "lpc_types.h"
 
 #include "../filter.h"
-#include "bandPass.h"
+#include "bandPassNoise.h"
 #include "../global.h"
 #include "../debug.h"
 
-uint32_t bandPassF(uint32_t sample, SFilter *filter) {
+uint32_t bandPassNoiseF(uint32_t sample, SFilter *filter) {
   
   float cutOffLow = filter->parameters[0];
   float cutOffHigh = filter->parameters[1];
@@ -21,16 +21,16 @@ uint32_t bandPassF(uint32_t sample, SFilter *filter) {
   return AMPLITUDE_PIVOT;
 }
 
-void printBandPassF(SFilter *filter) {
+void printBandPassNoiseF(SFilter *filter) {
 
-	printfToTerminal("Band Pass:\n\r\t\tCut Off Low: %f\n\r\r %f\n\r\t\tCut Off High: %f\n\r\r",
+	printfToTerminal("Band-pass Noise Gate:\n\r\t\tCut Off Low: %f\n\r\t\tCut-off High: %f\n\r\r",
 			filter->parameters[0], filter->parameters[1]);
 }
 
-Filter *createBandPassF(float cutOffLow, float cutOffHigh) {
+Filter *createBandPassNoiseF(float cutOffLow, float cutOffHigh) {
 
-	Filter *bandPassFilter = createFilterS(&bandPassF, &printBandPassF, cutOffLow, cutOffHigh,
+	Filter *bandPassNoiseFilter = createFilterS(&bandPassNoiseF, &printBandPassNoiseF, cutOffLow, cutOffHigh,
 			UNUSED, UNUSED, UNUSED);
 
-	return bandPassFilter;
+	return bandPassNoiseFilter;
 }

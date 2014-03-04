@@ -1,10 +1,6 @@
 #ifndef __USERINTERFACE_H__
 #define __USERINTERFACE_H__
 
-uint32_t receiveFromTerminal(void);
-
-void waitForTerminal(void);
-
 void forceInput(void);
 
 float getFloat(void);
@@ -35,10 +31,10 @@ Filter *inputTremelo(void);
 
 Filter *inputOverdrive(void);
 
-Filter *inputLowPass(void);
+Filter *inputLowPassNoise(void);
 
-Filter *inputHighPass(void);
+Filter *inputHighPassNoise(void);
 
-Filter *inputBandPass(void);
+Filter *inputBandPassNoise(void);
 
 #endif

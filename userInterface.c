@@ -16,32 +16,20 @@
 #include "filters/echo.h"
 #include "filters/tremelo.h"
 #include "filters/overDrive.h"
-#include "filters/lowPass.h"
-#include "filters/highPass.h"
-#include "filters/bandPass.h"
+#include "filters/lowPassNoise.h"
+#include "filters/highPassNoise.h"
+#include "filters/bandPassNoise.h"
 
 #include "debug.h"
 #include "global.h"
 #include "userInterface.h"
 
-static uint8_t terminalBuffer; //buffer to store read values from terminal
 static float filterVariable[5];
 
-static uint32_t received; //flag to check if there has been a keyboard input
+// Boolean used to decide when to show CPU usage in the main UI loop
+static uint8_t showUsage = 0;
+
 static uint8_t stay = 1; //stay to loop through switch statements
-
-//recieves single char from keyboard input
-uint32_t receiveFromTerminal(void) {
-	return UART_Receive((LPC_UART_TypeDef *) LPC_UART0, &terminalBuffer, 1, NONE_BLOCKING);
-}
-
-//waits for keyboard input. loops until user inputs something
-void waitForTerminal(void){
-	while (!received){
-		received = receiveFromTerminal();
-	}
-	received = 0;
-}
 
 void forceInput(void) {
 	printToTerminal("\n\rPress any key to return to main menu...\n\r");
@@ -49,27 +37,27 @@ void forceInput(void) {
 	clearScreen();
 }
 
-//takes string input from terminal converts and returns a float
-float getFloat(void){
+//takes string input from terminal, converts and returns a float
+float getFloat(void) {
 	char terminalArray[9];
 	int index = 0;
 	float inputFloat;
 	
-	while (terminalBuffer != 0x0D){ //while enter hasn't been pressed
-		if (index > sizeof terminalArray){ //if end of input array
-			printToTerminal("Input too long. Try again. \n\r");
+	while (terminalBuffer != 0x0D) { //while enter hasn't been pressed
+		if (index > sizeof terminalArray) { //if end of input array
+			printToTerminal("\n\rInput too long - try again:\n\r");
 			memset(terminalArray, 0, sizeof terminalArray);
 			index = 0;
 			waitForTerminal();
 		}
 		//if correct input character
-		if (((terminalBuffer >= 0x30) && (terminalBuffer <= 0x39)) || terminalBuffer == 0x2E){ 
+		if (((terminalBuffer >= 0x30) && (terminalBuffer <= 0x39)) || terminalBuffer == 0x2E) { 
 			terminalArray[index] = terminalBuffer;
 			printfToTerminal("%c", terminalBuffer);
 			index++; 
 			waitForTerminal();		
-		} else{
-			printToTerminal("\n\rIncorrect input. Try again. \n\r");
+		} else {
+			printToTerminal("\n\rIncorrect input - try again:\n\r");
 			memset(terminalArray, 0, sizeof terminalArray);
 			index = 0;
 			waitForTerminal();
@@ -79,6 +67,11 @@ float getFloat(void){
 	terminalArray[index] = '\0'; //add null char at end so it recognises string
 	index = 0;
 	inputFloat = atof(terminalArray);
+
+	// Ensures there is always a space between the input of a
+	// number and the next line printed
+	printToTerminal("\n\r");
+
 	return inputFloat; //convert char array to float, return
 }
 
@@ -99,59 +92,79 @@ float inputAndAssert(float min, float max) {
 		}
 		printfToTerminal("You must enter a number between %f and %f\n\r", min, max);
 	}
+
 	return input;
 }
 
 void printEffects(void) {
 	printToTerminal("\n\r1 - Delay\n\r2 - Echo\n\r3 - Enveloper Follower\n\r"
 					"4 - Flange\n\r5 - Linear Gain\n\r6 - Reverb\n\r7 - Tremelo\n\r"
-					"8 - Overdrive\n\r9 - Low-pass\n\r10 - High-pass\n\r"
-					"11 - Band-pass\n\r\n\r");
+					"8 - Overdrive\n\r9 - Low-pass Noise Gate\n\r10 - High-pass Noise Gate\n\r"
+					"11 - Band-pass Noise Gate\n\r\n\r");
 	return;
 }
 
 void printUsage(void) {
 
-	uint32_t usedTime;
-	uint32_t usage;
-	uint32_t remaining;
+	// usedTime is the percentage of the available time for each interrupt
+	// that is being used
+	int32_t usedTime;
 
-	usedTime = ((float) wdtCounter / (float) SAMPLE_RATE_US) * 100;
-	usage = usedTime;
+	uint32_t difference;
 
-	printfToTerminal("WDT: %d", wdtCounter);
+	uint32_t sRate = ADC_SAMPLE_RATE;
 
-	printToTerminal("\n\rCPU Usage:  |");
+	// Remaining used to calculate how much whitespace needs to be printed
+	// for when the usedTime is < 100%
+	uint32_t remaining = 0;
+
+	difference = WDT_TIMEOUT_US - wdtCounter;
+
+	// Calculates the percentage of the time being used for each sampling ISR
+	// compared to how long between interrupts at SAMPLE_RATE_US
+	usedTime = (((float) difference / (float) SAMPLE_RATE_US) * 100);
+
+	// If the usedTime percentage is greater than 100%, calculate an approximation
+	// for the current actual sampling rate
+	if (usedTime > 100) {
+		sRate = (ADC_SAMPLE_RATE / ((float) usedTime / 100.0));
+	}
+
+	printfToTerminal("Approx. Sample Rate:\t%dHz\n\r", sRate);
+
+	printfToTerminal("CPU Usage:\n\r\t\t%d%%\n\r\t\t|", usedTime);
 
 	if (usedTime > 100) {
+		printToTerminal("==========|");
+
 		while (usedTime > 100) {
-			printToTerminal("=");
 			usedTime -= 10;
+			printToTerminal("=");
 		}
+		printToTerminal(">\n\r\n\r");
+
+	} else {
+		while (usedTime > 0) {
+			remaining++;
+			usedTime -= 10;
+			printToTerminal("=");
+		}
+		printToTerminal(">");
+
+		// Calculate the number of spaces that need to be printed
+		remaining = 10 - remaining;
+
+		int i;
+		for (i = 0; i < remaining; i++) {
+			printToTerminal(" ");
+		}
+		printToTerminal("|\n\r\n\r");
 	}
 
-
-	uint8_t i = 0;
-	while (usage > 10 ) {
-
-		usage -= 10;
-		i++;
-		printToTerminal("=");
-	}
-
-	printToTerminal("=>");
-
-	remaining = 10;
-
-	uint8_t y;
-	for (y = 0; y < remaining; y++) {
-		printToTerminal(" ");
-	}
-
-	printfToTerminal("|\t%d%%\n\r", usedTime);
+	return;
 }
 	
-void generateUI(void){
+void generateUI(void) {
 	
 	while (1) {
 
@@ -159,20 +172,29 @@ void generateUI(void){
 
 		printToTerminal("\n\r################ MAIN MENU #################\n\r\n\r");
 
-		//printUsage();
-
+		if (showUsage) {
+			printUsage();
+		}
 		if (passThrough) {
 			printToTerminal("PASS-THROUGH ENABLED\n\r\n\r");
 		}
+		if (infraMix) {
+			printToTerminal("INFRARED MIX ENABLED\n\r\n\r");
+    	}
 
-		printToTerminal("1) Display all possible effects\n\r");
-		printToTerminal("2) Display all added effects\n\r");
-		printToTerminal("3) Remove effect\n\r");
-		printToTerminal("4) Add effect\n\r");
-		printToTerminal("5) Replace effect\n\r");
-		printToTerminal("6) Enable/Disable pass-through\n\r");
-		printToTerminal("7) Empty filter chain\n\r");
-		printToTerminal("8) Exit \n\r\n\r");
+		printToTerminal("1)\tDisplay all possible effects\n\r");
+		printToTerminal("2)\tDisplay all added effects\n\r\n\r");
+
+		printToTerminal("3)\tAdd effect\n\r");
+		printToTerminal("4)\tRemove effect\n\r");
+		printToTerminal("5)\tReplace effect\n\r\n\r");
+
+		printToTerminal("6)\tEnable/disable pass-through\n\r");
+		printToTerminal("7)\tEnable/disable infrared mix\n\r\n\r");
+
+		printToTerminal("8)\tShow/hide CPU usage\n\r");
+		printToTerminal("9)\tEmpty filter chain\n\r");
+		printToTerminal("10)\tExit \n\r\n\r");
 		
 		waitForTerminal();
 		switch ((uint32_t) getFloat()) {
@@ -187,6 +209,9 @@ void generateUI(void){
 				forceInput();
 				break;
 			case 3:
+				enqueueEffect();
+				break;
+			case 4:
 				clearScreen();
 				printQueue();
 				printToTerminal("Enter index of effect to remove:\n\r");
@@ -199,10 +224,6 @@ void generateUI(void){
 
 				forceInput();
 				break;
-			case 4:
-				enqueueEffect();
-				break;
-
 			case 5:
 				replaceEffect();
 				break;
@@ -218,6 +239,27 @@ void generateUI(void){
 				forceInput();
 				break;
 			case 7:
+				if (infraMix) {
+					infraMix = 0;
+					printToTerminal("\n\rInfrared mix disabled\n\r");
+				} else {
+					infraMix = 1;
+					printToTerminal("\n\rInfrared mix enabled\n\r");
+				}
+
+				forceInput();
+				break;
+			case 8:
+				if (showUsage) {
+					showUsage = 0;
+					printToTerminal("\n\rHiding CPU usage\n\r");
+				} else {
+					showUsage = 1;
+					printToTerminal("\n\rShowing CPU usage\n\r");
+				}
+				forceInput();
+				break;
+			case 9:
 				printToTerminal("\n\rRemoving all effects from the filter chain...");
 
 				if (dequeueAll() == -1) {
@@ -225,12 +267,18 @@ void generateUI(void){
 				} else {
 					printToTerminal("COMPLETE\n\r");
 				}
-
 				forceInput();
 				break;
-			case 8:
-				printToTerminal("\n\rSystem will now terminate");
+			case 10:
+				printToTerminal("\n\rSystem terminating...");
+
+				// Disable sampling timer
 				disableTimer();
+
+				// Disable WDT
+				NVIC_DisableIRQ(WDT_IRQn);
+
+				printToTerminal("COMPLETE");
 				exit(0);
 				break;
 			default:
@@ -249,8 +297,8 @@ void enqueueEffect(void) {
 
 	clearScreen();
 
-	printToTerminal("\n\rPlease choose the type of effect desired:\n\r"
-					"1: Serial\n\r2: Parallel\n\r");
+	printToTerminal("\n\rPlease choose the type of effect to add:\n\r\n\r"
+					"1:\tSerial\n\r2:\tParallel\n\r\n\r");
 
 	while(stay) {
 		waitForTerminal();
@@ -300,8 +348,8 @@ void replaceEffect(void) {
 		return;
 	}
 
-	printToTerminal("\n\rPlease choose the type of effect desired:\n\r"
-					"1: Serial\n\r2: Parallel\n\r");
+	printToTerminal("\n\rPlease choose the type of effect to add:\n\r\n\r"
+					"1:\tSerial\n\r2:\tParallel\n\r\n\r");
 
 	while(stay) {
 		waitForTerminal();
@@ -365,13 +413,13 @@ Filter *getEffect(void) {
 				return inputOverdrive();
 				break;
 			case 9:
-				return inputLowPass();
+				return inputLowPassNoise();
 				break;
 			case 10:
-				return inputHighPass();
+				return inputHighPassNoise();
 				break;
 			case 11:
-				return inputBandPass();
+				return inputBandPassNoise();
 				break;
 			default:
 				printToTerminal("\n\rEnter a correct effect number:\n\r");
@@ -397,7 +445,11 @@ Filter *inputEcho(void) {
 	return createEchoF(filterVariable[0], filterVariable[1]);
 }
 
+// Ideal attack is 2 (ms) and ideal release is 2 (ms)
 Filter *inputEnvFollower(void) {
+
+	printToTerminal("\n\rRecommended:\n\r\t\tAttack: 2 (ms)\n\r\t\tRelease: 2 (ms)\n\r");
+
 	printToTerminal("\n\rEnter the attack (ms):\n\r");
 	filterVariable[0] = inputAndAssert(0, 10000);
 
@@ -448,38 +500,32 @@ Filter *inputTremelo(void) {
 }
 
 Filter *inputOverdrive(void) {
-	printToTerminal("\n\rEnter the boost magnitude (1.7-4):\n\r");
-	filterVariable[0] = inputAndAssert(1.7, 4);
-/*
-	printToTerminal("\n\rEnter the input drive (0-100):\n\r");
-	filterVariable[1] = inputAndAssert(0, 100);
+	printToTerminal("\n\rEnter the boost magnitude (1.5-2):\n\r");
+	filterVariable[0] = inputAndAssert(1.5, 2);
 
-	printToTerminal("\n\rEnter the drive scalar (0-1):\n\r");
-	filterVariable[2] = inputAndAssert(0, 1);
-*/
 	return createOverdriveF(filterVariable[0]);
 }
 
-Filter *inputLowPass(void) {
+Filter *inputLowPassNoise(void) {
 	printToTerminal("\n\rEnter the cutoff amplitude (0-4000):\n\r");
 	filterVariable[0] = inputAndAssert(0, 4000);
 
-	return createLowPassF(filterVariable[0]);
+	return createLowPassNoiseF(filterVariable[0]);
 }
 
-Filter *inputHighPass(void) {
+Filter *inputHighPassNoise(void) {
 	printToTerminal("\n\rEnter the cutoff amplitude (0-4000):\n\r");
 	filterVariable[0] = inputAndAssert(0, 4000);
 
-	return createHighPassF(filterVariable[0]);
+	return createHighPassNoiseF(filterVariable[0]);
 }
 
-Filter *inputBandPass(void) {
+Filter *inputBandPassNoise(void) {
 	printToTerminal("\n\rEnter the bottom cutoff amplitude (0-4000):\n\r");
 	filterVariable[0] = inputAndAssert(0, 4000);
 
 	printToTerminal("\n\rEnter the top cutoff amplitude (0-4000):\n\r");
 	filterVariable[1] = inputAndAssert(0, 4000);
 
-	return createBandPassF(filterVariable[0], filterVariable[1]);
+	return createBandPassNoiseF(filterVariable[0], filterVariable[1]);
 }

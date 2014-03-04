@@ -43,14 +43,16 @@ void enqueue(Filter *newFilter) {
 
 	// Creates a new node at the end of the linked list
 	currentNode->next = malloc(sizeof(FilterNode));
-	// Moves the currentNode pointer to the new node
-	currentNode = currentNode->next;
 
 	// Test to check malloc did not fail
 	// Will not continue executing after throw
-	if (currentNode == NULL) {
-		THROW("Out of memory when allocating new node to filter queue");
+	if (currentNode->next == NULL) {
+		THROW("Malloc for FilterNode struct returned NULL");
 	}
+
+	// Moves the currentNode pointer to the new node
+	currentNode = currentNode->next;
+
 
 	// Initialize the new node
 	currentNode->next = NULL;
@@ -72,15 +74,15 @@ int enqueueByIndex(Filter *newFilter, float index) {
 			FilterNode *tempNode = currentNode->next;
 
 			currentNode->next = malloc(sizeof(FilterNode));
+
+			if (currentNode->next == NULL) {
+				THROW("Malloc for FilterNode struct returned NULL");
+			}
+
 			currentNode = currentNode->next;
 
 			currentNode->filter = newFilter;
 			currentNode->next = tempNode;
-
-			if (currentNode == NULL) {
-				THROW("Out of memory when allocating new node to filter queue");
-				return -1;
-			}
 
 			return 0;
 		}
@@ -298,15 +300,14 @@ void printQueue(void) {
 
 int chain_init(void) {
 
-	// root now points to a node struct
+	// root now points to a FilterNode struct
 	root = malloc(sizeof(FilterNode));
 
 	if (root == NULL) {
-		WARN(0, "Malloc failed for filterQueue");
-		return -1;
+		THROW("Malloc for root FilterNode struct returned NULL");
 	}
 
-	// The node pointer points to null
+	// The chain is empty, so the root points to NULL
 	root->next = NULL;
 
 	return 0;

@@ -5,7 +5,10 @@
 
 // Sample rate in microseconds per interrupt
 #define SAMPLE_RATE_US ((uint32_t) ((1.0/ADC_SAMPLE_RATE) * 1000000))
-#define WDT_TIMEOUT_US (SAMPLE_RATE_US * 2)
+
+// WDT reset value is 0xFF plus the number of microseconds passed to the
+// WDT start function
+#define WDT_TIMEOUT_US (SAMPLE_RATE_US + 0xFF)
 
 #define AMPLITUDE_MAX 4096
 #define AMPLITUDE_PIVOT AMPLITUDE_MAX/2
@@ -21,6 +24,11 @@ extern uint16_t *sampleP;
 extern volatile uint32_t wdtCounter;
 
 extern volatile uint8_t passThrough;
+
+extern volatile uint8_t infraMix;
+
+// Buffer to store read values from terminal
+extern uint8_t terminalBuffer;
 
 
 #endif

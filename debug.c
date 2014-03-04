@@ -8,6 +8,11 @@
 
 #include "debug.h"
 
+uint8_t terminalBuffer;
+
+// Flag to check if there has been a keyboard input
+static uint32_t received;
+
 //Read
 int read_usb_serial_none_blocking(char *buf, int length) {
 
@@ -20,6 +25,20 @@ int write_usb_serial_blocking(char *buf, int length) {
 
 	return (UART_Send((LPC_UART_TypeDef *) LPC_UART0, (uint8_t *) buf, 
 		length, BLOCKING));
+}
+
+// Recieves single char from keyboard input
+uint32_t receiveFromTerminal(void) {
+	return UART_Receive((LPC_UART_TypeDef *) LPC_UART0, &terminalBuffer, 1, NONE_BLOCKING);
+}
+
+// Waits for keyboard input. loops until user inputs something
+void waitForTerminal(void) {
+
+	while (!received) {
+		received = receiveFromTerminal();
+	}
+	received = 0;
 }
 
 int printToTerminal(char *buf) {
@@ -50,54 +69,6 @@ void clearScreen(void) {
 	printfToTerminal("\033[H");
 }
 
-void dumpRegs() { //http://www.ethernut.de/en/documents/arm-inline-asm.html
-
-	setColor("cyan");
-        printfToTerminal("DEBUG: Dumping registers:\n\r");
-        int tmp;
-        __asm volatile("mov %[res], r0\n\t" : [res] "=r" (tmp));
-        printfToTerminal("r0: 0x%x\n\r", tmp);
-        __asm volatile("mov %[res], r1\n\t" : [res] "=r" (tmp));
-        printfToTerminal("r1: 0x%x\n\r", tmp);
-        __asm volatile("mov %[res], r2\n\t" : [res] "=r" (tmp));
-        printfToTerminal("r2: 0x%x\n\r", tmp);
-        __asm volatile("mov %[res], r3\n\t" : [res] "=r" (tmp));
-        printfToTerminal("r3: 0x%x\n\r", tmp);
-        __asm volatile("mov %[res], r4\n\t" : [res] "=r" (tmp));
-        printfToTerminal("r4: 0x%x\n\r", tmp);
-        __asm volatile("mov %[res], r5\n\t" : [res] "=r" (tmp));
-        printfToTerminal("r5: 0x%x\n\r", tmp);
-        __asm volatile("mov %[res], r6\n\t" : [res] "=r" (tmp));
-        printfToTerminal("r6: 0x%x\n\r", tmp);
-        __asm volatile("mov %[res], r7\n\t" : [res] "=r" (tmp));
-        printfToTerminal("r7: 0x%x\n\r", tmp);
-        __asm volatile("mov %[res], r8\n\t" : [res] "=r" (tmp));
-        printfToTerminal("r8: 0x%x\n\r", tmp);
-        __asm volatile("mov %[res], r9\n\t" : [res] "=r" (tmp));
-        printfToTerminal("r9: 0x%x\n\r", tmp);
-        __asm volatile("mov %[res], r10\n\t" : [res] "=r" (tmp));
-        printfToTerminal("r10: 0x%x\n\r", tmp);
-        __asm volatile("mov %[res], r11\n\t" : [res] "=r" (tmp));
-        printfToTerminal("r11: 0x%x\n\r", tmp);
-        __asm volatile("mov %[res], r12\n\t" : [res] "=r" (tmp));
-        printfToTerminal("r12: 0x%x\n\r", tmp);
-        __asm volatile("mov %[res], r13\n\t" : [res] "=r" (tmp));
-        printfToTerminal("r13: 0x%x\n\r", tmp);
-        __asm volatile("mov %[res], r14\n\t" : [res] "=r" (tmp));
-        printfToTerminal("r14: 0x%x\n\r", tmp);
-        __asm volatile("mov %[res], r15\n\t" : [res] "=r" (tmp));
-        printfToTerminal("r15: 0x%x\n\r", tmp);
-        printfToTerminal("---------------------------------------------\n\r");
-        __asm volatile("mov %[res], sp\n\t" : [res] "=r" (tmp));
-        printfToTerminal("sp: 0x%x\n\r", tmp);
-        __asm volatile("mov %[res], fp\n\t" : [res] "=r" (tmp));
-        printfToTerminal("fp: 0x%x\n\r", tmp);
-        __asm volatile("mov %[res], lr\n\t" : [res] "=r" (tmp));
-        printfToTerminal("lr: 0x%x\n\r", tmp);
-
-	setColor("default");
-}
-
 void setColor(char *color) {
 
 	if (!strcmp(color, "red")) {
@@ -123,7 +94,6 @@ void debugAssert(char *message, char *file, int line) {
 	
 	setColor("red");
 	printfToTerminal("ASSERTION ERROR in %s line %d\n\r%s\n\r", file, line, message);
-	dumpRegs();
 	while(1);
 }
 
@@ -138,7 +108,6 @@ void debugThrow(char *message, char *file, int line) {
 
 	setColor("red");
 	printfToTerminal("ERROR THROWN in %s line %d\n\r%s\n\r", file, line, message);
-	dumpRegs();
 	while(1);
 }
 

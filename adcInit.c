@@ -6,8 +6,8 @@
 
 #include "adcInit.h"
 
-/*  Unnecessary function call
-    Call ADC_ChannelGetData directly */
+// Calculates the median from the three ADC inputs from the
+// analogue source, and then returns the median
 uint16_t getAdcSample(void) {
 
 	uint16_t sample4 = ADC_ChannelGetData(LPC_ADC, ADC_CHANNEL_4);
@@ -41,6 +41,7 @@ void sadc_init(int sampleRate) {
 
 	PINSEL_CFG_Type PinCfg;
 
+	// Pin used for sound input
 	PinCfg.Funcnum = 3;
 	PinCfg.OpenDrain = 0;
 	PinCfg.Pinmode = 0;
@@ -48,6 +49,7 @@ void sadc_init(int sampleRate) {
 	PinCfg.Portnum = 1;
 	PINSEL_ConfigPin(&PinCfg);
 
+	// Pin used for sound input
 	PinCfg.Funcnum = 1;
 	PinCfg.OpenDrain = 0;
 	PinCfg.Pinmode = 0;
@@ -55,10 +57,19 @@ void sadc_init(int sampleRate) {
 	PinCfg.Portnum = 0;
 	PINSEL_ConfigPin(&PinCfg);
 
+	// Pin used for sound input
 	PinCfg.Funcnum = 1;
 	PinCfg.OpenDrain = 0;
 	PinCfg.Pinmode = 0;
 	PinCfg.Pinnum = 24;		// Refers to pin 16 on board
+	PinCfg.Portnum = 0;
+	PINSEL_ConfigPin(&PinCfg);
+	
+	// Pin used for the infrared sensor
+	PinCfg.Funcnum = 1;
+	PinCfg.OpenDrain = 0;
+	PinCfg.Pinmode = 0;
+	PinCfg.Pinnum = 25;		// Refers to pin 17 on board
 	PinCfg.Portnum = 0;
 	PINSEL_ConfigPin(&PinCfg);
 
@@ -68,13 +79,11 @@ void sadc_init(int sampleRate) {
 	ADC_ChannelCmd(LPC_ADC, ADC_CHANNEL_0, ENABLE);
 	ADC_ChannelCmd(LPC_ADC, ADC_CHANNEL_1, ENABLE);
 
-//	ADC_StartCmd(LPC_ADC, ADC_START_CONTINUOUS);
+	ADC_ChannelCmd(LPC_ADC, ADC_CHANNEL_2, ENABLE); //infrared channel
 
 	ADC_BurstCmd(LPC_ADC, ENABLE);
 
-//	NVIC_EnableIRQ(ADC_IRQn);
-
-//	__enable_irq();
+	return;
 }
 
 //Add into main file void ADC_IRQHandler(void) with the IRQ handler
