@@ -14,7 +14,7 @@ uint32_t highPassNoiseF(uint32_t sample, SFilter *filter) {
 	float cutOff = filter->parameters[0];
 
 	// If input sample is above cut off, return it
-	if (sample > cutOff){
+	if (sample > cutOff) {
 	  return sample;
 	}
 	
