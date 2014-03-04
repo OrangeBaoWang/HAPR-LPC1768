@@ -1,3 +1,10 @@
+// Created by Oliver Lea - 31/1/2014
+
+// O-Edit: Added linear gain init method - 2/2/2014
+// J-Edit: Tested and found bug - 5/2/2014
+// O-Edit: Fixed bug that caused huge distortion - 20/2/2014
+
+
 
 #include "lpc_types.h"
 
