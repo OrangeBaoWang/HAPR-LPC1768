@@ -337,7 +337,7 @@ void replaceEffect(void) {
 
 	clearScreen();
 	printQueue();
-	printToTerminal("Enter index of effect to replace:\n\r");
+	printToTerminal("\n\rEnter index of effect to replace:\n\r");
 
 	waitForTerminal();
 	index = getFloat();
@@ -487,13 +487,19 @@ Filter *inputFlange(void) {
 }
 
 Filter *inputLinearGain(void) {
-	printToTerminal("\n\rEnter the magnitude of the gain (eg. 0.4 or 1.2) (0-3):\n\r");
+
+	printToTerminal("\n\rRecommended:\n\r\t\t\t\tGain Magnitude: 1.1-1.2\n\r");
+
+	printToTerminal("\n\rEnter the magnitude of the gain (0-3):\n\r");
 	filterVariable[0] = inputAndAssert(0, 3);
 
 	return createLinearGainF(filterVariable[0]);
 }
 
 Filter *inputOverdrive(void) {
+
+	printToTerminal("\n\rRecommended:\n\r\t\tBoost magnitude: 1.9\n\r");
+
 	printToTerminal("\n\rEnter the boost magnitude (1.5-2):\n\r");
 	filterVariable[0] = inputAndAssert(1.5, 2);
 
@@ -501,6 +507,9 @@ Filter *inputOverdrive(void) {
 }
 
 Filter *inputReverb(void) {
+
+	printToTerminal("\n\rRecommended:\n\r\t\t\t\tMixing Ratio: 0.4\n\r\t\t\t\tDelay: 4000\n\r");
+
 	printToTerminal("\n\rEnter the mixing ratio (0-1):\n\r");
 	filterVariable[0] = inputAndAssert(0, 1);
 
@@ -511,6 +520,9 @@ Filter *inputReverb(void) {
 }
 
 Filter *inputTremelo(void) {
+
+	printToTerminal("\n\rRecommended:\n\r\t\t\t\tSweep Range: 0.1\n\r\t\t\t\tSweep Frequency: 10\n\r");
+
 	printToTerminal("\n\rEnter the range of the sweep (0-1):\n\r");
 	filterVariable[0] = inputAndAssert(0, 1);
 
@@ -521,6 +533,9 @@ Filter *inputTremelo(void) {
 }
 
 Filter *inputLowPassNoise(void) {
+
+	printfToTerminal("\n\rAmplitude pivot is %d\n\r", AMPLITUDE_PIVOT);
+
 	printToTerminal("\n\rEnter the cutoff amplitude (0-4000):\n\r");
 	filterVariable[0] = inputAndAssert(0, 4000);
 
@@ -528,6 +543,9 @@ Filter *inputLowPassNoise(void) {
 }
 
 Filter *inputHighPassNoise(void) {
+
+	printfToTerminal("\n\rAmplitude pivot is %d\n\r", AMPLITUDE_PIVOT);
+
 	printToTerminal("\n\rEnter the cutoff amplitude (0-4000):\n\r");
 	filterVariable[0] = inputAndAssert(0, 4000);
 
@@ -535,6 +553,9 @@ Filter *inputHighPassNoise(void) {
 }
 
 Filter *inputBandPassNoise(void) {
+
+	printfToTerminal("\n\rAmplitude pivot is %d\n\r", AMPLITUDE_PIVOT);
+
 	printToTerminal("\n\rEnter the bottom cutoff amplitude (0-4000):\n\r");
 	filterVariable[0] = inputAndAssert(0, 4000);
 
