@@ -1,3 +1,4 @@
+
 #include "lpc17xx_adc.h"
 #include "lpc17xx_dac.h"
 #include "lpc17xx_wdt.h"
@@ -54,12 +55,9 @@ void TIMER0_IRQHandler(void) {
 		output = *sampleP;
 	} else if (infraMix) {
 
-	  // infraValue will be between 0 (no hand) and 1 (hand close)
-	  infraValue = (ADC_ChannelGetData(LPC_ADC, ADC_CHANNEL_2)) / 4000;
-	  output = (((float) *sampleP) * (1.0 - infraValue)) + (((float) applyFilters(*sampleP)) * infraValue);
-
-	  printfToTerminal("infrared: %f\n\r", infraValue);
-	  printfToTerminal("ADC_CHANNEL_2: %d\n\r", ADC_ChannelGetData(LPC_ADC, ADC_CHANNEL_2));
+		// infraValue will be between 0 (no hand) and 1 (hand close)
+		infraValue = ADC_ChannelGetData(LPC_ADC, ADC_CHANNEL_2) / 4000.0;
+		output = (((float) *sampleP) * (1.0 - infraValue)) + (((float) applyFilters(*sampleP)) * infraValue);
 
 	} else {
 		output = applyFilters(*sampleP);
