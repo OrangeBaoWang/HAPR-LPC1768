@@ -98,8 +98,8 @@ float inputAndAssert(float min, float max) {
 
 void printEffects(void) {
 	printToTerminal("\n\r1 - Delay\n\r2 - Echo\n\r3 - Enveloper Follower\n\r"
-					"4 - Flange\n\r5 - Linear Gain\n\r6 - Reverb\n\r7 - Tremelo\n\r"
-					"8 - Overdrive\n\r9 - Low-pass Noise Gate\n\r10 - High-pass Noise Gate\n\r"
+					"4 - Flange\n\r5 - Linear Gain\n\r6 - Overdrive\n\r"
+					"7 - Reverb\n\r8 - Tremelo\n\r9 - Low-pass Noise Gate\n\r10 - High-pass Noise Gate\n\r"
 					"11 - Band-pass Noise Gate\n\r\n\r");
 	return;
 }
@@ -340,9 +340,9 @@ void replaceEffect(void) {
 	printToTerminal("Enter index of effect to replace:\n\r");
 
 	waitForTerminal();
-	index = getFloat() - 1;
+	index = getFloat();
 
-	if (dequeueByIndex(index+1) == -1) {
+	if (dequeueByIndex(index) == -1) {
 		printToTerminal("\n\rModification failed - Invalid dequeue index given\n\r");
 		forceInput();
 		return;
@@ -404,13 +404,13 @@ Filter *getEffect(void) {
 				return inputLinearGain();
 				break;
 			case 6:
-				return inputReverb();
+				return inputOverdrive();
 				break;
 			case 7:
-				return inputTremelo();
+				return inputReverb();
 				break;
 			case 8:
-				return inputOverdrive();
+				return inputTremelo();
 				break;
 			case 9:
 				return inputLowPassNoise();
@@ -429,6 +429,9 @@ Filter *getEffect(void) {
 }
 
 Filter *inputDelay(void) {
+
+	printToTerminal("\n\rRecommended:\n\r\t\tDelay: 8000\n\r");
+
 	printToTerminal("\n\rEnter the size of the delay (0-8000):\n\r");
 	filterVariable[0] = inputAndAssert(0, 8000);
 
@@ -436,6 +439,11 @@ Filter *inputDelay(void) {
 }
 
 Filter *inputEcho(void) {
+
+	printToTerminal("\n\rRecommended:\n\r"
+			"\t\tNoticeable:\n\r\t\t\t\tMixing Ratio: 0.5\n\r\t\t\t\tDelay: 8000\n\r"
+			"\t\tChoral:\n\r\t\t\t\tMixingRatio: 0.5\n\r\t\t\t\tDelay: 1500\n\r");
+
 	printToTerminal("\n\rEnter the mixing ratio (0-1):\n\r");
 	filterVariable[0] = inputAndAssert(0, 1);
 
@@ -460,6 +468,12 @@ Filter *inputEnvFollower(void) {
 }
 
 Filter *inputFlange(void) {
+
+	printToTerminal("\n\rRecommended:\n\r\t\t\t\tMixingRatio: 0.4\n\r"
+			"\t\tWub:\n\r\t\t\t\tSweep Range: 500\n\r\t\t\t\tSweep Frequency: 20\n\r"
+			"\t\tUFO:\n\r\t\t\t\tSweep Range: 8000\n\r\t\t\t\tSweep Frequency: 1\n\r"
+			"\t\tChoral:\n\r\t\t\t\tSweep Range: 1000\n\r\t\t\t\tSweep Frequency: 0.1\n\r");
+
 	printToTerminal("\n\rEnter the mixing ratio (0-1):\n\r");
 	filterVariable[0] = inputAndAssert(0, 1);
 
@@ -477,6 +491,13 @@ Filter *inputLinearGain(void) {
 	filterVariable[0] = inputAndAssert(0, 3);
 
 	return createLinearGainF(filterVariable[0]);
+}
+
+Filter *inputOverdrive(void) {
+	printToTerminal("\n\rEnter the boost magnitude (1.5-2):\n\r");
+	filterVariable[0] = inputAndAssert(1.5, 2);
+
+	return createOverdriveF(filterVariable[0]);
 }
 
 Filter *inputReverb(void) {
@@ -497,13 +518,6 @@ Filter *inputTremelo(void) {
 	filterVariable[1] = inputAndAssert(0, 10000);
 
 	return createTremeloF(filterVariable[0], filterVariable[1]);
-}
-
-Filter *inputOverdrive(void) {
-	printToTerminal("\n\rEnter the boost magnitude (1.5-2):\n\r");
-	filterVariable[0] = inputAndAssert(1.5, 2);
-
-	return createOverdriveF(filterVariable[0]);
 }
 
 Filter *inputLowPassNoise(void) {

@@ -25,11 +25,11 @@ Filter *inputFlange(void);
 
 Filter *inputLinearGain(void);
 
+Filter *inputOverdrive(void);
+
 Filter *inputReverb(void);
 
 Filter *inputTremelo(void);
-
-Filter *inputOverdrive(void);
 
 Filter *inputLowPassNoise(void);
 
