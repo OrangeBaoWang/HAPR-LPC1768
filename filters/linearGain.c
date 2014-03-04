@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 // Created by Oliver Lea - 31/1/2014
 
 // O-Edit: Added linear gain init method - 2/2/2014
@@ -6,6 +7,8 @@
 
 
 
+=======
+>>>>>>> d9c282bf2d049ab0b9632f37684f59117c45166c
 #include "lpc_types.h"
 
 #include "../filter.h"

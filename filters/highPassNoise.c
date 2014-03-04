@@ -1,3 +1,7 @@
+// Created by Dariush Bahri - 18/2/2014
+
+// O-Edit: Changed file and function names - 26/1/2014
+
 #include "lpc_types.h"
 
 #include "../filter.h"
