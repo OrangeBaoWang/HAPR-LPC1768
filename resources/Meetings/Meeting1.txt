@@ -126,3 +126,33 @@ Jay - Big Boss
 
 Plan: Be done by Week 9, working only on commenting by then. 
 
+/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\
+
+MEETINGS NEED TO BE ADDED FOR WEEK 7 AND 8
+
+/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\
+
+#########################################################################################################
+#########################################################################################################
+Meeting 9
+
+Oli - Secretary
+Jay - Chair
+Daz - Big Boss
+
+#########################
+
+- Main project work complete
+
+- Daz working on his BA infrared (=> swag) sensor individual section
+
+- Oli and Jay working on commenting different undocumented functions
+
+- Ribs
+
+- Envelope follower finished and working really well
+
+- Want to be finished with all coding by next week, and no more commits from Tuesday week 10 onwards
+	in anticipation for the code submission on Wednesday week 10
+
+- Spend Tuesday week 10 going over the presentation
