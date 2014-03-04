@@ -6,12 +6,17 @@
 
 void WDT_IRQHandler(void) {
 
+	NVIC_DisableIRQ(WDT_IRQn);
+
+	clearScreen();
+
 	printToTerminal("\n\rWATCHDOG TIMEOUT\n\r");
+	printToTerminal("The effect generator will now reset...\n\r");
+	printToTerminal("\n\rPress any key to continue");
 
-	// Clear the timeout flag
-	WDT_ClrTimeOutFlag();
+	waitForTerminal();
 
-	WDT_Feed();
+	NVIC_SystemReset();
 }
 
 void watchdog_init(void) {

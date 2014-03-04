@@ -1,10 +1,6 @@
 #ifndef __USERINTERFACE_H__
 #define __USERINTERFACE_H__
 
-uint32_t receiveFromTerminal(void);
-
-void waitForTerminal(void);
-
 void forceInput(void);
 
 float getFloat(void);

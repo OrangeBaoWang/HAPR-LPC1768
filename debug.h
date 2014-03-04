@@ -16,13 +16,15 @@ int read_usb_serial_none_blocking(char *buf, int length);
 
 int write_usb_serial_blocking(char *buf, int length);
 
+uint32_t receiveFromTerminal(void);
+
+void waitForTerminal(void);
+
 int printToTerminal(char *buf);
 
 int printfToTerminal(char *buf, ...);
 
 void clearScreen(void);
-
-void dumpRegs();
 
 void setColor();
 

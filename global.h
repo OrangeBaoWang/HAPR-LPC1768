@@ -27,5 +27,8 @@ extern volatile uint8_t passThrough;
 
 extern volatile uint8_t infraMix;
 
+// Buffer to store read values from terminal
+extern uint8_t terminalBuffer;
+
 
 #endif

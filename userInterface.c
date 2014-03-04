@@ -24,27 +24,12 @@
 #include "global.h"
 #include "userInterface.h"
 
-static uint8_t terminalBuffer; //buffer to store read values from terminal
 static float filterVariable[5];
 
 // Boolean used to decide when to show CPU usage in the main UI loop
 static uint8_t showUsage = 0;
 
-static uint32_t received; //flag to check if there has been a keyboard input
 static uint8_t stay = 1; //stay to loop through switch statements
-
-//recieves single char from keyboard input
-uint32_t receiveFromTerminal(void) {
-	return UART_Receive((LPC_UART_TypeDef *) LPC_UART0, &terminalBuffer, 1, NONE_BLOCKING);
-}
-
-//waits for keyboard input. loops until user inputs something
-void waitForTerminal(void) {
-	while (!received) {
-		received = receiveFromTerminal();
-	}
-	received = 0;
-}
 
 void forceInput(void) {
 	printToTerminal("\n\rPress any key to return to main menu...\n\r");
