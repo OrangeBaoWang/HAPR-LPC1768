@@ -1,3 +1,9 @@
+// Created by Oliver Lea - 31/1/2014
+
+// O-Edit: Created flange init method - 2/2/2014
+// J-Edit: Optimised flange code and added new options - 4/2/2014
+// O-Edit: Flange refactored and sorted - 4/2/2014
+
 #include "lpc_types.h"
 
 #include <math.h>
