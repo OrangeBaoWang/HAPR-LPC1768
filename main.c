@@ -1,3 +1,8 @@
+// Created by Oliver Lea - 14/1/2014
+
+// O-Edit: Added tests - 27/1/2014
+// O-Edit: Changed interrupt handler - 8/2/2014
+// O-Edit: Added Watchdog timer - 24/2/2014
 
 #include "lpc17xx_adc.h"
 #include "lpc17xx_dac.h"
