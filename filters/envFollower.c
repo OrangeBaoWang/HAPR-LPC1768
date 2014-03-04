@@ -1,3 +1,13 @@
+// Created by Oliver Lea - 31/1/2014
+
+// O-Edit: New approch to envelope follower, work in progress - 4/2/2014
+// D-Edit: Added own fix to envelope follower - 14/2/2014
+// O-Edit: Fixed syntax errors in envelope follower - 16/2/2014
+// O-Edit: Fixed a bug in envelope follower - 17/2/2014
+// D-Edit: Test, still not fully operatonal - 18/2/2014
+// O-Edit: Envelope follower fixed - 3/3/2014
+
+
 #include "lpc_types.h"
 
 #include <math.h>
