@@ -1,14 +1,9 @@
-<<<<<<< HEAD
 // Created by Oliver Lea - 31/1/2014
 
 // O-Edit: Added linear gain init method - 2/2/2014
 // J-Edit: Tested and found bug - 5/2/2014
 // O-Edit: Fixed bug that caused huge distortion - 20/2/2014
 
-
-
-=======
->>>>>>> d9c282bf2d049ab0b9632f37684f59117c45166c
 #include "lpc_types.h"
 
 #include "../filter.h"
