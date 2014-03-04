@@ -3,6 +3,11 @@
 // O-Edit: Added tests - 27/1/2014
 // O-Edit: Changed interrupt handler - 8/2/2014
 // O-Edit: Added Watchdog timer - 24/2/2014
+// D-Edit: Added infrared sensor work to sampling IRQ handler - 25/2/2014
+// O-Edit: Fixed WDT work for the sampling IRQ handler and added a CPU
+//			usage calculator - 26/2/2014
+// O-Edit: Added comments describing the dacSetValue() call - 3/3/2014
+// D-Edit: Fixed infrared sensor type errors - 4/3/2014
 
 #include "lpc17xx_adc.h"
 #include "lpc17xx_dac.h"
@@ -72,8 +77,8 @@ void TIMER0_IRQHandler(void) {
 	// and output to the DAC
 	dacSetValue(output>>2);
 
-	//Select next buffer location based on previous location
-	//When at the end of the buffer, loop round to the beginning next
+	// Select next buffer location based on previous location
+	// When at the end of the buffer, loop round to the beginning next
 	if (sampleP < &(sampleBuffer[BUFFER_SIZE - 1])) {
 		sampleP++;
 	} else {
