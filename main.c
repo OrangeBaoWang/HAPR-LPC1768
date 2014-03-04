@@ -39,7 +39,6 @@ volatile uint8_t passThrough = 0;
 volatile uint8_t infraMix = 0;
 
 float infraValue; //infrared sensor value
-//float scalar = 3.3 / 4096.0;
 
 uint16_t output;
 
@@ -57,7 +56,7 @@ void TIMER0_IRQHandler(void) {
 
 	  // infraValue will be between 0 (no hand) and 1 (hand close)
 	  infraValue = (ADC_ChannelGetData(LPC_ADC, ADC_CHANNEL_2)) / 4000;
-	  output = (*sampleP * (1 - infraValue)) + (applyFilters(*sampleP) * infraValue);
+	  output = (((float) *sampleP) * (1.0 - infraValue)) + (((float) applyFilters(*sampleP)) * infraValue);
 
 	  printfToTerminal("infrared: %f\n\r", infraValue);
 	  printfToTerminal("ADC_CHANNEL_2: %d\n\r", ADC_ChannelGetData(LPC_ADC, ADC_CHANNEL_2));
