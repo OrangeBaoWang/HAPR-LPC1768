@@ -1,5 +1,5 @@
-//Created by Oliver Lea
-//Modified by Oliver Lea 14/01/2014 - Added comments
+// Created by Oliver Lea - 13/1/2014
+// O-Edit: Added comments - 14/1/2014 
 
 #include "lpc17xx_dac.h"
 #include "lpc17xx_pinsel.h"
