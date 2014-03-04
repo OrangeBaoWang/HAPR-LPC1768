@@ -1,3 +1,7 @@
+// Created by Oliver Lea - 04/02/2014
+
+// O-Edit: Fixed equality bug - 12/02/2014
+
 #include "lpc_types.h"
 
 #include <math.h>
