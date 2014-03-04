@@ -1,3 +1,8 @@
+// Created by Oliver Lea - 31/1/2014
+
+// O-Edit: Delay refactoring, still not working - 2/2/2014
+// D-Edit: Cleaned up delay - 3/2/2014
+// O-Edit: Fixed delay to work 100% - 4/2/2014
 
 #include "lpc_types.h"
 
