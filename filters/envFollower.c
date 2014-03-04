@@ -39,7 +39,7 @@ Filter *createEnvFollowerF(float attack_ms, float release_ms) {
 	Filter *envFollow = createFilterS(&envFollowerF, &printEnvFollowerF, attack_ms, release_ms,
 			UNUSED, UNUSED, UNUSED);
 
-	(envFollow->sfilter)->scratch[0] = (exp(log(0.01) / (attack_ms * ADC_SAMPLE_RATE * 0.001)));
+	(envFollow->sfilter)->scratch[0] = exp(log(0.01) / (attack_ms * ADC_SAMPLE_RATE * 0.001));
 	(envFollow->sfilter)->scratch[1] = exp(log(0.01) / (release_ms * ADC_SAMPLE_RATE * 0.001));
 
 	return envFollow;
