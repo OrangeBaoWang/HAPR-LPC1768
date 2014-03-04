@@ -1,4 +1,9 @@
+// Created by Oliver Lea - 24/2/2014
 
+// O-Edit: Fixed errors - 24/2/2014
+// O-Edit: Added reading wdt at the end of the sampling rate - 25/2/2014
+// O-Edit: WDT, found out counter always starts at 255 - 26/2/2014
+// O-Edit: WDT finished and working - 4/3/2014
 #include "lpc17xx_wdt.h"
 
 #include "global.h"
