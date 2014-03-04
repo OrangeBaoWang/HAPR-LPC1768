@@ -1,3 +1,9 @@
+// Created by James Lee - 13/2/2014
+
+// J-Edit: Changed first equations for overdrive - 18/2/2014
+// J-Edit: Changed second set of equations - 20/2/2014
+// J-Edit: Finalised third set of equations - 25/2/2014
+
 #include "lpc_types.h"
 
 #include <stdlib.h>
@@ -13,7 +19,7 @@ uint32_t overdriveF(uint32_t sample, SFilter *filter) {
 	uint32_t output;
 	float boost = filter->parameters[0];
 
-	output = sample*boost; //boost should be between 1.8 and 4	
+	output = sample*boost; //boost should be between 1.5 and 2	
 	return output;
 }
 
@@ -34,3 +40,4 @@ Filter *createOverdriveF(float boost) {
 
 	return overdriveFilter;
 }
+
