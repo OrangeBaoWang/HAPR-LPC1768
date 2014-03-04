@@ -1,3 +1,9 @@
+// Created by Oliver Lea - 13/1/2014
+
+// O-Edit: Added clear screen function - 11/1/2014
+// O-Edit: Added recieveFromTerminal and waitForTerminal functions from UI, as
+//      needed elsewhere. Removed register dump - 4/1/2014 
+
 #include "lpc17xx_uart.h"
 #include "lpc17xx_pinsel.h"
 #include "lpc_types.h"
@@ -19,7 +25,7 @@ int read_usb_serial_none_blocking(char *buf, int length) {
 	return (UART_Receive((LPC_UART_TypeDef *) LPC_UART0, (uint8_t *) buf, length,
 		NONE_BLOCKING));
 }
-
+dacinit
 //Write
 int write_usb_serial_blocking(char *buf, int length) {
 
