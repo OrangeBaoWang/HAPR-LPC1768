@@ -11,18 +11,18 @@
 
 uint32_t bandPassNoiseF(uint32_t sample, SFilter *filter) {
   
-  float cutOffLow = filter->parameters[0];
-  float cutOffHigh = filter->parameters[1];
+	float cutOffLow = filter->parameters[0];
+	float cutOffHigh = filter->parameters[1];
   
-  //if sample is above cutOffLow and below cutOffHigh then return
-  if (sample > cutOffLow) {
-    if (sample < cutOffHigh) {
-      return sample;
-    } 
-  }
+	// If sample is above cutOffLow and below cutOffHigh then return
+	if (sample > cutOffLow) {
+		if (sample < cutOffHigh) {
+			return sample;
+		}
+	}
 
-  //else return nothing
-  return AMPLITUDE_PIVOT;
+	// Else return nothing
+	return AMPLITUDE_PIVOT;
 }
 
 void printBandPassNoiseF(SFilter *filter) {
