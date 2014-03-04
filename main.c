@@ -64,9 +64,6 @@ void TIMER0_IRQHandler(void) {
 	  infraValue = (ADC_ChannelGetData(LPC_ADC, ADC_CHANNEL_2)) / 4000;
 	  output = (((float) *sampleP) * (1.0 - infraValue)) + (((float) applyFilters(*sampleP)) * infraValue);
 
-	  printfToTerminal("infrared: %f\n\r", infraValue);
-	  printfToTerminal("ADC_CHANNEL_2: %d\n\r", ADC_ChannelGetData(LPC_ADC, ADC_CHANNEL_2));
-
 	} else {
 		output = applyFilters(*sampleP);
 	}
