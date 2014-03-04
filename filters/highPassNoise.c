@@ -11,14 +11,15 @@
 
 uint32_t highPassNoiseF(uint32_t sample, SFilter *filter) {
   
-  float cutOff = filter->parameters[0];
+	float cutOff = filter->parameters[0];
 
-  //if input sample is above cut off, return it
-  if (sample > cutOff){
-    return sample;
-  }
-  //else return nothing
-  else return AMPLITUDE_PIVOT;
+	// If input sample is above cut off, return it
+	if (sample > cutOff){
+	  return sample;
+	}
+	
+	// Else return nothing
+	else return AMPLITUDE_PIVOT;
 }
 
 void printHighPassNoiseF(SFilter *filter) {
