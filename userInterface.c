@@ -180,7 +180,7 @@ void generateUI(void) {
 		}
 		if (infraMix) {
 			printToTerminal("INFRARED MIX ENABLED\n\r\n\r");
-    	}
+    		}
 
 		printToTerminal("1)\tDisplay all possible effects\n\r");
 		printToTerminal("2)\tDisplay all added effects\n\r\n\r");
