@@ -36,8 +36,6 @@ void debugThrow(char *message, char *file, int line);
 
 void debug_init(void);
 
-//Main assert macro!
-
 #define ASSERT(X, Y)  { if (X) {} else { debugAssert(Y, __FILE__, __LINE__); } } 
 #define WARN(X, Y)    { if (X) {} else { debugWarn(Y, __FILE__, __LINE__);   } }
 #define THROW(X)          debugThrow(X, __FILE__, __LINE__);
