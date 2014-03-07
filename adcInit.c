@@ -1,5 +1,7 @@
-// Created by Oliver Lea
-// Modified by Oliver Lea 14/01/2014 - Added comments
+// Created by Oliver Lea - 13/01/2014
+
+// O-Edit: Added median input filter - 27/01/2014
+// D-Edit: Added ADC pin setup for infrared sensor - 25/02/2014
 
 #include "lpc17xx_adc.h"
 #include "lpc17xx_pinsel.h"
