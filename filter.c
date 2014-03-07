@@ -1,3 +1,19 @@
+// Created by Oliver Lea - 20/01/2014
+
+// O-Edit: Added Filter creation functions - 21/01/2014
+// O-Edit: Changed Filter creation functions to take floats as parameters instead
+//	of uint32_t's - 22/01/2014
+// O-Edit: Moved all filters out of filter.c and into there own folder in
+//	individual files - 31/01/2014
+// O-Edit: Modified createFilterP to take a Filter structs as parameters instead
+//	of SFilter structs - 02/02/2014
+// O-Edit: Added passing the printing function pointer for each filter to the
+//	createFilterS function in order to facilitate printing the filters - 04/02/2014
+// O-Edit: Added free() ing of memory that was no longer needed in the createFilterP
+//	function - 20/02/2014
+// O-Edit: Added assertions that no malloc() returns NULL in all functions
+//	in filter.c - 28/02/2014
+
 #include <stdlib.h>
 #include <math.h>
 
