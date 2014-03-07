@@ -18,8 +18,6 @@ void sdac_init(void) {
 	DAC_Init(LPC_DAC);
 }
 
-/*  Unnecessary function call
-    Call DAC_UpdateData directly */
 void dacSetValue(int newValue) {
 	DAC_UpdateValue(LPC_DAC, newValue);
 }
