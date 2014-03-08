@@ -1,3 +1,32 @@
+// Created by Dariush Bahri - 04/02/2014
+
+// O-Edit: Added inputAndAssert() function that will force the user to input a value
+//	within the range specified by the parameters of inputAndAssert() - 12/02/2014
+
+// O-Edit: Added forceInput() function that tells the user to press any key in order
+//	to return to the main menu - 13/02/2014
+
+// O-Edit: Added support in the UI for emptying the filter chain using the dequeueAll()
+//	function - 18/02/2014
+
+// O-Edit: Changed the switch statements in the UI to switch on floats instead of chars
+//	in order to support more than 10 cases - 18/02/2014
+
+// O-Edit: Refactored the entire UI in order to reduce repeated code. Also added a new
+//	getEffect() function that gets the choice of effect from the user and creates
+//	a Filter struct from the choice - 21/02/2014
+
+// O-Edit: Added support in the UI for pass-through - 24/02/2014
+
+// O-Edit: Added a work in progress printUsage() function that should tell the user
+//	how hard the CPU is working, and the current sample rate - 25/02/2014
+
+// D-Edit: Added support for the unfinished infrared mixing - 25/02/2014
+
+// O-Edit: CPU usage support now complete. General UI cleaning - 26/02/2014
+
+// O-Edit: Added recommended parameters for input to filters in the UI - 04/03/2014
+
 #include "lpc_types.h"
 #include "lpc17xx_uart.h"
 
