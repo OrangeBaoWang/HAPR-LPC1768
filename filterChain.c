@@ -1,5 +1,44 @@
 // Created by Oliver Lea 17/01/2014
 
+// O-Edit: Added apply filters function that takes the current chain of filters
+//	and the sample to be filtered, and returns the post-processed sample - 19/01/2014
+
+// O-Edit: Added in support for parallel filters in the incrementCurrentNode()
+//	function (subsequently removed) and the applyFilters() function - 21/01/2014
+
+// O-Edit: Added dequeuing parallel filters to the dequeue() function. Also added a
+//	filterEq() function that tests if two SFilters are equivalent - 23/01/2014
+
+// O-Edit: Fixed a bug in the dequeue function that would cause segmentation
+//	faults upon attempting to dequeue a filter - 24/01/2014
+
+// O-Edit: Began work on a printQueue() function that would allow the filter chain
+//	to be printed from the UI. Work in progress - 29/01/2014
+
+// O-Edit: Modified filterEq(), applyFilters() and the (unfinished) printQueue()
+//	functions to support a change in how filter parameters are passed (Used to be
+//	passed as two floats, but are now passed as an array of five floats) - 31/01/2014
+
+// O-Edit: Finished the printQueue() function, which makes use of the printFunction
+//	function pointer that every instance of a filter possesses - 04/02/2014
+
+// O-Edit: Parallel filter dequeueing and printing support added in - 06/02/2014
+
+// O-Edit: dequeueByIndex() function added that removes a filter from the filter
+//	chain according to its index - 12/02/2014
+
+// O-Edit: enqueueByIndex() function added that adds a filter to the filter chain
+//	in a specified position given by the index passed to the function - 17/02/2014
+
+// O-Edit: Added freeNode() function (frees previously malloc'd space now unused by
+//	old filters) and dequeueAll() function (empties the filter chain) - 18/02/2014
+
+// O-Edit: Fixed freeNode() function (previous one caused seg faults as it was freeing
+//	the structs in the incorrect order) and added calls to free the FilterNode
+//	structs to all dequeue functions - 24/02/2014
+
+// O-Edit: Added assertions that no malloc() call in filterChain.c returns NULL - 28/02/2014
+
 #include "lpc_types.h"
 
 #include "stdlib.h"
