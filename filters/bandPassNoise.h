@@ -1,3 +1,5 @@
+// Created by Dariush Bahri - 26/02/2014
+
 #ifndef __BANDPASSNOISE_H_
 #define __BANDPASSNOISE_H_
 
