@@ -1,3 +1,5 @@
+// Created by Oliver Lea - 31/01/2014
+
 #ifndef __DELAY_H_
 #define __DELAY_H_
 
