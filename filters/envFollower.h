@@ -1,3 +1,5 @@
+// Created by Oliver Lea - 31/01/2014
+
 #ifndef __ENVFOLLOWER_H__
 #define __ENVFOLLOWER_H__
 
