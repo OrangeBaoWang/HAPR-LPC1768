@@ -1,3 +1,5 @@
+// Created by Oliver Lea - 04/02/2014
+
 #ifndef __TREMELO_H__
 #define __TREMELO_H__
 
