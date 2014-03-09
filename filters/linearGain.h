@@ -1,3 +1,5 @@
+// Created by Oliver Lea - 31/01/2014
+
 #ifndef __LINEARGAIN_H_
 #define __LINEARGAIN_H_
 
