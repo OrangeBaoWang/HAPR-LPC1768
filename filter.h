@@ -1,14 +1,28 @@
 // Created by Oliver Lea 18/01/2014
 
+// O-Edit: Defined SFilter, PFilter and Filter structs, and added Filter creation 
+//	functions - 21/01/2014
+
+// O-Edit: Changed Filter creation functions to take floats as parameters instead
+//	of uint32_t's - 22/01/2014
+
+// O-Edit: Moved all filters out of filter.c and into there own folder in
+//	individual files - 31/01/2014
+
+// O-Edit: Modified createFilterP to take a Filter structs as parameters instead
+//	of SFilter structs - 02/02/2014
+
+// O-Edit: Added passing the printing function pointer for each filter to the
+//	createFilterS function in order to facilitate printing the filters - 04/02/2014
+
 #ifndef __FILTER_H__
 #define __FILTER_H__
 
 // MUST BE INCLUDED ABOVE FILTERCHAIN.H"
 
-
 // Structure containing all the information needed for a filter
-// filterFunction points to the address of the destination filter
-// function
+// filterFunction points to the address of the destination filter function
+// printFunction points to the address of the destination filter printing function
 
 typedef struct SFilter {
 	uint32_t (*filterFunction)(uint32_t, struct SFilter *);
