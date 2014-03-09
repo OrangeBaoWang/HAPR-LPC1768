@@ -1,3 +1,5 @@
+// Created by Oliver Lea - 13/01/2014
+
 #ifndef __ADCINIT_H__
 #define __ADCINIT_H__
 
