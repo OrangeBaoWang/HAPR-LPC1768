@@ -1,3 +1,5 @@
+// Created by Oliver Lea - 02/02/2014
+
 #ifndef __REVERB_H__
 #define __REVERB_H__
 
