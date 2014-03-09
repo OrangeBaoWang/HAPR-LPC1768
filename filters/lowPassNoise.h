@@ -1,3 +1,5 @@
+// Created by Dariush Bahri - 26/02/2014
+
 #ifndef __LOWPASSNOISE_H_
 #define __LOWPASSNOISE_H_
 
