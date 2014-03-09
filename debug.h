@@ -1,3 +1,12 @@
+// Created by Oliver Lea - 13/01/2014
+
+// O-Edit: Added new clearScreen() function that clears the screen on
+//		the terminal - 11/02/2014
+
+// O-Edit: Added uint8_t terminalBuffer that holds chars read from the terminal.
+//		Also added the receiveFromTerminal() and waitForTerminal() functions that
+//		were originally part of userInterface.c as part of refactoring - 04/03/2014
+
 #ifndef __DEBUG_H__
 #define __DEBUG_H__
 
