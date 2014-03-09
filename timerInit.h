@@ -1,3 +1,5 @@
+// Created by Oliver Lea - 13/01/2014
+
 #ifndef __TIMERINIT_H__
 #define __TIMERINIT_H__
 
@@ -10,7 +12,5 @@ void disableTimer(void);
 void enableTimer(void);
 
 void sample_timer_init(uint32_t timeInterval);
-
-// void status_timer_init(void);
 
 #endif
