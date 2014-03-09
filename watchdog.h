@@ -1,3 +1,5 @@
+// Created by Oliver Lea - 24/02/2014
+
 #ifndef __WATCHDOG_H__
 #define __WATCHDOG_H__
 
