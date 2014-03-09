@@ -1,3 +1,5 @@
+// Created by Oliver Lea - 31/01/2014
+
 #ifndef __ECHO_H_
 #define __ECHO_H_
 
