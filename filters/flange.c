@@ -5,6 +5,7 @@
 // O-Edit: Created flange init method - 2/2/2014
 // O-Edit: Optimised flange code and added new options - 4/2/2014
 // O-Edit: Flange refactored and sorted - 4/2/2014
+// O-Edit: Fixed bug that would cause an irregular sounding flange - 11/03/2014
 
 #include "lpc_types.h"
 
@@ -18,6 +19,8 @@
 
 #define SINE_INPUT filter->scratch[0]
 #define SINE_INCREMENT filter->scratch[1]
+
+#define PI 3.14159
 
 // Maximum range is 8000
 // Range for strange effects is 8000
@@ -39,10 +42,13 @@ uint32_t flangeF(uint32_t sample, SFilter *filter) {
 
 	SINE_INPUT += SINE_INCREMENT;
 
-	// If the sine wave has completed one full revolution, set it back
-	// to zero
-	if (SINE_INPUT >= 6.3) {
-		SINE_INPUT = 0;
+	// If the sine wave has completed one full revolution, flip the increment
+	if (SINE_INPUT >= PI) {
+		SINE_INCREMENT *= -1;
+	}
+
+	if (SINE_INPUT <= 0) {
+		SINE_INCREMENT *= -1;
 	}
 
 	sineOutput = abs(sin(SINE_INPUT) * pivot);
@@ -66,7 +72,7 @@ void printFlangeF(SFilter *filter) {
 }
 
 Filter *createFlangeF(float mixingRatio, float range, float frequency) {
-	
+
 	float sineIncrement = frequency*6.3*23e-6;
 
 	Filter *flangeFilter = createFilterS(&flangeF, &printFlangeF,

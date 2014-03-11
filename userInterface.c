@@ -443,7 +443,7 @@ Filter *inputFlange(void) {
 	printToTerminal("\n\rRecommended:\n\r\t\t\t\tMixingRatio: 0.4\n\r"
 			"\t\tWub:\n\r\t\t\t\tSweep Range: 500\n\r\t\t\t\tSweep Frequency: 20\n\r"
 			"\t\tUFO:\n\r\t\t\t\tSweep Range: 8000\n\r\t\t\t\tSweep Frequency: 1\n\r"
-			"\t\tChoral:\n\r\t\t\t\tSweep Range: 1000\n\r\t\t\t\tSweep Frequency: 0.1\n\r");
+			"\t\tChoral:\n\r\t\t\t\tSweep Range: 2000\n\r\t\t\t\tSweep Frequency: 0.1\n\r");
 
 	printToTerminal("\n\rEnter the mixing ratio (0-1):\n\r");
 	filterVariable[0] = inputAndAssert(0, 1);
