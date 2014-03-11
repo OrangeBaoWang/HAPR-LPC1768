@@ -156,3 +156,23 @@ Daz - Big Boss
 	in anticipation for the code submission on Wednesday week 10
 
 - Spend Tuesday week 10 going over the presentation
+
+#######################################################################################
+#######################################################################################
+Meeting 10
+
+Jay - Secretary
+Daz - Chair
+Oli - Big Boass
+
+###############################
+
+- Try infra-red idea
+
+- Commenting all done
+
+- Tested speaker with board
+
+- Write down individual part cards
+
+- Submit code today
