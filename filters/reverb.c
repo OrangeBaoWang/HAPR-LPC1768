@@ -1,5 +1,7 @@
 // Created by Oliver Lea - 31/1/2014
 
+// THIS FILE IS PART OF OLIVER LEA'S INDIVIDUAL SECTION
+
 // O-Edit: Added reverb init method - 02/2/2014
 
 #include "lpc_types.h"

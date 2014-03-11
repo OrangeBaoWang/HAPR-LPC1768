@@ -1,5 +1,7 @@
 // Created by Oliver Lea - 31/1/2014
 
+// THIS FILE IS PART OF OLIVER LEA'S INDIVIDUAL SECTION
+
 // O-Edit: Created flange init method - 2/2/2014
 // O-Edit: Optimised flange code and added new options - 4/2/2014
 // O-Edit: Flange refactored and sorted - 4/2/2014

@@ -1,5 +1,7 @@
 // Created by Oliver Lea - 31/01/2014
 
+// THIS FILE IS PART OF OLIVER LEA'S INDIVIDUAL SECTION
+
 #ifndef __FLANGE_H_
 #define __FLANGE_H_
 
