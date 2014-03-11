@@ -58,7 +58,7 @@ void TIMER0_IRQHandler(void) {
 
 	  // infraValue will be between 0 (no hand) and 1 (hand close)
 	  infraValue = (ADC_ChannelGetData(LPC_ADC, ADC_CHANNEL_2)) / 4000.0;
-	  output = (((float) *sampleP) * (1.0 - infraValue)) + (((float) applyFilters(*sampleP)) * infraValue);
+	  output = (((float) *sampleP) * infraValue) + (((float) applyFilters(*sampleP)) * (1.0 - infraValue));
 
 	} else {
 		output = applyFilters(*sampleP);
