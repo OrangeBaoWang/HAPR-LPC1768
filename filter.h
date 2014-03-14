@@ -47,7 +47,6 @@ uint32_t mixParallel(PFilter *pfilter, uint32_t sample);
 Filter *createFilterS(uint32_t (*filterAddr)(uint32_t, SFilter *), void (*printAddr)(SFilter *),
 		float param0, float param1, float param2, float param3, float param4);
 
-Filter *createFilterP(Filter *filter1, Filter *filter2,
-						float mixingRatio);
+Filter *createFilterP(Filter *filter1, Filter *filter2, float mixingRatio);
 
 #endif
