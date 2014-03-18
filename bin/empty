@@ -1,0 +1,2 @@
+This file is needed in order to force git to keep this folder, as this folder is needed
+to store the binaries created with the 'make command'
