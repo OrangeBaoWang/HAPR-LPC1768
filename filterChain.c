@@ -228,10 +228,10 @@ int dequeueAll(void) {
 	while (root->next != NULL) {
 		// If at the last filter in the chain, free the filter node and return
 		if ((root->next)->next == NULL) {
-				root->next = NULL;
+			root->next = NULL;
 				
-				freeNode(nodeToFree);
-				return 0;
+			freeNode(nodeToFree);
+			return 0;
 		}
 		// Not at the last filter in the chain - rearrange root to point to the next filter
 		// after the one to free and then free the node no longer in the chain
