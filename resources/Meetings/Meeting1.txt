@@ -6,8 +6,8 @@ Secretary: Dariush Bahri
 
 •	Decided to use GitHub for version control and to ease collaboration.
 •	First get main pass through from ADC to DAC working before moving on to creating effects:
-o	This may require analogue circuitry such as a biasing circuit and an amplifying circuit.
-o	Unsure if the board would be able to drive a speaker, so attempt to get a pass-through to headphones working.
+  o	This may require analogue circuitry such as a biasing circuit and an amplifying circuit.
+  o	Unsure if the board would be able to drive a speaker, so attempt to get a pass-through to headphones working.
 •	In terms of a user interface, it could be possible to implement a rudimental user interface using switches on buttons on blue-board.
 •	Oliver and Dariush to work on analogue circuitry and implementing pass-through from ADC to DAC, while James works on researching the implementation of digital effects.
 
@@ -19,9 +19,9 @@ Chair: Dariush Bahri
 Secretary: James Lee
 
 •	Decided to focus on the analogue circuitry before moving on to the main programming for the system.
-o	Analogue circuitry that is being worked on is a low-pass filter, a biasing circuit so that the ADC can sample the entire output of the guitar, and a non-inverting op-amp circuit to amplify the signal so that the entire range of the ADC is used.
+  o	Analogue circuitry that is being worked on is a low-pass filter, a biasing circuit so that the ADC can sample the entire output of the guitar, and a non-inverting op-amp circuit to amplify the signal so that the entire range of the ADC is used.
 •	By the end of this week we want a clean signal from the guitar to the output of the DAC to be obtainable.
-o	Part of this involves writing code to average several signals from the ADC in order to reduce noise.
+  o	Part of this involves writing code to average several signals from the ADC in order to reduce noise.
 •	James will look into a compression effect for when the sampling is working correctly, whilst Oliver and Dariush continue to work on the analogue circuitry.
 
 
@@ -32,15 +32,15 @@ Chair: James Lee
 Secretary: Oliver Lea
 
 •	Analogue circuitry that preprocesses the signal before it arrives at the ADC is complete.
-o	Involves a biasing circuit, a low-pass filter and a non-inverting op-amp circuit.
+  o	Involves a biasing circuit, a low-pass filter and a non-inverting op-amp circuit.
 •	Work has begun on the filter chain:
-o	Going to use four distinct structures:
-•	FilterNode
-•	Filter
-•	SFilter
-•	PFilter
+  o	Going to use four distinct structures:
+    •	FilterNode
+    •	Filter
+    •	SFilter
+    •	PFilter
 •	Decided to use communication over UART with a computer as the user interface as it will likely be simple to implement once the communication functions are complete.
-o	Going to use non-blocking call to read input buffer from UART to evaluate input when the processor is not processing incoming analogue samples.
+  o	Going to use non-blocking call to read input buffer from UART to evaluate input when the processor is not processing incoming analogue samples.
 •	James is looking into implementations of digital reverb filters while Oliver and Dariush are working on the filter chain.
 
 
@@ -51,7 +51,7 @@ Chair: Oliver Lea
 Secretary: Dariush Bahri
 
 •	Filter chain is working completely as outlined in the previous meeting; user interface work has begun.
-o	A linear gain effect has been implemented that was used to test to make sure the serial and parallel effects were working in the chain.
+  o	A linear gain effect has been implemented that was used to test to make sure the serial and parallel effects were working in the chain.
 •	User interface work has begun and Dariush and James are working on UART communication.
 •	Oliver is refactoring filter chain code to make it easier to understand and more structured. Oliver is then to begin work on an echo filter in order to test the usage of the filter chain with more than one type of effect.
 
@@ -67,7 +67,7 @@ Secretary: James Lee
 •	Commenting of code must be focused upon in order to make sure the code is easily readable.
 •	Oliver is working on a function that will print all of the effects that are in the filter chain out to the user interface.
 •	James and Dariush are to work on getting digital effects implemented.
-o	Effects such as delay and echo to be looked into.
+  o	Effects such as delay and echo to be looked into.
 
 
 Meeting 6
@@ -77,7 +77,7 @@ Chair: James Lee
 Secretary: Oliver Lea
 
 •	A pass-through option needs to be added to the user interface that will allow the filter chain to be bypassed while the pass-through option is enabled.
-o	Oliver to work on implementing this.
+  o	Oliver to work on implementing this.
 •	Echo, delay and linear gain effects are complete and are present in the user interface.
 •	Dariush is working on adding low-, band- and high-pass noise gate effects.
 •	James is working on his individual section of the project.
@@ -103,7 +103,7 @@ Chair: Dariush Bahri
 Secretary: James Lee
 
 •	Oliver is still working on his individual section, but is also working on adding more digital effects.
-o	Will look into tremolo and an envelope follower.
+  o	Will look into tremolo and an envelope follower.
 •	Dariush and James are still each working on their individual sections.
 
 
@@ -131,6 +131,6 @@ Secretary: Dariush Bahri
 •	All commenting has been completed and no more code has to be written.
 •	Project code is complete and ready for submission.
 •	Discussion about project demonstration on Friday:
-o	Tested speakers and they work fine with the board.
-•	More practical for the demonstration than headphones.
-o	Everyone feels prepared for the demonstration.
+  o	Tested speakers and they work fine with the board.
+    •	More practical for the demonstration than headphones.
+  o	Everyone feels prepared for the demonstration.
