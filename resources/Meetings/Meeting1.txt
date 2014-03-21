@@ -56,8 +56,6 @@ Oli - Secretary
 
 - Sorted out the DC bias and amplification for input into the circuit
 
-- Working on reverb filter
-
 - Created all structs for sampled data and filters
 
 - Created filter chain
@@ -79,8 +77,6 @@ Oli - Big Boss
 - Oli has to do print chain function, to print out what filters are active etc
 
 - Has done refactoring to make code more efficient
-
-- Flange filter
 
 - Daz and I need to do our own filters
 	- Jay Noise Gain
