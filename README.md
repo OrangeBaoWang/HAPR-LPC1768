@@ -1,45 +1,10 @@
 HAPR
 ====
 
-HAPR source
+Source for our HAPR project for second year Computer Science students at the University of York.
 
+Intended to run on LPC1768 with ARM Cortext M3 (16KB).
 
+Effects can be added in a chain in parallel or in sequence to analogue signals applied to the ADC inputs of the LPC1768 (flange, reverb, echo, envelope followers, etc...). Processed signals are output to the DAC.
 
-                                                         ,/
-                                                        //
-                                                      ,//
-                                          ___   /|   |//
-                                      `__/\_ --(/|___/-/
-                                   \|\_-\___ __-_`- /-/ \.
-                                  |\_-___,-\_____--/_)' ) \
-                                   \ -_ /     __ \( `( __`\|
-                                   `\__|      |\)\ ) /(/|
-           ,._____.,            ',--//-|      \  |  '   /
-          /     __. \,          / /,---|       \       /
-         / /    _. \  \        `/`_/ _,'        |     |
-        |  | ( (  \   |      ,/\'__/'/          |     |
-        |  \  \`--, `_/_------______/           \(   )/
-        | | \  \_. \,                            \___/\
-        | |  \_   \  \                                 \
-        \ \    \_ \   \   /                             \
-         \ \  \._  \__ \_|       |                       \
-          \ \___  \      \       |                        \
-           \__ \__ \  \_ |       \                         |
-           |  \_____ \  ____      |                        |
-           | \  \__ ---' .__\     |        |               |
-           \  \__ ---   /   )     |        \              /
-            \   \____/ / ()(      \          `---_       /|
-             \__________/(,--__    \_________.    |    ./ |
-               |     \ \  `---_\--,           \   \_,./   |
-               |      \  \_ ` \    /`---_______-\   \\    /
-                \      \.___,`|   /              \   \\   \
-                 \     |  \_ \|   \              (   |:    |
-                  \    \      \    |             /  / |    ;
-                   \    \      \    \          ( `_'   \  |
-                    \.   \      \.   \          `__/   |  |   XxSNIPEZ2K14xX
-                      \   \       \.  \                |  |
-                       \   \        \  \               (  )
-                        \   |        \  |              |  |
-                         |  \         \ \              I  `
-                         ( __;        ( _;            ('-_';
-                         |___\        \___:            \___:
+UI provded by text over UART.
